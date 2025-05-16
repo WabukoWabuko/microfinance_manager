@@ -1,1 +1,0 @@
-/home/wabukowabuko/Desktop/all/microfinance_manager/microfinance_manager/target/debug/microfinance_manager: /home/wabukowabuko/Desktop/all/microfinance_manager/microfinance_manager/src/database.rs /home/wabukowabuko/Desktop/all/microfinance_manager/microfinance_manager/src/main.rs /home/wabukowabuko/Desktop/all/microfinance_manager/microfinance_manager/src/models.rs

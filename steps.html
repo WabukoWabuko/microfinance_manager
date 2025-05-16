@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microfinance/Savings Group Manager Project Roadmap</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .step {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .step h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+        .step ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        .step ul li {
+            margin-bottom: 0.5rem;
+        }
+        .phase {
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+        .highlight {
+            background-color: #e8f4f9;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #2c3e50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .step h2 {
+                font-size: 1.5rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Microfinance/Savings Group Manager Project Roadmap</h1>
+        <p>Building an Offline/Online System with Rust</p>
+    </header>
+    <div class="container">
+        <div class="step">
+            <h2>Project Overview</h2>
+            <p>The Microfinance/Savings Group Manager is a hybrid application designed to manage savings groups, track contributions, loans, and payouts. It operates offline with local data storage and syncs with a cloud backend when online, ensuring data integrity and accessibility. Built with Rust for performance and safety, the system targets microfinance institutions and community savings groups.</p>
+        </div>
+        <div class="step">
+            <h2>Step 1: Project Setup and Dependencies</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Install Rust and Cargo (Rust's package manager) via rustup.rs.</li>
+                    <li>Choose a frontend framework: Tauri (for desktop apps) or Dioxus (for web/desktop).</li>
+                    <li>Add core dependencies to <code>Cargo.toml</code>:
+                        <ul>
+                            <li><code>rusqlite</code>: For local SQLite database storage.</li>
+                            <li><code>reqwest</code>: For HTTP requests to sync data online.</li>
+                            <li><code>serde</code>: For JSON serialization/deserialization.</li>
+                            <li><code>tokio</code>: For asynchronous operations.</li>
+                            <li><code>tauri</code> or <code>dioxus</code>: For UI development.</li>
+                            <li><code>sqlx</code>: For cloud database interactions (e.g., PostgreSQL).</li>
+                        </ul>
+                    </li>
+                    <li>Set up a new Rust project: <code>cargo new microfinance_manager</code>.</li>
+                    <li>Initialize Git for version control and create a repository on GitHub.</li>
+                </ul>
+            </div>
+            <div class="highlight">
+                <p><strong>Note:</strong> Tauri is recommended for a lightweight desktop app with offline capabilities, while Dioxus offers flexibility for web deployment.</p>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 2: System Design and Architecture</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Define core entities: Users, Groups, Contributions, Loans, Payouts.</li>
+                    <li>Design database schema for SQLite (local) and PostgreSQL (cloud).</li>
+                    <li>Plan offline-online sync mechanism:
+                        <ul>
+                            <li>Store transactions locally in SQLite when offline.</li>
+                            <li>Queue sync operations and resolve conflicts when online.</li>
+                        </ul>
+                    </li>
+                    <li>Choose a backend server: Actix Web or Axum for REST API.</li>
+                    <li>Outline security measures: User authentication, data encryption, and secure API endpoints.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 3: Local Storage Implementation</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Create SQLite database with tables for users, groups, transactions, and loans.</li>
+                    <li>Implement CRUD operations using <code>rusqlite</code>.</li>
+                    <li>Develop a transaction queue for offline operations to track pending syncs.</li>
+                    <li>Test local storage with sample data to ensure reliability.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 4: Backend Development</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Set up a Rust backend with Actix Web or Axum.</li>
+                    <li>Implement REST API endpoints for:
+                        <ul>
+                            <li>User authentication (JWT-based).</li>
+                            <li>Data sync (upload local data, download updates).</li>
+                            <li>Group and transaction management.</li>
+                        </ul>
+                    </li>
+                    <li>Connect to a PostgreSQL database using <code>sqlx</code>.</li>
+                    <li>Implement conflict resolution for data sync (e.g., last-write-wins or timestamp-based).</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 5: Frontend Development</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Build UI with Tauri (HTML/CSS/JavaScript) or Dioxus (Rust-based components).</li>
+                    <li>Create screens for:
+                        <ul>
+                            <li>User login/registration.</li>
+                            <li>Group management (create, edit, delete).</li>
+                            <li>Transaction recording (contributions, loans, payouts).</li>
+                            <li>Sync status and offline mode indicator.</li>
+                        </ul>
+                    </li>
+                    <li>Implement responsive design for desktop and mobile compatibility.</li>
+                    <li>Integrate with Rust backend via Tauri commands or HTTP requests.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 6: Offline-Online Sync Logic</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Develop sync logic to detect online status using <code>reqwest</code>.</li>
+                    <li>Push queued transactions to the backend when online.</li>
+                    <li>Pull updates from the cloud to update local SQLite database.</li>
+                    <li>Handle sync errors and provide user feedback (e.g., "Sync failed, retrying...").</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 7: Testing and Validation</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Write unit tests for core logic (e.g., transaction processing, sync).</li>
+                    <li>Perform integration tests for API endpoints and database interactions.</li>
+                    <li>Test offline functionality by simulating network disconnection.</li>
+                    <li>Conduct user acceptance testing with sample savings groups.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 8: Deployment and Packaging</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Package the desktop app using Tauri for Windows, macOS, and Linux.</li>
+                    <li>Deploy the backend to a cloud provider (e.g., AWS, Heroku, or Fly.io).</li>
+                    <li>Set up a PostgreSQL database on the cloud provider.</li>
+                    <li>Generate installers and distribute via a website or app store.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 9: Marketing and Sales Preparation</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Create a landing page to showcase features and benefits.</li>
+                    <li>Highlight key selling points:
+                        <ul>
+                            <li>Offline functionality for remote areas.</li>
+                            <li>Secure data backup and sync.</li>
+                            <li>Easy-to-use interface for non-technical users.</li>
+                        </ul>
+                    </li>
+                    <li>Develop pricing models: One-time purchase, subscription, or freemium.</li>
+                    <li>Target microfinance institutions, NGOs, and community groups via outreach.</li>
+                    <li>Leverage social media and local networks for promotion.</li>
+                </ul>
+            </div>
+            <div class="highlight">
+                <p><strong>Tip:</strong> Offer a free trial to attract initial users and gather feedback for improvements.</p>
+            </div>
+        </div>
+        <div class="step">
+            <h2>Step 10: Maintenance and Updates</h2>
+            <div class="phase">
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Monitor backend performance and database usage.</li>
+                    <li>Release regular updates with bug fixes and new features.</li>
+                    <li>Provide customer support via email or a helpdesk.</li>
+                    <li>Plan for scalability as user base grows.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Microfinance/Savings Group Manager Project. All rights reserved.</p>
+    </footer>
+</body>
+</html>
