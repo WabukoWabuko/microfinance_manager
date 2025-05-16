@@ -9,9 +9,18 @@ fn main() -> Result<()> {
     let db = Database::new()?;
     println!("Database initialized with all tables.");
 
-    // Create a user
-    let user_id = db.create_user("alice", "password123", "admin", None)?;
-    println!("Created user with ID: {}", user_id);
+    // Check if user exists, create if not
+    let user_id = match db.get_user_by_username("alice")? {
+        Some(user) => {
+            println!("User 'alice' already exists with ID: {}", user.id);
+            user.id
+        }
+        None => {
+            let id = db.create_user("alice", "password123", "admin", None)?;
+            println!("Created user with ID: {}", id);
+            id
+        }
+    };
 
     // Create a group
     let group_id = db.create_group("Savings Group 1", Some("First savings group"), 1000.0)?;

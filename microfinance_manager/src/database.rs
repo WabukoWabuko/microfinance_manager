@@ -120,6 +120,22 @@ impl Database {
         }
     }
 
+    pub fn get_user_by_username(&self, username: &str) -> Result<Option<User>> {
+        let mut stmt = self.conn.prepare("SELECT id, username, password, role, group_id FROM users WHERE username = ?1")?;
+        let mut rows = stmt.query([username])?;
+        if let Some(row) = rows.next()? {
+            Ok(Some(User {
+                id: row.get(0)?,
+                username: row.get(1)?,
+                password: row.get(2)?,
+                role: row.get(3)?,
+                group_id: row.get(4)?,
+            }))
+        } else {
+            Ok(None)
+        }
+    }
+
     // Group CRUD
     pub fn create_group(&self, name: &str, description: Option<&str>, balance: f64) -> Result<i32> {
         let created_date = Self::get_timestamp();

@@ -29,6 +29,7 @@ pub struct Contribution {
     pub status: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Loan {
     pub id: i32,
@@ -41,6 +42,7 @@ pub struct Loan {
     pub status: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Payout {
     pub id: i32,
@@ -51,6 +53,7 @@ pub struct Payout {
     pub status: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct SyncQueue {
     pub id: i32,
