@@ -5,12 +5,12 @@ def main():
     print("Database initialized with all tables.")
 
     # Check if user exists, create if not
-    user = db.get_user_by_username("alice")
+    user = db.get_user_by_username("admin")
     if user:
         user_id = user.id
         print(f"User 'alice' already exists with ID: {user_id}")
     else:
-        user_id = db.create_user("alice", "password123", "admin")
+        user_id = db.create_user("admin", "password123", "admin")
         print(f"Created user with ID: {user_id}")
 
     # Create a group
