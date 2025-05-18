@@ -9,3 +9,4 @@ A Rust-based application to manage savings groups, supporting offline storage an
 
 ## Status
 Initial setup complete. Next steps: Database design and backend development.
+
