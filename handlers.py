@@ -5,16 +5,16 @@ from entities import User, Group, Contribution, Loan, Payout, UserCreate, LoginR
 import bcrypt
 from auth import create_jwt
 import uuid
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import os
+from dotenv import load_dotenv
 
 def get_db():
-    from fastapi import Depends
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-    import os
-    from dotenv import load_dotenv
-
     load_dotenv()
     DATABASE_URL = os.getenv("DATABASE_URL")
+    if not DATABASE_URL.startswith("postgresql://"):
+        raise ValueError("DATABASE_URL must start with 'postgresql://'")
     engine = create_engine(DATABASE_URL)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     db = SessionLocal()
