@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem, QDesktopWidget
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from src.login import Ui_LoginWindow
