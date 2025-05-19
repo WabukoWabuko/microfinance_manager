@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem
 import requests
 from local_db import LocalDatabase
+from entities import Contribution
 
 class ContributionForm(QDialog):
     def __init__(self, token):
@@ -101,7 +102,7 @@ class ContributionForm(QDialog):
     def load_contributions(self):
         session = self.db.Session()
         try:
-            contributions = session.query(self.db.Contribution).all()
+            contributions = session.query(Contribution).all()
             self.contribution_table.setRowCount(len(contributions))
             for row, contribution in enumerate(contributions):
                 self.contribution_table.setItem(row, 0, QTableWidgetItem(str(contribution.id)))

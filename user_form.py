@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem
 import requests
 from local_db import LocalDatabase
+from entities import User
 
 class UserForm(QDialog):
     def __init__(self, token):
@@ -78,7 +79,7 @@ class UserForm(QDialog):
     def load_users(self):
         session = self.db.Session()
         try:
-            users = session.query(self.db.User).all()
+            users = session.query(User).all()
             self.user_table.setRowCount(len(users))
             for row, user in enumerate(users):
                 self.user_table.setItem(row, 0, QTableWidgetItem(str(user.id)))

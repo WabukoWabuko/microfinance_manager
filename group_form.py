@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem
 import requests
 from local_db import LocalDatabase
+from entities import Group
 
 class GroupForm(QDialog):
     def __init__(self, token):
@@ -69,7 +70,7 @@ class GroupForm(QDialog):
     def load_groups(self):
         session = self.db.Session()
         try:
-            groups = session.query(self.db.Group).all()
+            groups = session.query(Group).all()
             self.group_table.setRowCount(len(groups))
             for row, group in enumerate(groups):
                 self.group_table.setItem(row, 0, QTableWidgetItem(str(group.id)))

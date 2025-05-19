@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem
 import requests
 from local_db import LocalDatabase
+from entities import Loan
 from datetime import datetime
 
 class LoanForm(QDialog):
@@ -126,7 +127,7 @@ class LoanForm(QDialog):
     def load_loans(self):
         session = self.db.Session()
         try:
-            loans = session.query(self.db.Loan).all()
+            loans = session.query(Loan).all()
             self.loan_table.setRowCount(len(loans))
             for row, loan in enumerate(loans):
                 self.loan_table.setItem(row, 0, QTableWidgetItem(str(loan.id)))

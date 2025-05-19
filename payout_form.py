@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem
 import requests
 from local_db import LocalDatabase
+from entities import Payout
 
 class PayoutForm(QDialog):
     def __init__(self, token):
@@ -52,6 +53,7 @@ class PayoutForm(QDialog):
 
     def add_payout(self):
         group_id = self.group_id_input.text()
+        group_id = self.group_id_input.text()
         user_id = self.user_id_input.text()
         amount = self.amount_input.text()
 
@@ -100,7 +102,7 @@ class PayoutForm(QDialog):
     def load_payouts(self):
         session = self.db.Session()
         try:
-            payouts = session.query(self.db.Payout).all()
+            payouts = session.query(Payout).all()
             self.payout_table.setRowCount(len(payouts))
             for row, payout in enumerate(payouts):
                 self.payout_table.setItem(row, 0, QTableWidgetItem(str(payout.id)))
