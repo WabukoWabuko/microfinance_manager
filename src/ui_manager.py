@@ -127,7 +127,7 @@ class UIManager:
             # Initialize UI
             self.apply_theme()
             self.shortcut_manager.setup_shortcuts(self.main_widget)
-            self.accessibility_manager.setup_accessibility(self.main_widget)
+            self.accessibility_manager.setup_accessibility(self)  # Pass self (UIManager)
             self.widget_manager.setup_dashboard(self.main_ui)
             self.notification_manager.check_due_payments(self.current_user)
             self.main_ui.statusbar.showMessage(self.i18n.translate("Ready"))
