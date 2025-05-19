@@ -23,6 +23,7 @@ if __name__ == "__main__":
         animation.setEndValue(1)
         animation.setEasingCurve(QEasingCurve.InOutQuad)
         animation.start()
+        print("Login window shown")
         sys.exit(app.exec_())
     except Exception as e:
         print(f"Error in main.py: {e}")
