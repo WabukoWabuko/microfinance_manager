@@ -14,31 +14,67 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
         LoginWindow.setObjectName("LoginWindow")
-        LoginWindow.resize(400, 300)
+        LoginWindow.resize(800, 600)
+        LoginWindow.setStyleSheet(
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #007BFF, stop:1 #0056B3); font-family: Roboto;")
         self.verticalLayout = QtWidgets.QVBoxLayout(LoginWindow)
+        self.verticalLayout.setContentsMargins(100, 50, 100, 50)
+        self.verticalLayout.setSpacing(20)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label_logo = QtWidgets.QLabel(LoginWindow)
         self.label_logo.setText("")
+        self.label_logo.setStyleSheet("background: transparent;")
         self.label_logo.setObjectName("label_logo")
-        self.verticalLayout.addWidget(self.label_logo)
+        self.verticalLayout.addWidget(
+            self.label_logo, 0, QtCore.Qt.AlignHCenter)
         self.label_title = QtWidgets.QLabel(LoginWindow)
         self.label_title.setText("")
+        self.label_title.setStyleSheet(
+            "text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);")
         self.label_title.setObjectName("label_title")
-        self.verticalLayout.addWidget(self.label_title)
+        self.verticalLayout.addWidget(
+            self.label_title, 0, QtCore.Qt.AlignHCenter)
         self.email_input = QtWidgets.QLineEdit(LoginWindow)
+        self.email_input.setMinimumSize(QtCore.QSize(0, 40))
+        font = QtGui.QFont()
+        font.setFamily("Roboto")
+        self.email_input.setFont(font)
+        self.email_input.setStyleSheet(
+            "background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 10px; padding: 10px;")
         self.email_input.setObjectName("email_input")
         self.verticalLayout.addWidget(self.email_input)
         self.password_input = QtWidgets.QLineEdit(LoginWindow)
+        self.password_input.setMinimumSize(QtCore.QSize(0, 40))
+        font = QtGui.QFont()
+        font.setFamily("Roboto")
+        self.password_input.setFont(font)
+        self.password_input.setStyleSheet(
+            "background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 10px; padding: 10px;")
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.setObjectName("password_input")
         self.verticalLayout.addWidget(self.password_input)
         self.role_combo = QtWidgets.QComboBox(LoginWindow)
+        self.role_combo.setMinimumSize(QtCore.QSize(0, 40))
+        font = QtGui.QFont()
+        font.setFamily("Roboto")
+        self.role_combo.setFont(font)
+        self.role_combo.setStyleSheet(
+            "background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 10px; padding: 10px;")
         self.role_combo.setObjectName("role_combo")
         self.role_combo.addItem("")
         self.role_combo.addItem("")
         self.role_combo.addItem("")
         self.verticalLayout.addWidget(self.role_combo)
         self.login_button = QtWidgets.QPushButton(LoginWindow)
+        self.login_button.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setFamily("Roboto")
+        font.setBold(True)
+        font.setWeight(75)
+        self.login_button.setFont(font)
+        self.login_button.setStyleSheet("background: #007BFF; color: #FFFFFF; border-radius: 10px; padding: 10px; border: none;\n"
+                                        "QPushButton:hover { background: #0056B3; }\n"
+                                        "QPushButton:pressed { background: #003D80; }")
         self.login_button.setObjectName("login_button")
         self.verticalLayout.addWidget(self.login_button)
 
@@ -47,12 +83,13 @@ class Ui_LoginWindow(object):
 
     def retranslateUi(self, LoginWindow):
         _translate = QtCore.QCoreApplication.translate
-        LoginWindow.setWindowTitle(_translate("LoginWindow", "Microfinance Manager - Login"))
-        LoginWindow.setStyleSheet(_translate("LoginWindow", "background-color: #FFFFFF; font-family: Roboto;"))
+        LoginWindow.setWindowTitle(_translate(
+            "LoginWindow", "Microfinance Manager - Login"))
         self.email_input.setPlaceholderText(_translate("LoginWindow", "Email"))
-        self.password_input.setPlaceholderText(_translate("LoginWindow", "Password"))
+        self.password_input.setPlaceholderText(
+            _translate("LoginWindow", "Password"))
         self.role_combo.setItemText(0, _translate("LoginWindow", "Client"))
         self.role_combo.setItemText(1, _translate("LoginWindow", "Admin"))
-        self.role_combo.setItemText(2, _translate("LoginWindow", "Loan Officer"))
+        self.role_combo.setItemText(
+            2, _translate("LoginWindow", "Loan Officer"))
         self.login_button.setText(_translate("LoginWindow", "Login"))
-        self.login_button.setStyleSheet(_translate("LoginWindow", "background-color: #007BFF; color: white; border-radius: 5px; padding: 8px;"))
