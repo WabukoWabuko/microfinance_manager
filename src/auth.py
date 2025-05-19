@@ -1,6 +1,6 @@
 import hashlib
 from datetime import datetime
-from database import Database
+from src.database import Database
 
 class Auth:
    def __init__(self):

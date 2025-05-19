@@ -1,6 +1,6 @@
-from auth import Auth
-from loans import LoanManager
-from transactions import TransactionManager
+from src.auth import Auth
+from src.loans import LoanManager
+from src.transactions import TransactionManager
 
 def run_tests():
    # Test authentication
