@@ -18,41 +18,118 @@ class LocalDatabase:
         cursor = conn.cursor()
         session = self.Session()
         try:
-            # Dictionary of tables and their models
-            tables = {
-                'users': User,
-                'groups': Group,
-                'contributions': Contribution,
-                'loans': Loan,
-                'payouts': Payout,
-                'sync_queue': SyncQueue
+            # Define table schemas with TEXT for IDs and indexes
+            table_definitions = {
+                'users': """
+                    id TEXT PRIMARY KEY,
+                    username TEXT NOT NULL,
+                    password TEXT NOT NULL,
+                    role TEXT NOT NULL,
+                    group_id TEXT,
+                    FOREIGN KEY (group_id) REFERENCES groups(id)
+                """,
+                'groups': """
+                    id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    description TEXT,
+                    balance REAL NOT NULL
+                """,
+                'contributions': """
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    group_id TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    created_at TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id),
+                    FOREIGN KEY (group_id) REFERENCES groups(id)
+                """,
+                'loans': """
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    group_id TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    interest_rate REAL NOT NULL,
+                    due_date TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id),
+                    FOREIGN KEY (group_id) REFERENCES groups(id)
+                """,
+                'payouts': """
+                    id TEXT PRIMARY KEY,
+                    group_id TEXT NOT NULL,
+                    user_id TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    created_at TEXT NOT NULL,
+                    FOREIGN KEY (group_id) REFERENCES groups(id),
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                """,
+                'sync_queue': """
+                    id TEXT PRIMARY KEY,
+                    operation TEXT NOT NULL,
+                    entity TEXT NOT NULL,
+                    entity_id TEXT NOT NULL,
+                    data TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                """
             }
 
-            for table_name, model in tables.items():
+            # Create indexes for performance
+            indexes = {
+                'users': ["CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)"],
+                'groups': ["CREATE INDEX IF NOT EXISTS idx_groups_name ON groups(name)"],
+                'contributions': [
+                    "CREATE INDEX IF NOT EXISTS idx_contributions_user_id ON contributions(user_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_contributions_group_id ON contributions(group_id)"
+                ],
+                'loans': [
+                    "CREATE INDEX IF NOT EXISTS idx_loans_user_id ON loans(user_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_loans_group_id ON loans(group_id)"
+                ],
+                'payouts': [
+                    "CREATE INDEX IF NOT EXISTS idx_payouts_group_id ON payouts(group_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_payouts_user_id ON payouts(user_id)"
+                ],
+                'sync_queue': ["CREATE INDEX IF NOT EXISTS idx_sync_queue_entity ON sync_queue(entity)"]
+            }
+
+            for table_name, definition in table_definitions.items():
                 # Check if table exists
                 cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
                 if not cursor.fetchone():
+                    cursor.execute(f"CREATE TABLE {table_name} ({definition})")
+                    for index in indexes.get(table_name, []):
+                        cursor.execute(index)
                     continue
 
-                # Create temporary table with correct schema
+                # Create temporary table
                 temp_table = f"{table_name}_temp"
                 cursor.execute(f"DROP TABLE IF EXISTS {temp_table}")
-                Base.metadata.tables[table_name].create(bind=self.engine, checkfirst=True)
+                cursor.execute(f"CREATE TABLE {temp_table} ({definition})")
 
                 # Get columns from original table
                 cursor.execute(f"PRAGMA table_info({table_name})")
                 columns = [col[1] for col in cursor.fetchall()]
                 columns_str = ', '.join(columns)
 
-                # Copy data, converting IDs to UUID strings
-                cursor.execute(f"INSERT INTO {temp_table} ({columns_str}) SELECT * FROM {table_name}")
+                # Copy data, handling type conversions
+                cursor.execute(f"INSERT INTO {temp_table} ({columns_str}) SELECT {columns_str} FROM {table_name}")
+                
+                # Convert integer IDs to UUID strings
+                model = {
+                    'users': User,
+                    'groups': Group,
+                    'contributions': Contribution,
+                    'loans': Loan,
+                    'payouts': Payout,
+                    'sync_queue': SyncQueue
+                }[table_name]
                 items = session.query(model).all()
                 for item in items:
                     if not isinstance(item.id, str):
                         new_id = str(uuid.uuid4())
                         cursor.execute(f"UPDATE {temp_table} SET id = ? WHERE id = ?", (new_id, item.id))
                         item.id = new_id
-                    if table_name in ['contributions', 'loans']:
+                    if table_name in ['contributions', 'loans', 'payouts']:
                         if not isinstance(item.user_id, str):
                             new_user_id = str(uuid.uuid4())
                             cursor.execute(f"UPDATE {temp_table} SET user_id = ? WHERE user_id = ?", (new_user_id, item.user_id))
@@ -61,15 +138,6 @@ class LocalDatabase:
                             new_group_id = str(uuid.uuid4())
                             cursor.execute(f"UPDATE {temp_table} SET group_id = ? WHERE group_id = ?", (new_group_id, item.group_id))
                             item.group_id = new_group_id
-                    elif table_name == 'payouts':
-                        if not isinstance(item.group_id, str):
-                            new_group_id = str(uuid.uuid4())
-                            cursor.execute(f"UPDATE {temp_table} SET group_id = ? WHERE group_id = ?", (new_group_id, item.group_id))
-                            item.group_id = new_group_id
-                        if not isinstance(item.user_id, str):
-                            new_user_id = str(uuid.uuid4())
-                            cursor.execute(f"UPDATE {temp_table} SET user_id = ? WHERE user_id = ?", (new_user_id, item.user_id))
-                            item.user_id = new_user_id
                     elif table_name == 'users' and item.group_id and not isinstance(item.group_id, str):
                         new_group_id = str(uuid.uuid4())
                         cursor.execute(f"UPDATE {temp_table} SET group_id = ? WHERE group_id = ?", (new_group_id, item.group_id))
@@ -83,6 +151,10 @@ class LocalDatabase:
                 # Replace original table
                 cursor.execute(f"DROP TABLE {table_name}")
                 cursor.execute(f"ALTER TABLE {temp_table} RENAME TO {table_name}")
+
+                # Create indexes
+                for index in indexes.get(table_name, []):
+                    cursor.execute(index)
 
             conn.commit()
         except:
@@ -496,7 +568,7 @@ class LocalDatabase:
                     payout.group_id = group_id
                 if user_id:
                     payout.user_id = user_id
-                if amount is not None:
+                if amount is not NULL:
                     payout.amount = amount
                 session.commit()
                 sync_entry = SyncQueue(
