@@ -85,9 +85,7 @@
              <string>Dashboard</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left;
-QPushButton:hover { background: #0056B3; }
-QPushButton:checked { background: #003D80; }</string>
+             <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left; } QPushButton:hover { background: #0056B3; } QPushButton:checked { background: #003D80; }</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -115,9 +113,7 @@ QPushButton:checked { background: #003D80; }</string>
              <string>Apply Loan</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">background: #343A40; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left;
-QPushButton:hover { background: #0056B3; }
-QPushButton:checked { background: #003D80; }</string>
+             <string notr="true">QPushButton { background: #343A40; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left; } QPushButton:hover { background: #0056B3; } QPushButton:checked { background: #003D80; }</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -142,9 +138,7 @@ QPushButton:checked { background: #003D80; }</string>
              <string>Transactions</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">background: #343A40; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left;
-QPushButton:hover { background: #0056B3; }
-QPushButton:checked { background: #003D80; }</string>
+             <string notr="true">QPushButton { background: #343A40; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left; } QPushButton:hover { background: #0056B3; } QPushButton:checked { background: #003D80; }</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -246,9 +240,7 @@ QPushButton:checked { background: #003D80; }</string>
               <string>Sync Transactions</string>
              </property>
              <property name="styleSheet">
-              <string notr="true">background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;
-QPushButton:hover { background: #0056B3; }
-QPushButton:pressed { background: #003D80; }</string>
+              <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #0056B3; } QPushButton:pressed { background: #003D80; }</string>
              </property>
             </widget>
            </item>
@@ -348,9 +340,7 @@ QPushButton:pressed { background: #003D80; }</string>
               <string>Calculate Payment</string>
              </property>
              <property name="styleSheet">
-              <string notr="true">background: #28A745; color: #FFFFFF; border-radius: 5px; padding: 10px;
-QPushButton:hover { background: #218838; }
-QPushButton:pressed { background: #1E7E34; }</string>
+              <string notr="true">QPushButton { background: #28A745; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #218838; } QPushButton:pressed { background: #1E7E34; }</string>
              </property>
             </widget>
            </item>
@@ -385,9 +375,7 @@ QPushButton:pressed { background: #1E7E34; }</string>
               <string>Submit Loan</string>
              </property>
              <property name="styleSheet">
-              <string notr="true">background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;
-QPushButton:hover { background: #0056B3; }
-QPushButton:pressed { background: #003D80; }</string>
+              <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #0056B3; } QPushButton:pressed { background: #003D80; }</string>
              </property>
             </widget>
            </item>
@@ -409,9 +397,7 @@ QPushButton:pressed { background: #003D80; }</string>
               <string>Back</string>
              </property>
              <property name="styleSheet">
-              <string notr="true">background: #6C757D; color: #FFFFFF; border-radius: 5px; padding: 10px;
-QPushButton:hover { background: #5A6268; }
-QPushButton:pressed { background: #545B62; }</string>
+              <string notr="true">QPushButton { background: #6C757D; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #5A6268; } QPushButton:pressed { background: #545B62; }</string>
              </property>
             </widget>
            </item>

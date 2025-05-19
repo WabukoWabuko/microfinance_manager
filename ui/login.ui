@@ -48,7 +48,7 @@
          <string><html><head/><body><p align="center"><span style=" font-size:24pt; font-weight:600; color:#FFFFFF;">Welcome Back</span></p></body></html></string>
         </property>
         <property name="styleSheet">
-         <string notr="true">text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);</string>
+         <string notr="true">background: transparent;</string>
         </property>
        </widget>
       </item>
@@ -153,9 +153,7 @@
          <string>Login</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">background: #007BFF; color: #FFFFFF; border-radius: 10px; padding: 10px; border: none;
-QPushButton:hover { background: #0056B3; }
-QPushButton:pressed { background: #003D80; }</string>
+         <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 10px; padding: 10px; border: none; } QPushButton:hover { background: #0056B3; } QPushButton:pressed { background: #003D80; }</string>
         </property>
        </widget>
       </item>
