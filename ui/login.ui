@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-   <ui version="4.0">
-    <class>LoginWindow</class>
-    <widget class="QWidget" name="LoginWindow">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>400</width>
-       <height>300</height>
-      </rect>
-     </property>
-     <property name="windowTitle">
-      <string>Microfinance Manager - Login</string>
-     </property>
-     <property name="styleSheet">
-      <string>background-color: #FFFFFF; font-family: Roboto;</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="label_logo">
-        <property name="text">
-         <string><html><head/><body><p align="center"><img src=":logo.png"/></p></body></html></string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_title">
-        <property name="text">
-         <string><html><head/><body><p align="center"><span style=" font-size:18pt; font-weight:600;">Login</span></p></body></html></string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="email_input">
-        <property name="placeholderText">
-         <string>Email</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="password_input">
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-        <property name="placeholderText">
-         <string>Password</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="role_combo">
-        <item>
-         <property name="text">
-          <string>Client</string>
+       <ui version="4.0">
+        <class>LoginWindow</class>
+        <widget class="QWidget" name="LoginWindow">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>400</width>
+           <height>300</height>
+          </rect>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Admin</string>
+         <property name="windowTitle">
+          <string>Microfinance Manager - Login</string>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Loan Officer</string>
+         <property name="styleSheet">
+          <string>background-color: #FFFFFF; font-family: Roboto;</string>
          </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="login_button">
-        <property name="text">
-         <string>Login</string>
-        </property>
-        <property name="styleSheet">
-         <string>background-color: #007BFF; color: white; border-radius: 5px; padding: 8px;</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <resources/>
-    <connections/>
-   </ui>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLabel" name="label_logo">
+            <property name="text">
+             <string></string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_title">
+            <property name="text">
+             <string><html><head/><body><p align="center"><span style=" font-size:18pt; font-weight:600;">Login</span></p></body></html></string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="email_input">
+            <property name="placeholderText">
+             <string>Email</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="password_input">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+            <property name="placeholderText">
+             <string>Password</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="role_combo">
+            <item>
+             <property name="text">
+              <string>Client</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Admin</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Loan Officer</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="login_button">
+            <property name="text">
+             <string>Login</string>
+            </property>
+            <property name="styleSheet">
+             <string>background-color: #007BFF; color: white; border-radius: 5px; padding: 8px;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <resources/>
+        <connections/>
+       </ui>
