@@ -1,7 +1,7 @@
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from entities import User, Group, Contribution, Loan, Payout, UserCreate, LoginRequest, GroupCreate, ContributionCreate, LoanCreate, PayoutCreate
+from entities import User, Group, Contribution, Loan, Payout, UserCreate, LoginRequest, GroupCreate, ContributionCreate, LoanCreate, PayoutCreate, SyncEntry
 import bcrypt
 from auth import create_jwt
 import uuid
@@ -9,6 +9,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 def get_db():
     load_dotenv()
@@ -97,6 +98,50 @@ async def create_payout(payout: PayoutCreate, db: Session = Depends(get_db)):
     db.refresh(db_payout)
     return db_payout
 
-async def sync_data(data: dict, db: Session = Depends(get_db)):
-    # Placeholder for sync logic
-    return {"status": "Sync not implemented yet"}
+async def sync_data(entries: list[SyncEntry], db: Session = Depends(get_db)):
+    results = []
+    for entry in entries:
+        try:
+            if entry.operation == "insert":
+                if entry.entity == "contribution":
+                    db_contribution = Contribution(
+                        id=uuid.UUID(entry.entity_id),
+                        user_id=uuid.UUID(entry.data["user_id"]),
+                        group_id=uuid.UUID(entry.data["group_id"]),
+                        amount=entry.data["amount"],
+                        date=datetime.utcnow(),
+                        status="pending"
+                    )
+                    db.add(db_contribution)
+                elif entry.entity == "loan":
+                    db_loan = Loan(
+                        id=uuid.UUID(entry.entity_id),
+                        user_id=uuid.UUID(entry.data["user_id"]),
+                        group_id=uuid.UUID(entry.data["group_id"]),
+                        amount=entry.data["amount"],
+                        interest_rate=5.0,  # Default for now
+                        due_date=datetime.utcnow(),  # Default for now
+                        status="active"
+                    )
+                    db.add(db_loan)
+                elif entry.entity == "payout":
+                    db_payout = Payout(
+                        id=uuid.UUID(entry.entity_id),
+                        group_id=uuid.UUID(entry.data["group_id"]),
+                        user_id=uuid.UUID(entry.data["user_id"]),
+                        amount=entry.data["amount"],
+                        date=datetime.utcnow(),
+                        status="pending"
+                    )
+                    db.add(db_payout)
+                else:
+                    results.append({"id": entry.id, "status": "failed", "error": "Unknown entity"})
+                    continue
+                db.commit()
+                results.append({"id": entry.id, "status": "success"})
+            else:
+                results.append({"id": entry.id, "status": "failed", "error": "Operation not supported"})
+        except Exception as e:
+            db.rollback()
+            results.append({"id": entry.id, "status": "failed", "error": str(e)})
+    return {"results": results}

@@ -93,3 +93,11 @@ class PayoutCreate(BaseModel):
     group_id: str
     user_id: str
     amount: float
+
+class SyncEntry(BaseModel):
+    id: str
+    operation: str
+    entity: str
+    entity_id: str
+    data: dict
+    created_at: str

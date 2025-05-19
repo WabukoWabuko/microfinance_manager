@@ -165,3 +165,34 @@ class LocalDatabase:
             return sync_entry
         finally:
             session.close()
+
+    def get_pending_sync_entries(self):
+        session = self.Session()
+        try:
+            entries = session.query(SyncQueue).all()
+            return [
+                {
+                    "id": str(entry.id),
+                    "operation": entry.operation,
+                    "entity": entry.entity,
+                    "entity_id": str(entry.entity_id),
+                    "data": json.loads(entry.data),
+                    "created_at": entry.created_at.isoformat()
+                }
+                for entry in entries
+            ]
+        finally:
+            session.close()
+
+    def clear_sync_entry(self, sync_id):
+        session = self.Session()
+        try:
+            entry = session.query(SyncQueue).filter_by(id=uuid.UUID(sync_id)).first()
+            if entry:
+                session.delete(entry)
+                session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()

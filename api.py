@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Depends
 from handlers import login, create_user, create_group, create_contribution, create_loan, create_payout, sync_data, get_db
-from entities import LoginRequest, UserCreate, GroupCreate, ContributionCreate, LoanCreate, PayoutCreate
+from entities import LoginRequest, UserCreate, GroupCreate, ContributionCreate, LoanCreate, PayoutCreate, SyncEntry
 from sqlalchemy.orm import Session
+from typing import List
 
 app = FastAPI()
 
@@ -30,5 +31,5 @@ async def create_payout_endpoint(payout: PayoutCreate, db: Session = Depends(get
     return await create_payout(payout, db)
 
 @app.post("/sync")
-async def sync_endpoint(data: dict, db: Session = Depends(get_db)):
-    return await sync_data(data, db)
+async def sync_endpoint(entries: List[SyncEntry], db: Session = Depends(get_db)):
+    return await sync_data(entries, db)
