@@ -4,6 +4,7 @@ from entities import Base, User, Group, Contribution, Loan, Payout, SyncQueue
 import json
 from datetime import datetime
 import uuid
+import sqlite3
 
 class LocalDatabase:
     def __init__(self):
@@ -13,41 +14,84 @@ class LocalDatabase:
         self.migrate_schema()
 
     def migrate_schema(self):
+        conn = sqlite3.connect('microfinance.db')
+        cursor = conn.cursor()
         session = self.Session()
         try:
-            # Convert integer IDs to UUID strings
-            for table, model in [
-                ('users', User),
-                ('groups', Group),
-                ('contributions', Contribution),
-                ('loans', Loan),
-                ('payouts', Payout),
-                ('sync_queue', SyncQueue)
-            ]:
+            # Dictionary of tables and their models
+            tables = {
+                'users': User,
+                'groups': Group,
+                'contributions': Contribution,
+                'loans': Loan,
+                'payouts': Payout,
+                'sync_queue': SyncQueue
+            }
+
+            for table_name, model in tables.items():
+                # Check if table exists
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+                if not cursor.fetchone():
+                    continue
+
+                # Create temporary table with correct schema
+                temp_table = f"{table_name}_temp"
+                cursor.execute(f"DROP TABLE IF EXISTS {temp_table}")
+                Base.metadata.tables[table_name].create(bind=self.engine, checkfirst=True)
+
+                # Get columns from original table
+                cursor.execute(f"PRAGMA table_info({table_name})")
+                columns = [col[1] for col in cursor.fetchall()]
+                columns_str = ', '.join(columns)
+
+                # Copy data, converting IDs to UUID strings
+                cursor.execute(f"INSERT INTO {temp_table} ({columns_str}) SELECT * FROM {table_name}")
                 items = session.query(model).all()
                 for item in items:
                     if not isinstance(item.id, str):
-                        item.id = str(uuid.uuid4())
-                    if table in ['contributions', 'loans']:
+                        new_id = str(uuid.uuid4())
+                        cursor.execute(f"UPDATE {temp_table} SET id = ? WHERE id = ?", (new_id, item.id))
+                        item.id = new_id
+                    if table_name in ['contributions', 'loans']:
                         if not isinstance(item.user_id, str):
-                            item.user_id = str(uuid.uuid4())
+                            new_user_id = str(uuid.uuid4())
+                            cursor.execute(f"UPDATE {temp_table} SET user_id = ? WHERE user_id = ?", (new_user_id, item.user_id))
+                            item.user_id = new_user_id
                         if not isinstance(item.group_id, str):
-                            item.group_id = str(uuid.uuid4())
-                    elif table == 'payouts':
+                            new_group_id = str(uuid.uuid4())
+                            cursor.execute(f"UPDATE {temp_table} SET group_id = ? WHERE group_id = ?", (new_group_id, item.group_id))
+                            item.group_id = new_group_id
+                    elif table_name == 'payouts':
                         if not isinstance(item.group_id, str):
-                            item.group_id = str(uuid.uuid4())
+                            new_group_id = str(uuid.uuid4())
+                            cursor.execute(f"UPDATE {temp_table} SET group_id = ? WHERE group_id = ?", (new_group_id, item.group_id))
+                            item.group_id = new_group_id
                         if not isinstance(item.user_id, str):
-                            item.user_id = str(uuid.uuid4())
-                    elif table == 'users' and item.group_id and not isinstance(item.group_id, str):
-                        item.group_id = str(uuid.uuid4())
-                    elif table == 'sync_queue' and not isinstance(item.entity_id, str):
-                        item.entity_id = str(uuid.uuid4())
+                            new_user_id = str(uuid.uuid4())
+                            cursor.execute(f"UPDATE {temp_table} SET user_id = ? WHERE user_id = ?", (new_user_id, item.user_id))
+                            item.user_id = new_user_id
+                    elif table_name == 'users' and item.group_id and not isinstance(item.group_id, str):
+                        new_group_id = str(uuid.uuid4())
+                        cursor.execute(f"UPDATE {temp_table} SET group_id = ? WHERE group_id = ?", (new_group_id, item.group_id))
+                        item.group_id = new_group_id
+                    elif table_name == 'sync_queue' and not isinstance(item.entity_id, str):
+                        new_entity_id = str(uuid.uuid4())
+                        cursor.execute(f"UPDATE {temp_table} SET entity_id = ? WHERE entity_id = ?", (new_entity_id, item.entity_id))
+                        item.entity_id = new_entity_id
                 session.commit()
+
+                # Replace original table
+                cursor.execute(f"DROP TABLE {table_name}")
+                cursor.execute(f"ALTER TABLE {temp_table} RENAME TO {table_name}")
+
+            conn.commit()
         except:
+            conn.rollback()
             session.rollback()
             raise
         finally:
             session.close()
+            conn.close()
 
     def create_user(self, username, password, role, group_id=None):
         session = self.Session()
