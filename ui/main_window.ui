@@ -1,513 +1,349 @@
 <?xml version="1.0" encoding="UTF-8"?>
-   <ui version="4.0">
-    <class>MainWindow</class>
-    <widget class="QMainWindow" name="MainWindow">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>1200</width>
-       <height>800</height>
-      </rect>
-     </property>
-     <property name="windowTitle">
-      <string>Microfinance Manager</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background: #F8F9FA; font-family: Roboto;</string>
-     </property>
-     <widget class="QWidget" name="centralwidget">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Microfinance Manager</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QWidget" name="sidebar">
+      <layout class="QVBoxLayout" name="sidebar_layout">
        <item>
-        <widget class="QWidget" name="sidebar">
-         <property name="minimumSize">
-          <size>
-           <width>250</width>
-           <height>0</height>
-          </size>
+        <widget class="QPushButton" name="dashboard_button">
+         <property name="text">
+          <string>Dashboard</string>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background: #343A40; border-right: 1px solid #CED4DA;</string>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
-         <layout class="QVBoxLayout" name="sidebarLayout">
-          <property name="spacing">
-           <number>10</number>
-          </property>
-          <property name="leftMargin">
-           <number>20</number>
-          </property>
-          <property name="topMargin">
-           <number>20</number>
-          </property>
-          <property name="rightMargin">
-           <number>20</number>
-          </property>
-          <property name="bottomMargin">
-           <number>20</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="sidebar_title">
-            <property name="text">
-             <string><html><head/><body><p><span style=" font-size:18pt; font-weight:600; color:#FFFFFF;">Microfinance</span></p></body></html></string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dashboard_button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Roboto</family>
-              <pointSize>12</pointSize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Dashboard</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left; } QPushButton:hover { background: #0056B3; } QPushButton:checked { background: #003D80; }</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="loan_button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Roboto</family>
-              <pointSize>12</pointSize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Apply Loan</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton { background: #343A40; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left; } QPushButton:hover { background: #0056B3; } QPushButton:checked { background: #003D80; }</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="transactions_button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Roboto</family>
-              <pointSize>12</pointSize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Transactions</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton { background: #343A40; color: #FFFFFF; border-radius: 5px; padding: 10px; text-align: left; } QPushButton:hover { background: #0056B3; } QPushButton:checked { background: #003D80; }</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="sidebarSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QStackedWidget" name="content_stack">
-         <property name="styleSheet">
-          <string notr="true">background: #FFFFFF;</string>
+        <widget class="QPushButton" name="loan_button">
+         <property name="text">
+          <string>Loan Application</string>
          </property>
-         <widget class="QWidget" name="dashboard_page">
-          <layout class="QVBoxLayout" name="dashboardLayout">
-           <property name="spacing">
-            <number>20</number>
-           </property>
-           <property name="leftMargin">
-            <number>30</number>
-           </property>
-           <property name="topMargin">
-            <number>30</number>
-           </property>
-           <property name="rightMargin">
-            <number>30</number>
-           </property>
-           <property name="bottomMargin">
-            <number>30</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="label_welcome">
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>18</pointSize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Welcome, User!</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="loan_table">
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>10</pointSize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 5px;</string>
-             </property>
-             <property name="columnCount">
-              <number>4</number>
-             </property>
-             <attribute name="horizontalHeaderLabels">
-              <stringlist>
-               <string>ID</string>
-               <string>Amount</string>
-               <string>Status</string>
-               <string>Applied Date</string>
-              </stringlist>
-             </attribute>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="sync_button">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Sync Transactions</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #0056B3; } QPushButton:pressed { background: #003D80; }</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="loan_page">
-          <layout class="QVBoxLayout" name="loanLayout">
-           <property name="spacing">
-            <number>20</number>
-           </property>
-           <property name="leftMargin">
-            <number>30</number>
-           </property>
-           <property name="topMargin">
-            <number>30</number>
-           </property>
-           <property name="rightMargin">
-            <number>30</number>
-           </property>
-           <property name="bottomMargin">
-            <number>30</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="label_loan">
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>18</pointSize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Loan Application</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="amount_input">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 5px; padding: 10px;</string>
-             </property>
-             <property name="placeholderText">
-              <string>Loan Amount</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="term_input">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 5px; padding: 10px;</string>
-             </property>
-             <property name="placeholderText">
-              <string>Term (Months)</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="calculate_button">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Calculate Payment</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton { background: #28A745; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #218838; } QPushButton:pressed { background: #1E7E34; }</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="payment_result">
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Monthly Payment: N/A</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="submit_loan_button">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Submit Loan</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #0056B3; } QPushButton:pressed { background: #003D80; }</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="back_button_loan">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>12</pointSize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Back</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton { background: #6C757D; color: #FFFFFF; border-radius: 5px; padding: 10px; } QPushButton:hover { background: #5A6268; } QPushButton:pressed { background: #545B62; }</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="transactions_page">
-          <layout class="QVBoxLayout" name="transactionsLayout">
-           <property name="spacing">
-            <number>20</number>
-           </property>
-           <property name="leftMargin">
-            <number>30</number>
-           </property>
-           <property name="topMargin">
-            <number>30</number>
-           </property>
-           <property name="rightMargin">
-            <number>30</number>
-           </property>
-           <property name="bottomMargin">
-            <number>30</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="label_transactions">
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>18</pointSize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Transaction History</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="transaction_table">
-             <property name="font">
-              <font>
-               <family>Roboto</family>
-               <pointSize>10</pointSize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 5px;</string>
-             </property>
-             <property name="columnCount">
-              <number>4</number>
-             </property>
-             <attribute name="horizontalHeaderLabels">
-              <stringlist>
-               <string>ID</string>
-               <string>Amount</string>
-               <string>Type</string>
-               <string>Date</string>
-              </stringlist>
-             </attribute>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="transactions_button">
+         <property name="text">
+          <string>Transactions</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="analytics_button">
+         <property name="text">
+          <string>Analytics</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="repayment_button">
+         <property name="text">
+          <string>Repayment Schedule</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="profile_button">
+         <property name="text">
+          <string>Profile</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QMenuBar" name="menubar">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1200</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background: #343A40; color: #FFFFFF;</string>
-      </property>
-      <widget class="QMenu" name="menuFile">
-       <property name="title">
-        <string>File</string>
-       </property>
-       <addaction name="actionExit"/>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="content_stack">
+      <widget class="QWidget" name="dashboard_page">
+       <layout class="QVBoxLayout" name="dashboard_layout">
+        <item>
+         <widget class="QLabel" name="label_welcome">
+          <property name="text">
+           <string>Welcome!</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="loan_table"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="notifications_button">
+          <property name="text">
+           <string>View Notifications</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
-      <widget class="QMenu" name="menuSettings">
-       <property name="title">
-        <string>Settings</string>
-       </property>
-       <addaction name="actionToggle_Theme"/>
+      <widget class="QWidget" name="loan_page">
+       <layout class="QVBoxLayout" name="loan_layout">
+        <item>
+         <widget class="QLineEdit" name="amount_input">
+          <property name="placeholderText">
+           <string>Loan Amount</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="term_input">
+          <property name="placeholderText">
+           <string>Term (months)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="calculate_button">
+          <property name="text">
+           <string>Calculate Payment</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="payment_result">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="submit_loan_button">
+          <property name="text">
+           <string>Submit Loan</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_loan">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
-      <addaction name="menuFile"/>
-      <addaction name="menuSettings"/>
+      <widget class="QWidget" name="transactions_page">
+       <layout class="QVBoxLayout" name="transactions_layout">
+        <item>
+         <widget class="QTableWidget" name="transaction_table"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="sync_button">
+          <property name="text">
+           <string>Sync Transactions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="b2c_amount_input">
+          <property name="placeholderText">
+           <string>Withdrawal Amount</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="b2c_phone_input">
+          <property name="placeholderText">
+           <string>Phone Number</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="b2c_withdraw_button">
+          <property name="text">
+           <string>Withdraw via MPesa</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="export_format_combo">
+          <item>
+           <property name="text">
+            <string>CSV</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>PDF</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="export_button">
+          <property name="text">
+           <string>Export Data</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_transactions">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="analytics_page">
+       <layout class="QVBoxLayout" name="analytics_layout">
+        <item>
+         <widget class="QTextEdit" name="analytics_text">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_analytics">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="repayment_page">
+       <layout class="QVBoxLayout" name="repayment_layout">
+        <item>
+         <widget class="QTableWidget" name="repayment_table"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_repayment">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="profile_page">
+       <layout class="QVBoxLayout" name="profile_layout">
+        <item>
+         <widget class="QLineEdit" name="profile_name_input">
+          <property name="placeholderText">
+           <string>Name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="profile_email_input">
+          <property name="placeholderText">
+           <string>Email</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="two_factor_code_input">
+          <property name="placeholderText">
+           <string>2FA Code</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="profile_save_button">
+          <property name="text">
+           <string>Save Profile</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="two_factor_button">
+          <property name="text">
+           <string>Setup 2FA</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_profile">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="notifications_page">
+       <layout class="QVBoxLayout" name="notifications_layout">
+        <item>
+         <widget class="QTextEdit" name="notifications_text">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_notifications">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
-     <widget class="QStatusBar" name="statusbar">
-      <property name="styleSheet">
-       <string notr="true">background: #343A40; color: #FFFFFF;</string>
-      </property>
-     </widget>
-     <action name="actionExit">
-      <property name="text">
-       <string>Exit</string>
-      </property>
-     </action>
-     <action name="actionToggle_Theme">
-      <property name="text">
-       <string>Toggle Theme</string>
-      </property>
-     </action>
-    </widget>
-    <resources/>
-    <connections/>
-   </ui>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <menu title="File">
+    <action name="actionExit">
+     <property name="text">
+      <string>Exit</string>
+     </property>
+    </action>
+   </menu>
+   <menu title="View">
+    <action name="actionToggle_Theme">
+     <property name="text">
+      <string>Toggle Theme</string>
+     </property>
+    </action>
+   </menu>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExit"/>
+  <action name="actionToggle_Theme"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

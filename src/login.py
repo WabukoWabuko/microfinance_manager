@@ -29,8 +29,7 @@ class Ui_LoginWindow(object):
             self.label_logo, 0, QtCore.Qt.AlignHCenter)
         self.label_title = QtWidgets.QLabel(LoginWindow)
         self.label_title.setText("")
-        self.label_title.setStyleSheet(
-            "text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);")
+        self.label_title.setStyleSheet("background: transparent;")
         self.label_title.setObjectName("label_title")
         self.verticalLayout.addWidget(
             self.label_title, 0, QtCore.Qt.AlignHCenter)
@@ -72,9 +71,8 @@ class Ui_LoginWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.login_button.setFont(font)
-        self.login_button.setStyleSheet("background: #007BFF; color: #FFFFFF; border-radius: 10px; padding: 10px; border: none;\n"
-                                        "QPushButton:hover { background: #0056B3; }\n"
-                                        "QPushButton:pressed { background: #003D80; }")
+        self.login_button.setStyleSheet(
+            "QPushButton { background: #007BFF; color: #FFFFFF; border-radius: 10px; padding: 10px; border: none; } QPushButton:hover { background: #0056B3; } QPushButton:pressed { background: #003D80; }")
         self.login_button.setObjectName("login_button")
         self.verticalLayout.addWidget(self.login_button)
 
