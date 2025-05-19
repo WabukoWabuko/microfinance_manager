@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.database import Database
+from database import Database
 
 class TransactionManager:
    def __init__(self):

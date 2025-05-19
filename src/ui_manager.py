@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QStackedWidget, QMessageBox
 from PyQt5.QtGui import QFont
-from src.login import Ui_LoginWindow
-from src.main_window import Ui_MainWindow
-from src.database import Database
-from src.auth import Auth
-from src.loans import LoanManager
-from src.transactions import TransactionManager
-from src.sync import SyncManager
+from login import Ui_LoginWindow
+from main_window import Ui_MainWindow
+from database import Database
+from auth import Auth
+from loans import LoanManager
+from transactions import TransactionManager
+from sync import SyncManager
 
 class UIManager:
    def __init__(self):

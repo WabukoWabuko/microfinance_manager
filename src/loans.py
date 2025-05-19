@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.database import Database
+from database import Database
 
 class LoanManager:
    def __init__(self):

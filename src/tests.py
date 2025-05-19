@@ -1,13 +1,20 @@
-from src.auth import Auth
-from src.loans import LoanManager
-from src.transactions import TransactionManager
+from auth import Auth
+from loans import LoanManager
+from transactions import TransactionManager
 
 def run_tests():
    # Test authentication
    auth = Auth()
-   success, msg = auth.register("John Doe", "john@example.com", "1234567890", "password", "client")
-   print(f"Register: {msg}")
-   success, user = auth.login("john@example.com", "password")
+   # Check if user already exists
+   email = "john@example.com"
+   query = "SELECT id FROM Users WHERE email = ?"
+   existing_user = auth.db.fetch_one(query, (email,))
+   if not existing_user:
+       success, msg = auth.register("John Doe", email, "1234567890", "password", "client")
+       print(f"Register: {msg}")
+   else:
+       print(f"Register: User with email {email} already exists")
+   success, user = auth.login(email, "password")
    print(f"Login: {user if success else msg}")
    user_id = user["id"] if success else None
 

@@ -1,7 +1,7 @@
 import requests
 from decouple import config
 import socket
-from src.transactions import TransactionManager
+from transactions import TransactionManager
 
 class SyncManager:
    def __init__(self):
