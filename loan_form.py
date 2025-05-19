@@ -1,12 +1,13 @@
-from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
+from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableWidget, QTableWidgetItem
 import requests
 from local_db import LocalDatabase
+from datetime import datetime
 
 class LoanForm(QDialog):
     def __init__(self, token):
         super().__init__()
         self.setWindowTitle("Manage Loans")
-        self.setFixedSize(300, 300)
+        self.setFixedSize(600, 450)
         self.token = token
         self.db = LocalDatabase()
 
@@ -14,12 +15,12 @@ class LoanForm(QDialog):
         layout = QVBoxLayout()
 
         self.user_id_input = QLineEdit()
-        self.user_id_input.setPlaceholderText("User ID")
+        self.user_id_input.setPlaceholderText("User ID (UUID)")
         layout.addWidget(QLabel("User ID:"))
         layout.addWidget(self.user_id_input)
 
         self.group_id_input = QLineEdit()
-        self.group_id_input.setPlaceholderText("Group ID")
+        self.group_id_input.setPlaceholderText("Group ID (UUID)")
         layout.addWidget(QLabel("Group ID:"))
         layout.addWidget(self.group_id_input)
 
@@ -42,7 +43,24 @@ class LoanForm(QDialog):
         add_button.clicked.connect(self.add_loan)
         layout.addWidget(add_button)
 
+        # Table for displaying loans
+        self.loan_table = QTableWidget()
+        self.loan_table.setColumnCount(5)
+        self.loan_table.setHorizontalHeaderLabels(["ID", "User ID", "Group ID", "Amount", "Due Date"])
+        self.loan_table.setColumnWidth(0, 150)
+        self.loan_table.setColumnWidth(1, 150)
+        self.loan_table.setColumnWidth(2, 150)
+        self.loan_table.setColumnWidth(3, 100)
+        self.loan_table.setColumnWidth(4, 100)
+        layout.addWidget(QLabel("Loans:"))
+        layout.addWidget(self.loan_table)
+
+        refresh_button = QPushButton("Refresh Loans")
+        refresh_button.clicked.connect(self.load_loans)
+        layout.addWidget(refresh_button)
+
         self.setLayout(layout)
+        self.load_loans()
 
     def add_loan(self):
         user_id = self.user_id_input.text()
@@ -56,9 +74,10 @@ class LoanForm(QDialog):
             interest_rate = float(interest_rate)
             if amount <= 0 or interest_rate < 0:
                 raise ValueError("Invalid amount or interest rate")
-            # Basic date format check
-            from datetime import datetime
             datetime.fromisoformat(due_date + "T00:00:00")
+            import uuid
+            uuid.UUID(user_id)
+            uuid.UUID(group_id)
         except ValueError as e:
             QMessageBox.warning(self, "Error", f"Invalid input: {str(e)}")
             return
@@ -89,7 +108,31 @@ class LoanForm(QDialog):
             )
             response.raise_for_status()
             QMessageBox.information(self, "Success", "Loan added successfully")
-            self.accept()
+            self.load_loans()
+            self.user_id_input.clear()
+            self.group_id_input.clear()
+            self.amount_input.clear()
+            self.interest_rate_input.clear()
+            self.due_date_input.clear()
         except requests.RequestException as e:
             QMessageBox.warning(self, "Warning", f"Added locally, but failed to sync: {str(e)}")
-            self.accept()
+            self.load_loans()
+            self.user_id_input.clear()
+            self.group_id_input.clear()
+            self.amount_input.clear()
+            self.interest_rate_input.clear()
+            self.due_date_input.clear()
+
+    def load_loans(self):
+        session = self.db.Session()
+        try:
+            loans = session.query(self.db.Loan).all()
+            self.loan_table.setRowCount(len(loans))
+            for row, loan in enumerate(loans):
+                self.loan_table.setItem(row, 0, QTableWidgetItem(str(loan.id)))
+                self.loan_table.setItem(row, 1, QTableWidgetItem(str(loan.user_id)))
+                self.loan_table.setItem(row, 2, QTableWidgetItem(str(loan.group_id)))
+                self.loan_table.setItem(row, 3, QTableWidgetItem(str(loan.amount)))
+                self.loan_table.setItem(row, 4, QTableWidgetItem(loan.due_date.strftime("%Y-%m-%d")))
+        finally:
+            session.close()
