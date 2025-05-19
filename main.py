@@ -1,7 +1,12 @@
-import uvicorn
+import sys
+from PyQt6.QtWidgets import QApplication
+from login_window import LoginWindow
 
 def main():
-    uvicorn.run("api:app", host="127.0.0.1", port=8000, reload=True)
+    app = QApplication(sys.argv)
+    login_window = LoginWindow()
+    login_window.show()
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
