@@ -18,7 +18,7 @@ class LocalDatabase:
         cursor = conn.cursor()
         session = self.Session()
         try:
-            # Define table schemas with TEXT for IDs and indexes
+            # Define table schemas with TEXT for IDs and all columns
             table_definitions = {
                 'users': """
                     id TEXT PRIMARY KEY,
@@ -26,13 +26,15 @@ class LocalDatabase:
                     password TEXT NOT NULL,
                     role TEXT NOT NULL,
                     group_id TEXT,
+                    created_date TEXT,
                     FOREIGN KEY (group_id) REFERENCES groups(id)
                 """,
                 'groups': """
                     id TEXT PRIMARY KEY,
                     name TEXT NOT NULL,
                     description TEXT,
-                    balance REAL NOT NULL
+                    balance REAL NOT NULL,
+                    created_date TEXT
                 """,
                 'contributions': """
                     id TEXT PRIMARY KEY,
@@ -75,7 +77,10 @@ class LocalDatabase:
 
             # Create indexes for performance
             indexes = {
-                'users': ["CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)"],
+                'users': [
+                    "CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)",
+                    "CREATE INDEX IF NOT EXISTS idx_users_group_id ON users(group_id)"
+                ],
                 'groups': ["CREATE INDEX IF NOT EXISTS idx_groups_name ON groups(name)"],
                 'contributions': [
                     "CREATE INDEX IF NOT EXISTS idx_contributions_user_id ON contributions(user_id)",
@@ -101,15 +106,24 @@ class LocalDatabase:
                         cursor.execute(index)
                     continue
 
+                # Get columns from original table
+                cursor.execute(f"PRAGMA table_info({table_name})")
+                orig_columns = [col[1] for col in cursor.fetchall()]
+                
+                # Get columns from definition
+                def_columns = [line.split()[0] for line in definition.strip().split('\n') if line.strip() and not line.strip().startswith('FOREIGN')]
+                def_columns = [col.strip(',') for col in def_columns]
+
+                # Use common columns to avoid mismatches
+                common_columns = [col for col in orig_columns if col in def_columns]
+                if not common_columns:
+                    continue  # Skip if no common columns
+                columns_str = ', '.join(common_columns)
+
                 # Create temporary table
                 temp_table = f"{table_name}_temp"
                 cursor.execute(f"DROP TABLE IF EXISTS {temp_table}")
                 cursor.execute(f"CREATE TABLE {temp_table} ({definition})")
-
-                # Get columns from original table
-                cursor.execute(f"PRAGMA table_info({table_name})")
-                columns = [col[1] for col in cursor.fetchall()]
-                columns_str = ', '.join(columns)
 
                 # Copy data, handling type conversions
                 cursor.execute(f"INSERT INTO {temp_table} ({columns_str}) SELECT {columns_str} FROM {table_name}")
@@ -568,7 +582,7 @@ class LocalDatabase:
                     payout.group_id = group_id
                 if user_id:
                     payout.user_id = user_id
-                if amount is not NULL:
+                if amount is not None:
                     payout.amount = amount
                 session.commit()
                 sync_entry = SyncQueue(

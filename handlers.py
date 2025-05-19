@@ -28,7 +28,8 @@ class DatabaseHandler:
                     id VARCHAR(36) PRIMARY KEY,
                     name TEXT NOT NULL,
                     description TEXT,
-                    balance FLOAT NOT NULL
+                    balance FLOAT NOT NULL,
+                    created_date TIMESTAMP
                 )
             """))
             conn.execute(text("""
@@ -38,6 +39,7 @@ class DatabaseHandler:
                     password TEXT NOT NULL,
                     role TEXT NOT NULL,
                     group_id VARCHAR(36),
+                    created_date TIMESTAMP,
                     FOREIGN KEY (group_id) REFERENCES groups(id)
                 )
             """))
@@ -89,6 +91,7 @@ class DatabaseHandler:
 
             # Create indexes for performance
             conn.execute(text("CREATE INDEX idx_users_username ON users(username)"))
+            conn.execute(text("CREATE INDEX idx_users_group_id ON users(group_id)"))
             conn.execute(text("CREATE INDEX idx_groups_name ON groups(name)"))
             conn.execute(text("CREATE INDEX idx_contributions_user_id ON contributions(user_id)"))
             conn.execute(text("CREATE INDEX idx_contributions_group_id ON contributions(group_id)"))
