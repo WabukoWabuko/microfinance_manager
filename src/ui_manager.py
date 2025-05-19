@@ -76,7 +76,10 @@ class UIManager:
 
             # Connect signals
             self.login_ui.login_button.clicked.connect(self.handle_login)
-            self.login_ui.reset_password_button.clicked.connect(self.handle_password_reset)
+            if hasattr(self.login_ui, 'reset_password_button'):
+                self.login_ui.reset_password_button.clicked.connect(self.handle_password_reset)
+            else:
+                print("Warning: reset_password_button not found in login UI")
             self.main_ui.actionExit.triggered.connect(self.close)
             self.main_ui.actionToggle_Theme.triggered.connect(self.toggle_theme)
             self.main_ui.submit_loan_button.clicked.connect(self.handle_loan_submission)
@@ -99,7 +102,8 @@ class UIManager:
             self.login_ui.password_input.setToolTip(self.i18n.translate("Enter your password"))
             self.login_ui.role_combo.setToolTip(self.i18n.translate("Select your role"))
             self.login_ui.login_button.setToolTip(self.i18n.translate("Click to log in"))
-            self.login_ui.reset_password_button.setToolTip(self.i18n.translate("Reset your password"))
+            if hasattr(self.login_ui, 'reset_password_button'):
+                self.login_ui.reset_password_button.setToolTip(self.i18n.translate("Reset your password"))
             self.main_ui.dashboard_button.setToolTip(self.i18n.translate("View your dashboard"))
             self.main_ui.loan_button.setToolTip(self.i18n.translate("Apply for a new loan"))
             self.main_ui.transactions_button.setToolTip(self.i18n.translate("View transaction history"))
