@@ -11,61 +11,61 @@ from src.sync import SyncManager
 
 class UIManager:
     def __init__(self):
-        self.db = Database()
-        self.auth = Auth()
-        self.loan_manager = LoanManager()
-        self.transaction_manager = TransactionManager()
-        self.sync_manager = SyncManager()
-        self.current_user = None
-        self.theme = "light"
+        try:
+            self.db = Database()
+            self.auth = Auth()
+            self.loan_manager = LoanManager()
+            self.transaction_manager = TransactionManager()
+            self.sync_manager = SyncManager()
+            self.current_user = None
+            self.theme = "light"
 
-        # Initialize stacked widget for navigation
-        self.stack = QStackedWidget()
-        self.login_widget = QWidget()
-        self.main_widget = QMainWindow()
+            # Initialize login widget
+            self.login_widget = QWidget()
+            self.login_ui = Ui_LoginWindow()
+            self.login_ui.setupUi(self.login_widget)
 
-        # Set up UI
-        self.login_ui = Ui_LoginWindow()
-        self.login_ui.setupUi(self.login_widget)
-        self.main_ui = Ui_MainWindow()
-        self.main_ui.setupUi(self.main_widget)
+            # Initialize main window
+            self.main_widget = QMainWindow()
+            self.main_ui = Ui_MainWindow()
+            self.main_ui.setupUi(self.main_widget)
 
-        # Add login widget to stack
-        self.stack.addWidget(self.login_widget)
+            # Button group for sidebar navigation
+            self.nav_group = QButtonGroup(self.main_widget)
+            self.nav_group.setExclusive(True)
+            self.nav_group.addButton(self.main_ui.dashboard_button, 0)
+            self.nav_group.addButton(self.main_ui.loan_button, 1)
+            self.nav_group.addButton(self.main_ui.transactions_button, 2)
 
-        # Button group for sidebar navigation
-        self.nav_group = QButtonGroup(self.main_widget)
-        self.nav_group.setExclusive(True)
-        self.nav_group.addButton(self.main_ui.dashboard_button, 0)
-        self.nav_group.addButton(self.main_ui.loan_button, 1)
-        self.nav_group.addButton(self.main_ui.transactions_button, 2)
+            # Connect signals
+            self.login_ui.login_button.clicked.connect(self.handle_login)
+            self.main_ui.actionExit.triggered.connect(self.close)
+            self.main_ui.actionToggle_Theme.triggered.connect(self.toggle_theme)
+            self.main_ui.submit_loan_button.clicked.connect(self.handle_loan_submission)
+            self.main_ui.calculate_button.clicked.connect(self.handle_calculate_payment)
+            self.main_ui.sync_button.clicked.connect(self.handle_sync)
+            self.main_ui.back_button_loan.clicked.connect(self.back_to_dashboard)
+            self.nav_group.buttonClicked[int].connect(self.main_ui.content_stack.setCurrentIndex)
 
-        # Connect signals
-        self.login_ui.login_button.clicked.connect(self.handle_login)
-        self.main_ui.actionExit.triggered.connect(self.close)
-        self.main_ui.actionToggle_Theme.triggered.connect(self.toggle_theme)
-        self.main_ui.submit_loan_button.clicked.connect(self.handle_loan_submission)
-        self.main_ui.calculate_button.clicked.connect(self.handle_calculate_payment)
-        self.main_ui.sync_button.clicked.connect(self.handle_sync)
-        self.main_ui.back_button_loan.clicked.connect(self.back_to_dashboard)
-        self.nav_group.buttonClicked[int].connect(self.main_ui.content_stack.setCurrentIndex)
+            # Add tooltips
+            self.login_ui.email_input.setToolTip("Enter your registered email")
+            self.login_ui.password_input.setToolTip("Enter your password")
+            self.login_ui.role_combo.setToolTip("Select your role")
+            self.login_ui.login_button.setToolTip("Click to log in")
+            self.main_ui.dashboard_button.setToolTip("View your dashboard")
+            self.main_ui.loan_button.setToolTip("Apply for a new loan")
+            self.main_ui.transactions_button.setToolTip("View transaction history")
+            self.main_ui.sync_button.setToolTip("Sync transactions with MPesa")
+            self.main_ui.calculate_button.setToolTip("Calculate monthly payment")
+            self.main_ui.submit_loan_button.setToolTip("Submit loan application")
+            self.main_ui.back_button_loan.setToolTip("Return to dashboard")
 
-        # Add tooltips
-        self.login_ui.email_input.setToolTip("Enter your registered email")
-        self.login_ui.password_input.setToolTip("Enter your password")
-        self.login_ui.role_combo.setToolTip("Select your role")
-        self.login_ui.login_button.setToolTip("Click to log in")
-        self.main_ui.dashboard_button.setToolTip("View your dashboard")
-        self.main_ui.loan_button.setToolTip("Apply for a new loan")
-        self.main_ui.transactions_button.setToolTip("View transaction history")
-        self.main_ui.sync_button.setToolTip("Sync transactions with MPesa")
-        self.main_ui.calculate_button.setToolTip("Calculate monthly payment")
-        self.main_ui.submit_loan_button.setToolTip("Submit loan application")
-        self.main_ui.back_button_loan.setToolTip("Return to dashboard")
-
-        # Initialize UI
-        self.apply_theme()
-        self.main_ui.statusbar.showMessage("Ready")
+            # Initialize UI
+            self.apply_theme()
+            self.main_ui.statusbar.showMessage("Ready")
+        except Exception as e:
+            print(f"Error in UIManager.__init__: {e}")
+            raise
 
     def handle_login(self):
         email = self.login_ui.email_input.text()
