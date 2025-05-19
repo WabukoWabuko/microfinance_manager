@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QStackedWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtGui import QFont
-from login import Ui_LoginWindow
-from main_window import Ui_MainWindow
-from database import Database
-from auth import Auth
-from loans import LoanManager
-from transactions import TransactionManager
-from sync import SyncManager
+from src.login import Ui_LoginWindow
+from src.main_window import Ui_MainWindow
+from src.database import Database
+from src.auth import Auth
+from src.loans import LoanManager
+from src.transactions import TransactionManager
+from src.sync import SyncManager
 
 
 class UIManager:
@@ -52,11 +52,14 @@ class UIManager:
         password = self.login_ui.password_input.text()
         role = self.login_ui.role_combo.currentText().lower()
         success, result = self.auth.login(email, password)
-        if success and result["role"] == role:
-            self.current_user = result
-            self.stack.setCurrentWidget(self.main_widget)
-            self.main_ui.label_welcome.setText(f"Welcome, {result['name']}!")
-            self.update_dashboard()
+        if success:
+            if result["role"] == role:
+                self.current_user = result
+                self.stack.setCurrentWidget(self.main_widget)
+                self.main_ui.label_welcome.setText(f"Welcome, {result['name']}!")
+                self.update_dashboard()
+            else:
+                QMessageBox.critical(self.login_widget, "Error", "Invalid role")
         else:
             QMessageBox.critical(self.login_widget, "Error", result)
 
@@ -93,7 +96,6 @@ class UIManager:
         for row, loan in enumerate(loans):
             for col, value in enumerate(loan[:4]):
                 self.main_ui.loan_table.setItem(row, col, QTableWidgetItem(str(value)))
-
         # Update transaction table
         if loans:
             transactions = self.transaction_manager.get_transactions(loans[0][0])
@@ -103,17 +105,10 @@ class UIManager:
                     self.main_ui.transaction_table.setItem(row, col, QTableWidgetItem(str(value)))
 
     def apply_theme(self):
-        style = (
-            "background-color: #FFFFFF; color: #000000; font-family: Roboto;"
-            if self.theme == "light"
-            else "background-color: #343A40; color: #FFFFFF; font-family: Roboto;"
-        )
+        style = "background-color: #FFFFFF; color: #000000; font-family: Roboto;" if self.theme == "light" else "background-color: #343A40; color: #FFFFFF; font-family: Roboto;"
         self.login_widget.setStyleSheet(style)
         self.main_widget.setStyleSheet(style)
-        self.db.execute(
-            "INSERT OR REPLACE INTO Settings (id, theme, last_sync_timestamp) VALUES (1, ?, NULL)",
-            (self.theme,)
-        )
+        self.db.execute("INSERT OR REPLACE INTO Settings (id, theme, last_sync_timestamp) VALUES (1, ?, NULL)", (self.theme,))
 
     def toggle_theme(self):
         self.theme = "dark" if self.theme == "light" else "light"
@@ -125,4 +120,3 @@ class UIManager:
         self.loan_manager.close()
         self.transaction_manager.close()
         self.sync_manager.close()
-
