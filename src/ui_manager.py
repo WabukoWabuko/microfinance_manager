@@ -56,14 +56,16 @@ class UIManager:
             self.login_ui = Ui_LoginWindow()
             self.login_ui.setupUi(self.login_widget)
             self.login_widget.setVisible(True)  # Ensure visibility
-            print("Login widget initialized")
+            self.login_widget.setWindowOpacity(1.0)  # Ensure full opacity
+            print(f"Login widget initialized, geometry: {self.login_widget.geometry()}, isVisible: {self.login_widget.isVisible()}")
 
             # Initialize main window
             self.main_widget = QMainWindow()
             self.main_ui = Ui_MainWindow()
             self.main_ui.setupUi(self.main_widget)
             self.main_widget.setMinimumSize(1200, 800)
-            print("Main window initialized")
+            self.main_widget.setWindowOpacity(1.0)  # Ensure full opacity
+            print(f"Main window initialized, geometry: {self.main_widget.geometry()}")
 
             # Button group for sidebar navigation
             self.nav_group = QButtonGroup(self.main_widget)
@@ -155,10 +157,10 @@ class UIManager:
                     self.main_widget.setWindowTitle(self.i18n.translate("Microfinance Manager"))
                     self.main_widget.show()
                     self.main_widget.setVisible(True)  # Force visibility
-                    # Center the main window
-                    screen = QDesktopWidget().screenGeometry()
-                    size = self.main_widget.geometry()
-                    self.main_widget.move(int((screen.width() - size.width()) / 2), int((screen.height() - size.height()) / 2))
+                    self.main_widget.setWindowOpacity(1.0)  # Ensure full opacity
+                    # Hardcode position to ensure visibility
+                    self.main_widget.move(100, 100)
+                    print(f"Main window shown, geometry: {self.main_widget.geometry()}, isVisible: {self.main_widget.isVisible()}")
                     self.main_ui.label_welcome.setText(self.i18n.translate("Welcome, {name}!").format(name=result["name"]))
                     self.update_dashboard()
                     self.animation_manager.animate_sidebar(self.main_ui.sidebar)
@@ -359,7 +361,7 @@ class UIManager:
             print(f"Error in toggle_theme: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme toggle failed: {error}").format(error=e), QMessageBox.Critical)
 
-    def show_message(self, title, message, icon):
+    def show_message(self):
         try:
             msg = QMessageBox(self.main_widget)
             msg.setWindowTitle(title)
@@ -380,6 +382,7 @@ class UIManager:
             animation.setStartValue(0)
             animation.setEndValue(1)
             animation.setEasingCurve(QEasingCurve.InOutQuad)
+            animation.finished.connect(lambda: widget.setWindowOpacity(1.0))  # Ensure opacity is 1 after animation
             animation.start()
             print(f"Transition animation started for {widget}")
         except Exception as e:
@@ -393,6 +396,7 @@ class UIManager:
             animation.setStartValue(0)
             animation.setEndValue(1)
             animation.setEasingCurve(QEasingCurve.InOutQuad)
+            animation.finished.connect(lambda: msg.setWindowOpacity(1.0))  # Ensure opacity is 1 after animation
             animation.start()
             print("Message animation started")
         except Exception as e:
