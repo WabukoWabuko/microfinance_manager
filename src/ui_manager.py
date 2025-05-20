@@ -55,6 +55,7 @@ class UIManager:
             self.login_widget = QWidget()
             self.login_ui = Ui_LoginWindow()
             self.login_ui.setupUi(self.login_widget)
+            self.login_widget.setVisible(True)  # Ensure visibility
             print("Login widget initialized")
 
             # Initialize main window
@@ -127,7 +128,7 @@ class UIManager:
             # Initialize UI
             self.apply_theme()
             self.shortcut_manager.setup_shortcuts(self.main_widget)
-            self.accessibility_manager.setup_accessibility(self)  # Pass self (UIManager)
+            self.accessibility_manager.setup_accessibility(self)
             self.widget_manager.setup_dashboard(self.main_ui)
             self.notification_manager.check_due_payments(self.current_user)
             self.main_ui.statusbar.showMessage(self.i18n.translate("Ready"))
@@ -153,6 +154,8 @@ class UIManager:
                     self.login_widget.hide()
                     self.main_widget.setWindowTitle(self.i18n.translate("Microfinance Manager"))
                     self.main_widget.show()
+                    self.main_widget.setVisible(True)  # Force visibility
+                    # Center the main window
                     screen = QDesktopWidget().screenGeometry()
                     size = self.main_widget.geometry()
                     self.main_widget.move(int((screen.width() - size.width()) / 2), int((screen.height() - size.height()) / 2))
@@ -364,7 +367,8 @@ class UIManager:
             msg.setIcon(icon)
             msg.setStyleSheet("background: #F8F9FA; color: #000000; font-family: Roboto;" if self.theme == "light" else "background: #343A40; color: #FFFFFF; font-family: Roboto;")
             self.animate_message(msg)
-            msg.exec_()
+            msg.show()  # Ensure message box is shown
+            print(f"Message shown: {title} - {message}")
         except Exception as e:
             print(f"Error in show_message: {e}")
 
@@ -390,6 +394,7 @@ class UIManager:
             animation.setEndValue(1)
             animation.setEasingCurve(QEasingCurve.InOutQuad)
             animation.start()
+            print("Message animation started")
         except Exception as e:
             print(f"Error in animate_message: {e}")
 
