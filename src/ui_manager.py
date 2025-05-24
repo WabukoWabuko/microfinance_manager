@@ -96,7 +96,7 @@ class UIManager:
             self.main_ui.add_client_button.clicked.connect(self.handle_add_client)
             self.nav_group.buttonClicked[int].connect(self.handle_navigation)
 
-            self.login_ui.email_input.setToolTip(self.i18n.translate("Enter your registered email"))
+            self.login_ui.email_input.setToolTip(self.i18n.translate("Enter your username"))
             self.login_ui.password_input.setToolTip(self.i18n.translate("Enter your password"))
             self.login_ui.role_combo.setToolTip(self.i18n.translate("Select your role"))
             self.login_ui.login_button.setToolTip(self.i18n.translate("Click to log in"))
@@ -126,7 +126,7 @@ class UIManager:
             self.main_ui.two_factor_button.setToolTip(self.i18n.translate("Setup two-factor authentication"))
             self.main_ui.add_client_button.setToolTip(self.i18n.translate("Add a new client"))
             self.main_ui.client_name_input.setToolTip(self.i18n.translate("Enter client name"))
-            self.main_ui.client_email_input.setToolTip(self.i18n.translate("Enter client email"))
+            self.main_ui.client_email_input.setToolTip(self.i18n.translate("Enter client username"))
             self.main_ui.client_phone_input.setToolTip(self.i18n.translate("Enter client phone number"))
             self.main_ui.client_role_combo.setToolTip(self.i18n.translate("Select client role"))
 
@@ -142,10 +142,10 @@ class UIManager:
 
     def handle_login(self):
         try:
-            email = self.login_ui.email_input.text()
+            username = self.login_ui.email_input.text()
             password = self.login_ui.password_input.text()
             role = self.login_ui.role_combo.currentText().lower()
-            success, result = self.auth.login(email, password)
+            success, result = self.auth.login(username, password)
             if success:
                 if result["role"] == role:
                     if self.two_factor.is_enabled(result["id"]):
@@ -157,7 +157,7 @@ class UIManager:
                     self.login_widget.hide()
                     self.main_widget.setWindowTitle(self.i18n.translate("Microfinance Manager"))
                     self.main_widget.show()
-                    self.main_ui.label_welcome.setText(self.i18n.translate("Welcome, {name}!").format(name=result["name"]))
+                    self.main_ui.label_welcome.setText(self.i18n.translate("Welcome, {name}!").format(name=result["username"]))
                     self.update_dashboard()
                     self.animation_manager.animate_sidebar(self.main_ui.sidebar)
                     self.audit_logger.log_action(result["id"], "login", "User logged in")
@@ -261,9 +261,8 @@ class UIManager:
 
     def handle_profile_save(self):
         try:
-            name = self.main_ui.profile_name_input.text()
-            email = self.main_ui.profile_email_input.text()
-            success, msg = self.profile_manager.update_profile(self.current_user["id"], name, email)
+            username = self.main_ui.profile_name_input.text()
+            success, msg = self.profile_manager.update_profile(self.current_user["id"], username)
             self.show_message(self.i18n.translate("Profile"), self.i18n.translate(msg), QMessageBox.Information)
             self.audit_logger.log_action(self.current_user["id"], "update_profile", "Updated profile")
         except Exception as e:
@@ -281,10 +280,10 @@ class UIManager:
 
     def handle_password_reset(self):
         try:
-            email = self.login_ui.email_input.text()
-            success, msg = self.password_reset.initiate_reset(email)
+            username = self.login_ui.email_input.text()
+            success, msg = self.password_reset.initiate_reset(username)
             self.show_message(self.i18n.translate("Password Reset"), self.i18n.translate(msg), QMessageBox.Information)
-            self.audit_logger.log_action(0, "password_reset", f"Initiated password reset for {email}")
+            self.audit_logger.log_action(0, "password_reset", f"Initiated password reset for {username}")
         except Exception as e:
             print(f"Error in handle_password_reset: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Password reset failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -294,13 +293,13 @@ class UIManager:
             if self.current_user["role"] != "admin":
                 self.show_message(self.i18n.translate("Error"), self.i18n.translate("Admin access required"), QMessageBox.Critical)
                 return
-            name = self.main_ui.client_name_input.text()
+            username = self.main_ui.client_name_input.text()
             email = self.main_ui.client_email_input.text()
             phone = self.main_ui.client_phone_input.text()
             role = self.main_ui.client_role_combo.currentText().lower()
-            success, msg = self.client_manager.add_client(name, email, phone, role)
+            success, msg = self.client_manager.add_client(username, email, phone, role)
             self.show_message(self.i18n.translate("Client"), self.i18n.translate(msg), QMessageBox.Information if success else QMessageBox.Critical)
-            self.audit_logger.log_action(self.current_user["id"], "add_client", f"Added client: {name}")
+            self.audit_logger.log_action(self.current_user["id"], "add_client", f"Added client: {username}")
             if success:
                 self.main_ui.client_name_input.clear()
                 self.main_ui.client_email_input.clear()
@@ -313,16 +312,22 @@ class UIManager:
         try:
             if not self.current_user:
                 return
-            loans = self.loan_manager.get_loans(self.current_user["id"])
+            loans = self.db.execute_fetch_all(
+                "SELECT id, amount, status, date_issued FROM loans WHERE user_id = ?",
+                (str(self.current_user["id"]),)
+            )
             self.main_ui.loan_table.setRowCount(len(loans))
             for row, loan in enumerate(loans):
-                for col, value in enumerate(loan[:4]):
+                for col, value in enumerate(loan):
                     self.main_ui.loan_table.setItem(row, col, QTableWidgetItem(str(value)))
             if loans:
-                transactions = self.transaction_manager.get_transactions(loans[0][0])
+                transactions = self.db.execute_fetch_all(
+                    "SELECT id, loan_id, amount, type FROM transactions WHERE loan_id = ?",
+                    (str(loans[0][0]),)
+                )
                 self.main_ui.transaction_table.setRowCount(len(transactions))
                 for row, transaction in enumerate(transactions):
-                    for col, value in enumerate(transaction[:4]):
+                    for col, value in enumerate(transaction):
                         self.main_ui.transaction_table.setItem(row, col, QTableWidgetItem(str(value)))
             self.analytics_manager.update_analytics(self.main_ui, self.current_user["id"])
             self.repayment_manager.update_schedule(self.main_ui, self.current_user["id"])
@@ -355,7 +360,6 @@ class UIManager:
             self.main_ui.analytics_text.setStyleSheet("QTextEdit { color: #000000; }" if self.theme == "light" else "QTextEdit { color: #FFFFFF; }")
             self.main_ui.repayment_table.setStyleSheet("QTableWidget { color: #000000; }" if self.theme == "light" else "QTableWidget { color: #FFFFFF; }")
             self.main_ui.notifications_text.setStyleSheet("QTextEdit { color: #000000; }" if self.theme == "light" else "QTextEdit { color: #FFFFFF; }")
-            self.db.execute("INSERT OR REPLACE INTO Settings (id, theme, last_sync_timestamp) VALUES (1, ?, NULL)", (self.theme,))
         except Exception as e:
             print(f"Error in apply_theme: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme application failed: {error}").format(error=str(e)), QMessageBox.Critical)
