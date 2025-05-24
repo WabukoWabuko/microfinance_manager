@@ -1,5 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem, QDesktopWidget
-from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QTimer
 from src.login import Ui_LoginWindow
 from src.main_window import Ui_MainWindow
@@ -53,7 +52,6 @@ class UIManager:
             self.theme = "light"
             self.previous_page = 0
 
-            # Initialize login widget
             self.login_widget = QWidget()
             self.login_ui = Ui_LoginWindow()
             self.login_ui.setupUi(self.login_widget)
@@ -61,7 +59,6 @@ class UIManager:
             self.login_widget.setWindowOpacity(1.0)
             print(f"Login widget initialized, geometry: {self.login_widget.geometry()}, isVisible: {self.login_widget.isVisible()}")
 
-            # Initialize main window
             self.main_widget = QMainWindow()
             self.main_ui = Ui_MainWindow()
             self.main_ui.setupUi(self.main_widget)
@@ -69,7 +66,6 @@ class UIManager:
             self.main_widget.setWindowOpacity(1.0)
             print(f"Main window initialized, geometry: {self.main_widget.geometry()}")
 
-            # Button group for sidebar navigation
             self.nav_group = QButtonGroup(self.main_widget)
             self.nav_group.setExclusive(True)
             self.nav_group.addButton(self.main_ui.dashboard_button, 0)
@@ -80,7 +76,6 @@ class UIManager:
             self.nav_group.addButton(self.main_ui.profile_button, 5)
             self.nav_group.addButton(self.main_ui.clients_button, 6)
 
-            # Connect signals
             self.login_ui.login_button.clicked.connect(self.handle_login)
             if hasattr(self.login_ui, 'reset_password_button'):
                 self.login_ui.reset_password_button.clicked.connect(self.handle_password_reset)
@@ -105,7 +100,6 @@ class UIManager:
             self.main_ui.add_client_button.clicked.connect(self.handle_add_client)
             self.nav_group.buttonClicked[int].connect(self.handle_navigation)
 
-            # Add tooltips
             self.login_ui.email_input.setToolTip(self.i18n.translate("Enter your registered email"))
             self.login_ui.password_input.setToolTip(self.i18n.translate("Enter your password"))
             self.login_ui.role_combo.setToolTip(self.i18n.translate("Select your role"))
@@ -130,12 +124,16 @@ class UIManager:
             self.main_ui.back_button_clients.setToolTip(self.i18n.translate("Return to previous page"))
             self.main_ui.b2c_withdraw_button.setToolTip(self.i18n.translate("Withdraw funds via MPesa"))
             self.main_ui.export_button.setToolTip(self.i18n.translate("Export data to CSV/PDF"))
+            self.main_ui.export_format_combo.setToolTip(self.i18n.translate("Select export format"))
             self.main_ui.notifications_button.setToolTip(self.i18n.translate("View notifications"))
             self.main_ui.profile_save_button.setToolTip(self.i18n.translate("Save profile changes"))
             self.main_ui.two_factor_button.setToolTip(self.i18n.translate("Setup two-factor authentication"))
             self.main_ui.add_client_button.setToolTip(self.i18n.translate("Add a new client"))
+            self.main_ui.client_name_input.setToolTip(self.i18n.translate("Enter client name"))
+            self.main_ui.client_email_input.setToolTip(self.i18n.translate("Enter client email"))
+            self.main_ui.client_phone_input.setToolTip(self.i18n.translate("Enter client phone number"))
+            self.main_ui.client_role_combo.setToolTip(self.i18n.translate("Select client role"))
 
-            # Initialize UI
             self.apply_theme()
             self.shortcut_manager.setup_shortcuts(self.main_widget)
             self.accessibility_manager.setup_accessibility(self)

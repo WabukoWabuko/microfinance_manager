@@ -250,6 +250,45 @@
          </widget>
         </item>
         <item>
+         <widget class="QComboBox" name="export_format_combo">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>CSV</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>PDF</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="export_button">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Export Data</string>
+          </property>
+          <property name="styleSheet">
+           <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 5px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="back_button_transactions">
           <property name="text">
            <string>Back</string>
