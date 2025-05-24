@@ -150,7 +150,7 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="dashboard_page">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="dashboard_layout">
         <item>
          <widget class="QTableWidget" name="loan_table">
           <property name="minimumSize">
