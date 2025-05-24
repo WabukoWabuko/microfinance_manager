@@ -56,15 +56,11 @@ class UIManager:
             self.login_ui = Ui_LoginWindow()
             self.login_ui.setupUi(self.login_widget)
             self.login_widget.setVisible(True)
-            self.login_widget.setWindowOpacity(1.0)
-            print(f"Login widget initialized, geometry: {self.login_widget.geometry()}, isVisible: {self.login_widget.isVisible()}")
 
             self.main_widget = QMainWindow()
             self.main_ui = Ui_MainWindow()
             self.main_ui.setupUi(self.main_widget)
             self.main_widget.setMinimumSize(1200, 800)
-            self.main_widget.setWindowOpacity(1.0)
-            print(f"Main window initialized, geometry: {self.main_widget.geometry()}")
 
             self.nav_group = QButtonGroup(self.main_widget)
             self.nav_group.setExclusive(True)
@@ -140,7 +136,6 @@ class UIManager:
             self.widget_manager.setup_dashboard(self.main_ui)
             self.notification_manager.check_due_payments(self.current_user)
             self.main_ui.statusbar.showMessage(self.i18n.translate("Ready"))
-            print("UI initialized")
         except Exception as e:
             print(f"Error in UIManager.__init__: {e}")
             raise
@@ -162,15 +157,10 @@ class UIManager:
                     self.login_widget.hide()
                     self.main_widget.setWindowTitle(self.i18n.translate("Microfinance Manager"))
                     self.main_widget.show()
-                    self.main_widget.setVisible(True)
-                    self.main_widget.setWindowOpacity(1.0)
-                    self.main_widget.move(100, 100)
-                    print(f"Main window shown, geometry: {self.main_widget.geometry()}, isVisible: {self.main_widget.isVisible()}")
                     self.main_ui.label_welcome.setText(self.i18n.translate("Welcome, {name}!").format(name=result["name"]))
                     self.update_dashboard()
                     self.animation_manager.animate_sidebar(self.main_ui.sidebar)
                     self.audit_logger.log_action(result["id"], "login", "User logged in")
-                    print("Main window shown after login")
                 else:
                     self.show_message(self.i18n.translate("Error"), self.i18n.translate("Invalid role"), QMessageBox.Critical)
             else:
@@ -188,7 +178,6 @@ class UIManager:
                 self.main_ui.content_stack.setCurrentIndex(self.previous_page)
                 return
             self.audit_logger.log_action(self.current_user["id"], "navigate", f"Navigated to page {index}")
-            print(f"Navigated to page {index}")
         except Exception as e:
             print(f"Error in handle_navigation: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Navigation failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -198,7 +187,6 @@ class UIManager:
             self.main_ui.content_stack.setCurrentIndex(self.previous_page)
             self.nav_group.button(self.previous_page).setChecked(True)
             self.audit_logger.log_action(self.current_user["id"], "navigate", f"Returned to page {self.previous_page}")
-            print(f"Returned to previous page {self.previous_page}")
         except Exception as e:
             print(f"Error in back_to_previous: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Navigation failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -324,7 +312,6 @@ class UIManager:
     def update_dashboard(self):
         try:
             if not self.current_user:
-                print("No current user, skipping dashboard update")
                 return
             loans = self.loan_manager.get_loans(self.current_user["id"])
             self.main_ui.loan_table.setRowCount(len(loans))
@@ -340,7 +327,6 @@ class UIManager:
             self.analytics_manager.update_analytics(self.main_ui, self.current_user["id"])
             self.repayment_manager.update_schedule(self.main_ui, self.current_user["id"])
             self.widget_manager.update_dashboard(self.main_ui, self.current_user["id"])
-            print("Dashboard updated")
         except Exception as e:
             print(f"Error in update_dashboard: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Dashboard update failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -370,7 +356,6 @@ class UIManager:
             self.main_ui.repayment_table.setStyleSheet("QTableWidget { color: #000000; }" if self.theme == "light" else "QTableWidget { color: #FFFFFF; }")
             self.main_ui.notifications_text.setStyleSheet("QTextEdit { color: #000000; }" if self.theme == "light" else "QTextEdit { color: #FFFFFF; }")
             self.db.execute("INSERT OR REPLACE INTO Settings (id, theme, last_sync_timestamp) VALUES (1, ?, NULL)", (self.theme,))
-            print("Theme applied")
         except Exception as e:
             print(f"Error in apply_theme: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme application failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -380,7 +365,6 @@ class UIManager:
             self.theme = "dark" if self.theme == "light" else "light"
             self.apply_theme()
             self.audit_logger.log_action(self.current_user["id"], "toggle_theme", f"Toggled to {self.theme} theme")
-            print("Theme toggled")
         except Exception as e:
             print(f"Error in toggle_theme: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme toggle failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -410,7 +394,6 @@ class UIManager:
             animation.setEasingCurve(QEasingCurve.InOutQuad)
             animation.finished.connect(lambda: widget.setWindowOpacity(1.0))
             animation.start()
-            print(f"Transition animation started for {widget}")
         except Exception as e:
             print(f"Error in animate_transition: {e}")
 
@@ -424,7 +407,6 @@ class UIManager:
             animation.setEasingCurve(QEasingCurve.InOutQuad)
             animation.finished.connect(lambda: msg.setWindowOpacity(1.0))
             animation.start()
-            print("Message animation started")
         except Exception as e:
             print(f"Error in animate_message: {e}")
 
@@ -453,6 +435,5 @@ class UIManager:
             self.client_manager.close()
             self.main_widget.close()
             self.login_widget.close()
-            print("Application closed")
         except Exception as e:
             print(f"Error in close: {e}")

@@ -1,39 +1,39 @@
-import hashlib
-import sqlite3
-from datetime import datetime
+import bcrypt
 from src.database import Database
-
 
 class Auth:
     def __init__(self):
-        self.db = Database()
-
-    def hash_password(self, password):
-        """Hash a password using SHA-256."""
-        return hashlib.sha256(password.encode()).hexdigest()
-
-    def register(self, name, email, phone, password, role):
-        """Register a new user with hashed password."""
-        password_hash = self.hash_password(password)
-        query = """
-           INSERT INTO Users (name, email, phone, password_hash, role)
-           VALUES (?, ?, ?, ?, ?)
-       """
         try:
-            self.db.execute(query, (name, email, phone, password_hash, role))
-            return True, "Registration successful"
-        except sqlite3.IntegrityError:
-            return False, "Email or phone already exists"
+            self.db = Database()
+        except Exception as e:
+            print(f"Error in Auth.__init__: {e}")
+            raise
 
     def login(self, email, password):
-        """Authenticate a user."""
-        password_hash = self.hash_password(password)
-        query = "SELECT id, name, role FROM Users WHERE email = ? AND password_hash = ?"
-        user = self.db.fetch_one(query, (email, password_hash))
-        if user:
-            return True, {"id": user[0], "name": user[1], "role": user[2]}
-        return False, "Invalid email or password"
+        try:
+            result = self.db.execute_fetch_one(
+                "SELECT id, name, email, password_hash, phone, role FROM Users WHERE email = ?",
+                (email,)
+            )
+            if result:
+                stored_hash = result[3].encode('utf-8')
+                if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
+                    return True, {
+                        "id": result[0],
+                        "name": result[1],
+                        "email": result[2],
+                        "phone": result[4],
+                        "role": result[5]
+                    }
+                return False, "Invalid password"
+            return False, "User not found"
+        except Exception as e:
+            print(f"Error in login: {e}")
+            return False, str(e)
 
     def close(self):
-        """Close the database connection."""
-        self.db.close()
+        try:
+            self.db.close()
+        except Exception as e:
+            print(f"Error in close: {e}")
+            raise
