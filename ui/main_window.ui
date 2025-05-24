@@ -17,7 +17,26 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QWidget" name="sidebar">
-      <layout class="QVBoxLayout" name="sidebar_layout">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string>background: #343A40; color: #FFFFFF;</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_welcome">
+         <property name="text">
+          <string>Welcome!</string>
+         </property>
+         <property name="styleSheet">
+          <string>font-size: 16px; font-weight: bold;</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QPushButton" name="dashboard_button">
          <property name="text">
@@ -26,18 +45,21 @@
          <property name="checkable">
           <bool>true</bool>
          </property>
-         <property name="checked">
-          <bool>true</bool>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="loan_button">
          <property name="text">
-          <string>Loan Application</string>
+          <string>Loans</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
          </property>
         </widget>
        </item>
@@ -49,6 +71,9 @@
          <property name="checkable">
           <bool>true</bool>
          </property>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -59,15 +84,21 @@
          <property name="checkable">
           <bool>true</bool>
          </property>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="repayment_button">
          <property name="text">
-          <string>Repayment Schedule</string>
+          <string>Repayment</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
          </property>
         </widget>
        </item>
@@ -79,36 +110,71 @@
          <property name="checkable">
           <bool>true</bool>
          </property>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+         </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="clients_button">
+         <property name="text">
+          <string>Clients</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
     </item>
     <item>
      <widget class="QStackedWidget" name="content_stack">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="dashboard_page">
-       <layout class="QVBoxLayout" name="dashboard_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="label_welcome">
-          <property name="text">
-           <string>Welcome!</string>
+         <widget class="QTableWidget" name="loan_table">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="loan_table"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="notifications_button">
-          <property name="text">
-           <string>View Notifications</string>
+         <widget class="QTableWidget" name="transaction_table">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="loan_page">
-       <layout class="QVBoxLayout" name="loan_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLineEdit" name="amount_input">
           <property name="placeholderText">
@@ -133,7 +199,7 @@
         <item>
          <widget class="QLabel" name="payment_result">
           <property name="text">
-           <string/>
+           <string>Monthly Payment: </string>
           </property>
          </widget>
         </item>
@@ -154,14 +220,18 @@
        </layout>
       </widget>
       <widget class="QWidget" name="transactions_page">
-       <layout class="QVBoxLayout" name="transactions_layout">
-        <item>
-         <widget class="QTableWidget" name="transaction_table"/>
-        </item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QPushButton" name="sync_button">
           <property name="text">
            <string>Sync Transactions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="b2c_withdraw_button">
+          <property name="text">
+           <string>Withdraw via MPesa</string>
           </property>
          </widget>
         </item>
@@ -180,34 +250,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="b2c_withdraw_button">
-          <property name="text">
-           <string>Withdraw via MPesa</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="export_format_combo">
-          <item>
-           <property name="text">
-            <string>CSV</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>PDF</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="export_button">
-          <property name="text">
-           <string>Export Data</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="back_button_transactions">
           <property name="text">
            <string>Back</string>
@@ -217,7 +259,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="analytics_page">
-       <layout class="QVBoxLayout" name="analytics_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <widget class="QTextEdit" name="analytics_text">
           <property name="readOnly">
@@ -235,9 +277,16 @@
        </layout>
       </widget>
       <widget class="QWidget" name="repayment_page">
-       <layout class="QVBoxLayout" name="repayment_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QTableWidget" name="repayment_table"/>
+         <widget class="QTableWidget" name="repayment_table">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>400</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="back_button_repayment">
@@ -249,7 +298,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="profile_page">
-       <layout class="QVBoxLayout" name="profile_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
          <widget class="QLineEdit" name="profile_name_input">
           <property name="placeholderText">
@@ -265,13 +314,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="two_factor_code_input">
-          <property name="placeholderText">
-           <string>2FA Code</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="profile_save_button">
           <property name="text">
            <string>Save Profile</string>
@@ -279,9 +321,16 @@
          </widget>
         </item>
         <item>
+         <widget class="QLineEdit" name="two_factor_code_input">
+          <property name="placeholderText">
+           <string>Two-Factor Code</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="two_factor_button">
           <property name="text">
-           <string>Setup 2FA</string>
+           <string>Setup Two-Factor</string>
           </property>
          </widget>
         </item>
@@ -294,8 +343,106 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="clients_page">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QLineEdit" name="client_name_input">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>Name</string>
+          </property>
+          <property name="styleSheet">
+           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="client_email_input">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>Email</string>
+          </property>
+          <property name="styleSheet">
+           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="client_phone_input">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>Phone Number</string>
+          </property>
+          <property name="styleSheet">
+           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="client_role_combo">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Client</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Admin</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="add_client_button">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Add Client</string>
+          </property>
+          <property name="styleSheet">
+           <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 5px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="back_button_clients">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="notifications_page">
-       <layout class="QVBoxLayout" name="notifications_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
          <widget class="QTextEdit" name="notifications_text">
           <property name="readOnly">
@@ -304,9 +451,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="back_button_notifications">
+         <widget class="QPushButton" name="notifications_button">
           <property name="text">
-           <string>Back</string>
+           <string>Refresh Notifications</string>
           </property>
          </widget>
         </item>
@@ -322,27 +469,35 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
-   <menu title="File">
-    <action name="actionExit">
-     <property name="text">
-      <string>Exit</string>
-     </property>
-    </action>
-   </menu>
-   <menu title="View">
-    <action name="actionToggle_Theme">
-     <property name="text">
-      <string>Toggle Theme</string>
-     </property>
-    </action>
-   </menu>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionToggle_Theme"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionExit"/>
-  <action name="actionToggle_Theme"/>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionToggle_Theme">
+   <property name="text">
+    <string>Toggle Theme</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

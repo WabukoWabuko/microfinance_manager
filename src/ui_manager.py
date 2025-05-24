@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem, QDesktopWidget
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QTimer
 from src.login import Ui_LoginWindow
 from src.main_window import Ui_MainWindow
 from src.database import Database
@@ -23,6 +23,7 @@ from src.repayment import RepaymentManager
 from src.i18n import I18nManager
 from src.animations import AnimationManager
 from src.password_reset import PasswordResetManager
+from src.clients import ClientManager
 
 class UIManager:
     def __init__(self):
@@ -47,6 +48,7 @@ class UIManager:
             self.i18n = I18nManager()
             self.animation_manager = AnimationManager()
             self.password_reset = PasswordResetManager()
+            self.client_manager = ClientManager()
             self.current_user = None
             self.theme = "light"
             self.previous_page = 0
@@ -55,8 +57,8 @@ class UIManager:
             self.login_widget = QWidget()
             self.login_ui = Ui_LoginWindow()
             self.login_ui.setupUi(self.login_widget)
-            self.login_widget.setVisible(True)  # Ensure visibility
-            self.login_widget.setWindowOpacity(1.0)  # Ensure full opacity
+            self.login_widget.setVisible(True)
+            self.login_widget.setWindowOpacity(1.0)
             print(f"Login widget initialized, geometry: {self.login_widget.geometry()}, isVisible: {self.login_widget.isVisible()}")
 
             # Initialize main window
@@ -64,7 +66,7 @@ class UIManager:
             self.main_ui = Ui_MainWindow()
             self.main_ui.setupUi(self.main_widget)
             self.main_widget.setMinimumSize(1200, 800)
-            self.main_widget.setWindowOpacity(1.0)  # Ensure full opacity
+            self.main_widget.setWindowOpacity(1.0)
             print(f"Main window initialized, geometry: {self.main_widget.geometry()}")
 
             # Button group for sidebar navigation
@@ -76,6 +78,7 @@ class UIManager:
             self.nav_group.addButton(self.main_ui.analytics_button, 3)
             self.nav_group.addButton(self.main_ui.repayment_button, 4)
             self.nav_group.addButton(self.main_ui.profile_button, 5)
+            self.nav_group.addButton(self.main_ui.clients_button, 6)
 
             # Connect signals
             self.login_ui.login_button.clicked.connect(self.handle_login)
@@ -93,11 +96,13 @@ class UIManager:
             self.main_ui.back_button_analytics.clicked.connect(self.back_to_previous)
             self.main_ui.back_button_repayment.clicked.connect(self.back_to_previous)
             self.main_ui.back_button_profile.clicked.connect(self.back_to_previous)
+            self.main_ui.back_button_clients.clicked.connect(self.back_to_previous)
             self.main_ui.b2c_withdraw_button.clicked.connect(self.handle_b2c_withdrawal)
             self.main_ui.export_button.clicked.connect(self.handle_export)
             self.main_ui.notifications_button.clicked.connect(self.handle_notifications)
             self.main_ui.profile_save_button.clicked.connect(self.handle_profile_save)
             self.main_ui.two_factor_button.clicked.connect(self.handle_two_factor_setup)
+            self.main_ui.add_client_button.clicked.connect(self.handle_add_client)
             self.nav_group.buttonClicked[int].connect(self.handle_navigation)
 
             # Add tooltips
@@ -113,6 +118,7 @@ class UIManager:
             self.main_ui.analytics_button.setToolTip(self.i18n.translate("View loan analytics"))
             self.main_ui.repayment_button.setToolTip(self.i18n.translate("View repayment schedule"))
             self.main_ui.profile_button.setToolTip(self.i18n.translate("Edit your profile"))
+            self.main_ui.clients_button.setToolTip(self.i18n.translate("Manage clients"))
             self.main_ui.sync_button.setToolTip(self.i18n.translate("Sync transactions with MPesa"))
             self.main_ui.calculate_button.setToolTip(self.i18n.translate("Calculate monthly payment"))
             self.main_ui.submit_loan_button.setToolTip(self.i18n.translate("Submit loan application"))
@@ -121,11 +127,13 @@ class UIManager:
             self.main_ui.back_button_analytics.setToolTip(self.i18n.translate("Return to previous page"))
             self.main_ui.back_button_repayment.setToolTip(self.i18n.translate("Return to previous page"))
             self.main_ui.back_button_profile.setToolTip(self.i18n.translate("Return to previous page"))
+            self.main_ui.back_button_clients.setToolTip(self.i18n.translate("Return to previous page"))
             self.main_ui.b2c_withdraw_button.setToolTip(self.i18n.translate("Withdraw funds via MPesa"))
             self.main_ui.export_button.setToolTip(self.i18n.translate("Export data to CSV/PDF"))
             self.main_ui.notifications_button.setToolTip(self.i18n.translate("View notifications"))
             self.main_ui.profile_save_button.setToolTip(self.i18n.translate("Save profile changes"))
             self.main_ui.two_factor_button.setToolTip(self.i18n.translate("Setup two-factor authentication"))
+            self.main_ui.add_client_button.setToolTip(self.i18n.translate("Add a new client"))
 
             # Initialize UI
             self.apply_theme()
@@ -156,9 +164,8 @@ class UIManager:
                     self.login_widget.hide()
                     self.main_widget.setWindowTitle(self.i18n.translate("Microfinance Manager"))
                     self.main_widget.show()
-                    self.main_widget.setVisible(True)  # Force visibility
-                    self.main_widget.setWindowOpacity(1.0)  # Ensure full opacity
-                    # Hardcode position to ensure visibility
+                    self.main_widget.setVisible(True)
+                    self.main_widget.setWindowOpacity(1.0)
                     self.main_widget.move(100, 100)
                     print(f"Main window shown, geometry: {self.main_widget.geometry()}, isVisible: {self.main_widget.isVisible()}")
                     self.main_ui.label_welcome.setText(self.i18n.translate("Welcome, {name}!").format(name=result["name"]))
@@ -172,17 +179,21 @@ class UIManager:
                 self.show_message(self.i18n.translate("Error"), result, QMessageBox.Critical)
         except Exception as e:
             print(f"Error in handle_login: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Login failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Login failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_navigation(self, index):
         try:
             self.previous_page = self.main_ui.content_stack.currentIndex()
             self.main_ui.content_stack.setCurrentIndex(index)
+            if index == 6 and self.current_user["role"] != "admin":
+                self.show_message(self.i18n.translate("Error"), self.i18n.translate("Admin access required"), QMessageBox.Critical)
+                self.main_ui.content_stack.setCurrentIndex(self.previous_page)
+                return
             self.audit_logger.log_action(self.current_user["id"], "navigate", f"Navigated to page {index}")
             print(f"Navigated to page {index}")
         except Exception as e:
             print(f"Error in handle_navigation: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Navigation failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Navigation failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def back_to_previous(self):
         try:
@@ -192,7 +203,7 @@ class UIManager:
             print(f"Returned to previous page {self.previous_page}")
         except Exception as e:
             print(f"Error in back_to_previous: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Navigation failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Navigation failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_loan_submission(self):
         try:
@@ -207,7 +218,7 @@ class UIManager:
             self.audit_logger.log_action(self.current_user["id"], "loan_submission", f"Submitted loan: {amount}")
         except Exception as e:
             print(f"Error in handle_loan_submission: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Loan submission failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Loan submission failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_calculate_payment(self):
         try:
@@ -217,7 +228,7 @@ class UIManager:
             self.main_ui.payment_result.setText(self.i18n.translate("Monthly Payment: {payment}").format(payment=payment))
         except Exception as e:
             print(f"Error in handle_calculate_payment: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Calculation failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Calculation failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_sync(self):
         try:
@@ -229,7 +240,7 @@ class UIManager:
             self.audit_logger.log_action(self.current_user["id"], "sync", "Synced transactions")
         except Exception as e:
             print(f"Error in handle_sync: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Sync failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Sync failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_b2c_withdrawal(self):
         try:
@@ -240,7 +251,7 @@ class UIManager:
             self.audit_logger.log_action(self.current_user["id"], "b2c_withdrawal", f"Withdrew {amount} to {phone}")
         except Exception as e:
             print(f"Error in handle_b2c_withdrawal: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Withdrawal failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Withdrawal failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_export(self):
         try:
@@ -250,17 +261,17 @@ class UIManager:
             self.audit_logger.log_action(self.current_user["id"], "export", f"Exported data as {format_type}")
         except Exception as e:
             print(f"Error in handle_export: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Export failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Export failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_notifications(self):
         try:
             notifications = self.notification_manager.get_notifications(self.current_user["id"])
             self.main_ui.notifications_text.setPlainText("\n".join([self.i18n.translate(n["message"]) for n in notifications]))
-            self.main_ui.content_stack.setCurrentIndex(6)
+            self.main_ui.content_stack.setCurrentIndex(7)
             self.audit_logger.log_action(self.current_user["id"], "view_notifications", "Viewed notifications")
         except Exception as e:
             print(f"Error in handle_notifications: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Notifications failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Notifications failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_profile_save(self):
         try:
@@ -271,7 +282,7 @@ class UIManager:
             self.audit_logger.log_action(self.current_user["id"], "update_profile", "Updated profile")
         except Exception as e:
             print(f"Error in handle_profile_save: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Profile update failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Profile update failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_two_factor_setup(self):
         try:
@@ -280,7 +291,7 @@ class UIManager:
             self.audit_logger.log_action(self.current_user["id"], "two_factor_setup", "Setup two-factor authentication")
         except Exception as e:
             print(f"Error in handle_two_factor_setup: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Two-factor setup failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Two-factor setup failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def handle_password_reset(self):
         try:
@@ -290,36 +301,51 @@ class UIManager:
             self.audit_logger.log_action(0, "password_reset", f"Initiated password reset for {email}")
         except Exception as e:
             print(f"Error in handle_password_reset: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Password reset failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Password reset failed: {error}").format(error=str(e)), QMessageBox.Critical)
+
+    def handle_add_client(self):
+        try:
+            if self.current_user["role"] != "admin":
+                self.show_message(self.i18n.translate("Error"), self.i18n.translate("Admin access required"), QMessageBox.Critical)
+                return
+            name = self.main_ui.client_name_input.text()
+            email = self.main_ui.client_email_input.text()
+            phone = self.main_ui.client_phone_input.text()
+            role = self.main_ui.client_role_combo.currentText().lower()
+            success, msg = self.client_manager.add_client(name, email, phone, role)
+            self.show_message(self.i18n.translate("Client"), self.i18n.translate(msg), QMessageBox.Information if success else QMessageBox.Critical)
+            self.audit_logger.log_action(self.current_user["id"], "add_client", f"Added client: {name}")
+            if success:
+                self.main_ui.client_name_input.clear()
+                self.main_ui.client_email_input.clear()
+                self.main_ui.client_phone_input.clear()
+        except Exception as e:
+            print(f"Error in handle_add_client: {e}")
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Client addition failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def update_dashboard(self):
         try:
             if not self.current_user:
                 print("No current user, skipping dashboard update")
                 return
-            # Update loan table
             loans = self.loan_manager.get_loans(self.current_user["id"])
             self.main_ui.loan_table.setRowCount(len(loans))
             for row, loan in enumerate(loans):
                 for col, value in enumerate(loan[:4]):
                     self.main_ui.loan_table.setItem(row, col, QTableWidgetItem(str(value)))
-            # Update transaction table
             if loans:
                 transactions = self.transaction_manager.get_transactions(loans[0][0])
                 self.main_ui.transaction_table.setRowCount(len(transactions))
                 for row, transaction in enumerate(transactions):
                     for col, value in enumerate(transaction[:4]):
                         self.main_ui.transaction_table.setItem(row, col, QTableWidgetItem(str(value)))
-            # Update analytics
             self.analytics_manager.update_analytics(self.main_ui, self.current_user["id"])
-            # Update repayment schedule
             self.repayment_manager.update_schedule(self.main_ui, self.current_user["id"])
-            # Update custom widgets
             self.widget_manager.update_dashboard(self.main_ui, self.current_user["id"])
             print("Dashboard updated")
         except Exception as e:
             print(f"Error in update_dashboard: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Dashboard update failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Dashboard update failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def apply_theme(self):
         try:
@@ -349,7 +375,7 @@ class UIManager:
             print("Theme applied")
         except Exception as e:
             print(f"Error in apply_theme: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme application failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme application failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
     def toggle_theme(self):
         try:
@@ -359,17 +385,19 @@ class UIManager:
             print("Theme toggled")
         except Exception as e:
             print(f"Error in toggle_theme: {e}")
-            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme toggle failed: {error}").format(error=e), QMessageBox.Critical)
+            self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme toggle failed: {error}").format(error=str(e)), QMessageBox.Critical)
 
-    def show_message(self):
+    def show_message(self, title, message, icon):
         try:
             msg = QMessageBox(self.main_widget)
             msg.setWindowTitle(title)
             msg.setText(message)
             msg.setIcon(icon)
-            msg.setStyleSheet("background: #F8F9FA; color: #000000; font-family: Roboto;" if self.theme == "light" else "background: #343A40; color: #FFFFFF; font-family: Roboto;")
+            msg.setStyleSheet("background: #808080; color: #FFFFFF; font-family: Roboto;")
+            msg.addButton(self.i18n.translate("Close"), QMessageBox.AcceptRole)
             self.animate_message(msg)
-            msg.show()  # Ensure message box is shown
+            msg.show()
+            QTimer.singleShot(5000, msg.close)
             print(f"Message shown: {title} - {message}")
         except Exception as e:
             print(f"Error in show_message: {e}")
@@ -382,7 +410,7 @@ class UIManager:
             animation.setStartValue(0)
             animation.setEndValue(1)
             animation.setEasingCurve(QEasingCurve.InOutQuad)
-            animation.finished.connect(lambda: widget.setWindowOpacity(1.0))  # Ensure opacity is 1 after animation
+            animation.finished.connect(lambda: widget.setWindowOpacity(1.0))
             animation.start()
             print(f"Transition animation started for {widget}")
         except Exception as e:
@@ -396,7 +424,7 @@ class UIManager:
             animation.setStartValue(0)
             animation.setEndValue(1)
             animation.setEasingCurve(QEasingCurve.InOutQuad)
-            animation.finished.connect(lambda: msg.setWindowOpacity(1.0))  # Ensure opacity is 1 after animation
+            animation.finished.connect(lambda: msg.setWindowOpacity(1.0))
             animation.start()
             print("Message animation started")
         except Exception as e:
@@ -424,6 +452,7 @@ class UIManager:
             self.i18n.close()
             self.animation_manager.close()
             self.password_reset.close()
+            self.client_manager.close()
             self.main_widget.close()
             self.login_widget.close()
             print("Application closed")
