@@ -12,7 +12,7 @@ class WidgetManager:
     def setup_dashboard(self, main_ui):
         try:
             main_ui.loan_table.setColumnCount(4)
-            main_ui.loan_table.setHorizontalHeaderLabels(["ID", "Amount", "Status", "Created"])
+            main_ui.loan_table.setHorizontalHeaderLabels(["ID", "Amount", "Status", "Issued"])
             main_ui.transaction_table.setColumnCount(4)
             main_ui.transaction_table.setHorizontalHeaderLabels(["ID", "Loan ID", "Amount", "Type"])
         except Exception as e:
@@ -22,8 +22,8 @@ class WidgetManager:
     def update_dashboard(self, main_ui, user_id):
         try:
             loans = self.db.execute_fetch_all(
-                "SELECT id, amount, status, created_at FROM Loans WHERE user_id = ?",
-                (user_id,)
+                "SELECT id, amount, status, date_issued FROM loans WHERE user_id = ?",
+                (str(user_id),)
             )
             main_ui.loan_table.setRowCount(len(loans))
             for row, loan in enumerate(loans):

@@ -1,5 +1,6 @@
 import sqlite3
 import bcrypt
+import uuid
 
 class Database:
     def __init__(self):
@@ -14,66 +15,69 @@ class Database:
     def create_tables(self):
         try:
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS Users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    email TEXT UNIQUE NOT NULL,
-                    password_hash TEXT NOT NULL,
-                    phone TEXT,
+                CREATE TABLE IF NOT EXISTS users (
+                    id TEXT PRIMARY KEY,
+                    username TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL,
                     role TEXT NOT NULL,
-                    two_factor_enabled BOOLEAN DEFAULT 0,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    group_id TEXT
                 )
             ''')
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS Loans (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
+                CREATE TABLE IF NOT EXISTS groups (
+                    id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    description TEXT,
+                    created_date TIMESTAMP NOT NULL,
+                    balance REAL NOT NULL
+                )
+            ''')
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS contributions (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    group_id TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    date TIMESTAMP NOT NULL,
+                    status TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id),
+                    FOREIGN KEY (group_id) REFERENCES groups(id)
+                )
+            ''')
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS loans (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    group_id TEXT NOT NULL,
                     amount REAL NOT NULL,
                     interest_rate REAL NOT NULL,
-                    term INTEGER NOT NULL,
-                    purpose TEXT,
-                    status TEXT DEFAULT 'pending',
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES Users(id)
+                    date_issued TIMESTAMP NOT NULL,
+                    due_date TIMESTAMP NOT NULL,
+                    status TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id),
+                    FOREIGN KEY (group_id) REFERENCES groups(id)
                 )
             ''')
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS Transactions (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    loan_id INTEGER,
+                CREATE TABLE IF NOT EXISTS payouts (
+                    id TEXT PRIMARY KEY,
+                    group_id TEXT NOT NULL,
+                    user_id TEXT NOT NULL,
                     amount REAL NOT NULL,
-                    type TEXT NOT NULL,
-                    status TEXT DEFAULT 'pending',
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (loan_id) REFERENCES Loans(id)
+                    date TIMESTAMP NOT NULL,
+                    status TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id),
+                    FOREIGN KEY (group_id) REFERENCES groups(id)
                 )
             ''')
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS Settings (
-                    id INTEGER PRIMARY KEY,
-                    theme TEXT DEFAULT 'light',
-                    last_sync_timestamp TIMESTAMP
-                )
-            ''')
-            self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS AuditLog (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
-                    action TEXT NOT NULL,
-                    details TEXT,
-                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES Users(id)
-                )
-            ''')
-            self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS Notifications (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
-                    message TEXT NOT NULL,
-                    status TEXT DEFAULT 'unread',
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES Users(id)
+                CREATE TABLE IF NOT EXISTS sync_queue (
+                    id TEXT PRIMARY KEY,
+                    operation TEXT NOT NULL,
+                    entity TEXT NOT NULL,
+                    entity_id TEXT NOT NULL,
+                    data TEXT NOT NULL,
+                    created_at TIMESTAMP NOT NULL
                 )
             ''')
             self.conn.commit()
@@ -84,13 +88,14 @@ class Database:
 
     def seed_admin_user(self):
         try:
-            email = "john@example.com"
+            user_id = str(uuid.uuid4())
+            username = "john@example.com"
             password = "password"
             hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             self.cursor.execute('''
-                INSERT OR IGNORE INTO Users (name, email, password_hash, phone, role)
+                INSERT OR IGNORE INTO users (id, username, password, role, group_id)
                 VALUES (?, ?, ?, ?, ?)
-            ''', ("John Doe", email, hashed, "+254123456789", "client"))
+            ''', (user_id, username, hashed, "client", None))
             self.conn.commit()
         except Exception as e:
             print(f"Error in seed_admin_user: {e}")
@@ -113,7 +118,7 @@ class Database:
             print(f"Error fetching one: {e}")
             raise
 
-    def fetch_all(self, query, params=()):
+    def execute_fetch_all(self, query, params=()):
         try:
             self.cursor.execute(query, params)
             return self.cursor.fetchall()

@@ -9,21 +9,21 @@ class Auth:
             print(f"Error in Auth.__init__: {e}")
             raise
 
-    def login(self, email, password):
+    def login(self, username, password):
         try:
             result = self.db.execute_fetch_one(
-                "SELECT id, name, email, password_hash, phone, role FROM Users WHERE email = ?",
-                (email,)
+                "SELECT id, username, password, role FROM users WHERE username = ?",
+                (username,)
             )
             if result:
-                stored_hash = result[3].encode('utf-8')
+                stored_hash = result[2]
+                if isinstance(stored_hash, str):
+                    stored_hash = stored_hash.encode('utf-8')
                 if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
                     return True, {
                         "id": result[0],
-                        "name": result[1],
-                        "email": result[2],
-                        "phone": result[4],
-                        "role": result[5]
+                        "username": result[1],
+                        "role": result[3]
                     }
                 return False, "Invalid password"
             return False, "User not found"
