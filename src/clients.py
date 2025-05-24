@@ -1,11 +1,15 @@
-import hashlib
 import re
+import bcrypt
+import uuid
+from src.database import Database
 
 class ClientManager:
     def __init__(self):
-        from src.database import Database
-        self.db = Database()
-        print("ClientManager initialized")
+        try:
+            self.db = Database()
+        except Exception as e:
+            print(f"Error in ClientManager.__init__: {e}")
+            raise
 
     def add_client(self, name, email, phone, role):
         try:
@@ -18,23 +22,22 @@ class ClientManager:
             if role not in ["client", "admin"]:
                 return False, "Invalid role"
             
-            # Generate default password (e.g., "password123")
+            user_id = str(uuid.uuid4())
             password = "password123"
-            password_hash = hashlib.sha256(password.encode()).hexdigest()
-            
+            password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             query = """
-                INSERT INTO Users (name, email, phone, password_hash, role)
+                INSERT INTO users (id, username, password, role, group_id)
                 VALUES (?, ?, ?, ?, ?)
             """
-            self.db.execute(query, (name, email, phone, password_hash, role))
+            self.db.execute(query, (user_id, email, password_hash, role, None))
             return True, "Client added successfully"
         except Exception as e:
-            print(f"Error adding client: {e}")
+            print(f"Error in add_client: {e}")
             return False, str(e)
 
     def close(self):
         try:
             self.db.close()
-            print("ClientManager closed")
         except Exception as e:
-            print(f"Error closing ClientManager: {e}")
+            print(f"Error in close: {e}")
+            raise

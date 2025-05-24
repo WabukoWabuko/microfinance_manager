@@ -80,6 +80,17 @@ class Database:
                     created_at TIMESTAMP NOT NULL
                 )
             ''')
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS transactions (
+                    id TEXT PRIMARY KEY,
+                    loan_id TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    type TEXT NOT NULL,
+                    date TIMESTAMP NOT NULL,
+                    status TEXT NOT NULL,
+                    FOREIGN KEY (loan_id) REFERENCES loans(id)
+                )
+            ''')
             self.conn.commit()
             self.seed_admin_user()
         except Exception as e:
