@@ -23,6 +23,7 @@ from src.i18n import I18nManager
 from src.animations import AnimationManager
 from src.password_reset import PasswordResetManager
 from src.clients import ClientManager
+import json
 
 class UIManager:
     def __init__(self):
@@ -198,7 +199,9 @@ class UIManager:
             amount = float(self.main_ui.amount_input.text() or 0)
             term = int(self.main_ui.term_input.text() or 0)
             purpose = "General"
-            success, msg = self.loan_manager.apply_loan(self.current_user["id"], amount, 5.0, purpose)
+            success, msg = self.offline_manager.sync_if_online(
+                lambda: self.loan_manager.apply_loan(self.current_user["id"], amount, 5.0, purpose)
+            )
             self.show_message(self.i18n.translate("Loan"), self.i18n.translate(msg), QMessageBox.Information)
             self.update_dashboard()
             self.audit_logger.log_action(self.current_user["id"], "loan_submission", f"Submitted loan: {amount}")
@@ -221,9 +224,10 @@ class UIManager:
             self.main_ui.statusbar.showMessage(self.i18n.translate("Syncing transactions..."))
             success, msg = self.offline_manager.sync_if_online(self.sync_manager.sync_transactions)
             self.main_ui.statusbar.showMessage(self.i18n.translate(msg), 5000)
-            self.show_message(self.i18n.translate("Sync"), self.i18n.translate(msg), QMessageBox.Information)
-            self.update_dashboard()
-            self.audit_logger.log_action(self.current_user["id"], "sync", "Synced transactions")
+            self.show_message(self.i18n.translate("Sync"), self.i18n.translate(msg), QMessageBox.Information if success else QMessageBox.Warning)
+            if success:
+                self.update_dashboard()
+                self.audit_logger.log_action(self.current_user["id"], "sync", "Synced transactions")
         except Exception as e:
             print(f"Error in handle_sync: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Sync failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -232,7 +236,9 @@ class UIManager:
         try:
             amount = float(self.main_ui.b2c_amount_input.text() or 0)
             phone = self.main_ui.b2c_phone_input.text()
-            success, msg = self.b2c_manager.withdraw(self.current_user["id"], amount, phone)
+            success, msg = self.offline_manager.sync_if_online(
+                lambda: self.b2c_manager.withdraw(self.current_user["id"], amount, phone)
+            )
             self.show_message(self.i18n.translate("Withdrawal"), self.i18n.translate(msg), QMessageBox.Information)
             self.audit_logger.log_action(self.current_user["id"], "b2c_withdrawal", f"Withdrew {amount} to {phone}")
         except Exception as e:
