@@ -1,4 +1,5 @@
 from src.database import Database
+from PyQt5.QtWidgets import QTableWidgetItem
 
 class WidgetManager:
     def __init__(self):
