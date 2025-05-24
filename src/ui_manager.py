@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QTimer
+from PyQt5.QtWidgets import QMainWindow, QWidget, QMessageBox, QButtonGroup, QTableWidgetItem, QScrollArea, QVBoxLayout, QHBoxLayout, QLabel
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QTimer, Qt
 from src.login import Ui_LoginWindow
 from src.main_window import Ui_MainWindow
 from src.database import Database
@@ -23,7 +23,6 @@ from src.i18n import I18nManager
 from src.animations import AnimationManager
 from src.password_reset import PasswordResetManager
 from src.clients import ClientManager
-import json
 
 class UIManager:
     def __init__(self):
@@ -73,6 +72,7 @@ class UIManager:
             self.nav_group.addButton(self.main_ui.profile_button, 5)
             self.nav_group.addButton(self.main_ui.clients_button, 6)
 
+            self.setup_scrollable_pages()
             self.login_ui.login_button.clicked.connect(self.handle_login)
             if hasattr(self.login_ui, 'reset_password_button'):
                 self.login_ui.reset_password_button.clicked.connect(self.handle_password_reset)
@@ -139,6 +139,48 @@ class UIManager:
             self.main_ui.statusbar.showMessage(self.i18n.translate("Ready"))
         except Exception as e:
             print(f"Error in UIManager.__init__: {e}")
+            raise
+
+    def setup_scrollable_pages(self):
+        try:
+            pages = [
+                (self.main_ui.dashboard_page, [self.main_ui.loan_table, self.main_ui.transaction_table, self.main_ui.analytics_text]),
+                (self.main_ui.loan_page, [self.main_ui.amount_input, self.main_ui.term_input, self.main_ui.calculate_button, self.main_ui.submit_loan_button, self.main_ui.payment_result, self.main_ui.back_button_loan]),
+                (self.main_ui.transactions_page, [self.main_ui.transaction_table, self.main_ui.back_button_transactions]),
+                (self.main_ui.analytics_page, [self.main_ui.analytics_text, self.main_ui.back_button_analytics]),
+                (self.main_ui.repayment_page, [self.main_ui.repayment_table, self.main_ui.back_button_repayment]),
+                (self.main_ui.profile_page, [self.main_ui.profile_name_input, self.main_ui.profile_save_button, self.main_ui.two_factor_code_input, self.main_ui.two_factor_button, self.main_ui.back_button_profile]),
+                (self.main_ui.clients_page, [self.main_ui.client_name_input, self.main_ui.client_email_input, self.main_ui.client_phone_input, self.main_ui.client_role_combo, self.main_ui.add_client_button, self.main_ui.back_button_clients]),
+                (self.main_ui.notifications_page, [self.main_ui.notifications_text])
+            ]
+            for page, widgets in pages:
+                scroll_area = QScrollArea()
+                scroll_area.setWidgetResizable(True)
+                scroll_area.setStyleSheet("QScrollArea { border: none; background: transparent; }")
+                content_widget = QWidget()
+                layout = QVBoxLayout(content_widget)
+                layout.setContentsMargins(20, 20, 20, 20)
+                layout.setSpacing(15)
+                for widget in widgets:
+                    card = QWidget()
+                    card_layout = QVBoxLayout(card)
+                    card_layout.setContentsMargins(15, 15, 15, 15)
+                    card_layout.addWidget(widget)
+                    card.setStyleSheet("""
+                        QWidget {
+                            background: #FFFFFF;
+                            border-radius: 10px;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                        }
+                    """)
+                    layout.addWidget(card)
+                layout.addStretch()
+                scroll_area.setWidget(content_widget)
+                page_layout = QVBoxLayout(page)
+                page_layout.setContentsMargins(0, 0, 0, 0)
+                page_layout.addWidget(scroll_area)
+        except Exception as e:
+            print(f"Error in setup_scrollable_pages: {e}")
             raise
 
     def handle_login(self):
@@ -345,27 +387,219 @@ class UIManager:
     def apply_theme(self):
         try:
             style = """
-                QWidget { background: #F8F9FA; color: #000000; font-family: Roboto; }
-                QLineEdit, QComboBox, QPushButton { border: 1px solid #CED4DA; border-radius: 5px; padding: 5px; }
-                QPushButton:hover { background: #0056B3; color: #FFFFFF; }
-                QTableWidget { gridline-color: #CED4DA; color: #000000; }
-                QLabel, QTextEdit { color: #000000; }
+                QWidget {
+                    background: #F8F9FA;
+                    color: #333333;
+                    font-family: Roboto;
+                    font-size: 14px;
+                }
+                QLineEdit, QComboBox {
+                    border: 1px solid #CED4DA;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background: #FFFFFF;
+                    font-size: 14px;
+                }
+                QComboBox::drop-down {
+                    border: none;
+                }
+                QPushButton {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 12px 24px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                }
+                QPushButton:hover {
+                    background: #0056B3;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                }
+                QPushButton:pressed {
+                    background: #003087;
+                }
+                QTableWidget {
+                    border: none;
+                    background: #FFFFFF;
+                    border-radius: 10px;
+                    color: #333333;
+                    gridline-color: #E9ECEF;
+                }
+                QTableWidget::item {
+                    padding: 10px;
+                }
+                QTextEdit, QLabel {
+                    color: #333333;
+                    background: #FFFFFF;
+                    border-radius: 10px;
+                    padding: 10px;
+                }
+                QStatusBar {
+                    background: #E9ECEF;
+                    color: #333333;
+                    font-size: 14px;
+                }
+                QMenuBar {
+                    background: #FFFFFF;
+                    color: #333333;
+                    font-size: 14px;
+                }
+                QMenuBar::item:selected {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                }
+                QHeaderView::section {
+                    background: #F1F3F5;
+                    padding: 10px;
+                    border: none;
+                    color: #333333;
+                }
             """ if self.theme == "light" else """
-                QWidget { background: #343A40; color: #FFFFFF; font-family: Roboto; }
-                QLineEdit, QComboBox, QPushButton { border: 1px solid #6C757D; border-radius: 5px; padding: 5px; }
-                QPushButton:hover { background: #0056B3; color: #FFFFFF; }
-                QTableWidget { gridline-color: #6C757D; color: #FFFFFF; }
-                QLabel, QTextEdit { color: #FFFFFF; }
+                QWidget {
+                    background: #1A1A1A;
+                    color: #E9ECEF;
+                    font-family: Roboto;
+                    font-size: 14px;
+                }
+                QLineEdit, QComboBox {
+                    border: 1px solid #495057;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background: #2C2C2C;
+                    font-size: 14px;
+                    color: #E9ECEF;
+                }
+                QComboBox::drop-down {
+                    border: none;
+                }
+                QPushButton {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 12px 24px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                }
+                QPushButton:hover {
+                    background: #0056B3;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+                }
+                QPushButton:pressed {
+                    background: #003087;
+                }
+                QTableWidget {
+                    border: none;
+                    background: #2C2C2C;
+                    border-radius: 10px;
+                    color: #E9ECEF;
+                    gridline-color: #495057;
+                }
+                QTableWidget::item {
+                    padding: 10px;
+                }
+                QTextEdit, QLabel {
+                    color: #E9ECEF;
+                    background: #2C2C2C;
+                    border-radius: 10px;
+                    padding: 10px;
+                }
+                QStatusBar {
+                    background: #2C2C2C;
+                    color: #E9ECEF;
+                    font-size: 14px;
+                }
+                QMenuBar {
+                    background: #2C2C2C;
+                    color: #E9ECEF;
+                    font-size: 14px;
+                }
+                QMenuBar::item:selected {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                }
+                QHeaderView::section {
+                    background: #343A40;
+                    padding: 10px;
+                    border: none;
+                    color: #E9ECEF;
+                }
             """
-            self.login_widget.setStyleSheet("background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #007BFF, stop:1 #0056B3); font-family: Roboto; color: #FFFFFF;")
+            self.login_widget.setStyleSheet("""
+                QWidget {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #007BFF, stop:1 #0056B3);
+                    font-family: Roboto;
+                    color: #FFFFFF;
+                }
+                QLineEdit, QComboBox {
+                    border: 1px solid #FFFFFF;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background: rgba(255,255,255,0.1);
+                    color: #FFFFFF;
+                    font-size: 14px;
+                }
+                QPushButton {
+                    background: #FFFFFF;
+                    color: #007BFF;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 12px 24px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                }
+                QPushButton:hover {
+                    background: #E9ECEF;
+                    color: #0056B3;
+                }
+                QLabel {
+                    color: #FFFFFF;
+                    font-size: 16px;
+                }
+            """)
             self.main_widget.setStyleSheet(style)
-            self.main_ui.statusbar.setStyleSheet("background: #343A40; color: #FFFFFF;" if self.theme == "light" else "background: #212529; color: #FFFFFF;")
-            self.main_ui.menubar.setStyleSheet("background: #343A40; color: #FFFFFF;" if self.theme == "light" else "background: #212529; color: #FFFFFF;")
-            self.main_ui.loan_table.setStyleSheet("QTableWidget { color: #000000; }" if self.theme == "light" else "QTableWidget { color: #FFFFFF; }")
-            self.main_ui.transaction_table.setStyleSheet("QTableWidget { color: #000000; }" if self.theme == "light" else "QTableWidget { color: #FFFFFF; }")
-            self.main_ui.analytics_text.setStyleSheet("QTextEdit { color: #000000; }" if self.theme == "light" else "QTextEdit { color: #FFFFFF; }")
-            self.main_ui.repayment_table.setStyleSheet("QTableWidget { color: #000000; }" if self.theme == "light" else "QTableWidget { color: #FFFFFF; }")
-            self.main_ui.notifications_text.setStyleSheet("QTextEdit { color: #000000; }" if self.theme == "light" else "QTextEdit { color: #FFFFFF; }")
+            self.main_ui.statusbar.setStyleSheet("background: #E9ECEF; color: #333333;" if self.theme == "light" else "background: #2C2C2C; color: #E9ECEF;")
+            self.main_ui.menubar.setStyleSheet("background: #FFFFFF; color: #333333;" if self.theme == "light" else "background: #2C2C2C; color: #E9ECEF;")
+            self.main_ui.sidebar.setStyleSheet("""
+                QWidget {
+                    background: #FFFFFF;
+                    border-right: 1px solid #E9ECEF;
+                }
+                QPushButton {
+                    background: transparent;
+                    color: #333333;
+                    border: none;
+                    padding: 15px;
+                    text-align: left;
+                    font-size: 16px;
+                }
+                QPushButton:hover {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                }
+            """ if self.theme == "light" else """
+                QWidget {
+                    background: #2C2C2C;
+                    border-right: 1px solid #495057;
+                }
+                QPushButton {
+                    background: transparent;
+                    color: #E9ECEF;
+                    border: none;
+                    padding: 15px;
+                    text-align: left;
+                    font-size: 16px;
+                }
+                QPushButton:hover {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                }
+            """)
+            self.main_ui.label_welcome.setStyleSheet("font-size: 24px; font-weight: bold; color: #007BFF; padding: 20px;")
         except Exception as e:
             print(f"Error in apply_theme: {e}")
             self.show_message(self.i18n.translate("Error"), self.i18n.translate("Theme application failed: {error}").format(error=str(e)), QMessageBox.Critical)
@@ -385,7 +619,47 @@ class UIManager:
             msg.setWindowTitle(title)
             msg.setText(message)
             msg.setIcon(icon)
-            msg.setStyleSheet("background: #808080; color: #FFFFFF; font-family: Roboto;")
+            msg.setStyleSheet("""
+                QMessageBox {
+                    background: #FFFFFF;
+                    font-family: Roboto;
+                    font-size: 14px;
+                }
+                QLabel {
+                    color: #333333;
+                }
+                QPushButton {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 20px;
+                    font-size: 14px;
+                }
+                QPushButton:hover {
+                    background: #0056B3;
+                }
+            """ if self.theme == "light" else """
+                QMessageBox {
+                    background: #2C2C2C;
+                    font-family: Roboto;
+                    font-size: 14px;
+                }
+                QLabel {
+                    color: #E9ECEF;
+                }
+                QPushButton {
+                    background: #007BFF;
+                    color: #FFFFFF;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 20px;
+                    font-size: 14px;
+                }
+                QPushButton:hover {
+                    background: #0056B3;
+                }
+            """)
             msg.addButton(self.i18n.translate("Close"), QMessageBox.AcceptRole)
             self.animate_message(msg)
             msg.show()
