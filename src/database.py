@@ -90,7 +90,7 @@ class Database:
             self.cursor.execute('''
                 INSERT OR IGNORE INTO Users (name, email, password_hash, phone, role)
                 VALUES (?, ?, ?, ?, ?)
-            ''', ("John Doe", email, hashed.decode('utf-8'), "+254123456789", "client"))
+            ''', ("John Doe", email, hashed, "+254123456789", "client"))
             self.conn.commit()
         except Exception as e:
             print(f"Error in seed_admin_user: {e}")
