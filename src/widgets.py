@@ -1,29 +1,33 @@
-from PyQt5.QtWidgets import QLabel
 from src.database import Database
 
 class WidgetManager:
     def __init__(self):
         try:
             self.db = Database()
-            print("WidgetManager initialized")
         except Exception as e:
             print(f"Error in WidgetManager.__init__: {e}")
             raise
 
-    def setup_dashboard(self, ui):
+    def setup_dashboard(self, main_ui):
         try:
-            label = QLabel("Custom Widget: Loan Summary")
-            ui.dashboard_layout.addWidget(label)
-            print("Dashboard widgets set up")
+            main_ui.loan_table.setColumnCount(4)
+            main_ui.loan_table.setHorizontalHeaderLabels(["ID", "Amount", "Status", "Created"])
+            main_ui.transaction_table.setColumnCount(4)
+            main_ui.transaction_table.setHorizontalHeaderLabels(["ID", "Loan ID", "Amount", "Type"])
         except Exception as e:
             print(f"Error in setup_dashboard: {e}")
             raise
 
-    def update_dashboard(self, ui, user_id):
+    def update_dashboard(self, main_ui, user_id):
         try:
-            widgets = self.db.fetchall("SELECT * FROM Widgets WHERE user_id = ?", (user_id,))
-            # Placeholder for dynamic widget updates
-            print("Dashboard widgets updated")
+            loans = self.db.execute_fetch_all(
+                "SELECT id, amount, status, created_at FROM Loans WHERE user_id = ?",
+                (user_id,)
+            )
+            main_ui.loan_table.setRowCount(len(loans))
+            for row, loan in enumerate(loans):
+                for col, value in enumerate(loan):
+                    main_ui.loan_table.setItem(row, col, QTableWidgetItem(str(value)))
         except Exception as e:
             print(f"Error in update_dashboard: {e}")
             raise
@@ -31,6 +35,6 @@ class WidgetManager:
     def close(self):
         try:
             self.db.close()
-            print("WidgetManager closed")
         except Exception as e:
             print(f"Error in close: {e}")
+            raise
