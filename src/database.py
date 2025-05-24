@@ -20,7 +20,8 @@ class Database:
                     username TEXT NOT NULL UNIQUE,
                     password TEXT NOT NULL,
                     role TEXT NOT NULL,
-                    group_id TEXT
+                    group_id TEXT,
+                    two_factor_enabled BOOLEAN DEFAULT 0
                 )
             ''')
             self.cursor.execute('''
@@ -91,6 +92,16 @@ class Database:
                     FOREIGN KEY (loan_id) REFERENCES loans(id)
                 )
             ''')
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS AuditLog (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT,
+                    action TEXT NOT NULL,
+                    details TEXT,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            ''')
             self.conn.commit()
             self.seed_admin_user()
         except Exception as e:
@@ -104,9 +115,9 @@ class Database:
             password = "password"
             hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             self.cursor.execute('''
-                INSERT OR IGNORE INTO users (id, username, password, role, group_id)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (user_id, username, hashed, "client", None))
+                INSERT OR IGNORE INTO users (id, username, password, role, group_id, two_factor_enabled)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (user_id, username, hashed, "client", None, 0))
             self.conn.commit()
         except Exception as e:
             print(f"Error in seed_admin_user: {e}")

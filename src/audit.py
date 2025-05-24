@@ -1,4 +1,5 @@
 from src.database import Database
+import uuid
 
 class AuditLogger:
     def __init__(self):
@@ -10,10 +11,12 @@ class AuditLogger:
 
     def log_action(self, user_id, action, details):
         try:
-            self.db.execute(
-                "INSERT INTO AuditLog (user_id, action, details) VALUES (?, ?, ?)",
-                (user_id, action, details)
-            )
+            audit_id = str(uuid.uuid4())
+            query = """
+                INSERT INTO AuditLog (id, user_id, action, details)
+                VALUES (?, ?, ?, ?)
+            """
+            self.db.execute(query, (audit_id, str(user_id) if user_id else None, action, details))
         except Exception as e:
             print(f"Error in log_action: {e}")
             raise

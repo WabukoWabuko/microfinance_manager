@@ -8,26 +8,24 @@ class TwoFactorAuth:
             print(f"Error in TwoFactorAuth.__init__: {e}")
             raise
 
-    def setup(self, user_id, code):
-        try:
-            self.db.execute(
-                "UPDATE Users SET two_factor_enabled = ? WHERE id = ?",
-                (True, user_id)
-            )
-            return True, "Two-factor authentication enabled"
-        except Exception as e:
-            print(f"Error in setup: {e}")
-            return False, str(e)
-
     def is_enabled(self, user_id):
         try:
             result = self.db.execute_fetch_one(
-                "SELECT two_factor_enabled FROM Users WHERE id = ?",
-                (user_id,)
+                "SELECT two_factor_enabled FROM users WHERE id = ?",
+                (str(user_id),)
             )
             return result[0] if result else False
         except Exception as e:
             print(f"Error in is_enabled: {e}")
+            raise
+
+    def setup(self, user_id, code):
+        try:
+            query = "UPDATE users SET two_factor_enabled = 1 WHERE id = ?"
+            self.db.execute(query, (str(user_id),))
+            return True, "Two-factor authentication enabled"
+        except Exception as e:
+            print(f"Error in setup: {e}")
             return False, str(e)
 
     def verify(self, user_id):
