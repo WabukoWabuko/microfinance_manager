@@ -1,5 +1,6 @@
 from src.database import Database
 
+
 class PasswordResetManager:
     def __init__(self):
         try:
@@ -11,7 +12,8 @@ class PasswordResetManager:
 
     def initiate_reset(self, email):
         try:
-            user = self.db.fetchall("SELECT id FROM Users WHERE email = ?", (email,))
+            user = self.db.fetchall(
+                "SELECT id FROM Users WHERE email = ?", (email,))
             if user:
                 # Placeholder for sending reset email
                 return True, "Reset link sent to your email"

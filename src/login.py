@@ -81,7 +81,6 @@ class Ui_LoginWindow(object):
         self.login_button.setStyleSheet(_translate("LoginWindow", "background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }"))
         self.reset_password_button.setText(_translate("LoginWindow", "Reset Password"))
         self.reset_password_button.setStyleSheet(_translate("LoginWindow", "background: transparent; color: #FFFFFF; border: 1px solid #FFFFFF; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: rgba(255,255,255,0.1); color: #E9ECEF; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }"))
-import resources_rc
 
 
 if __name__ == "__main__":

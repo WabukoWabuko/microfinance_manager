@@ -3,6 +3,7 @@ from src.database import Database
 import uuid
 from datetime import datetime
 
+
 class OfflineManager:
     def __init__(self):
         try:
@@ -43,7 +44,8 @@ class OfflineManager:
                 INSERT INTO sync_queue (id, operation, entity, entity_id, data, created_at)
                 VALUES (?, ?, ?, ?, ?, ?)
             """
-            self.db.execute(query, (queue_id, operation, entity, entity_id, data, created_at))
+            self.db.execute(query, (queue_id, operation,
+                            entity, entity_id, data, created_at))
             return True, "Operation queued"
         except Exception as e:
             print(f"Error in queue_operation: {e}")

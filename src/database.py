@@ -2,6 +2,7 @@ import sqlite3
 import bcrypt
 import uuid
 
+
 class Database:
     def __init__(self):
         try:

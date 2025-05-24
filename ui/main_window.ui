@@ -13,8 +13,22 @@
   <property name="windowTitle">
    <string>Microfinance Manager</string>
   </property>
+  <property name="styleSheet">
+   <string>background: #F8F9FA; font-family: Roboto; color: #333333;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="contentsMargins">
+     <rect>
+      <left>0</left>
+      <top>0</top>
+      <right>0</right>
+      <bottom>0</bottom>
+     </rect>
+    </property>
     <item>
      <widget class="QWidget" name="sidebar">
       <property name="minimumSize">
@@ -24,16 +38,27 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string>background: #343A40; color: #FFFFFF;</string>
+       <string>background: #FFFFFF; border-right: 1px solid #E9ECEF;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <property name="contentsMargins">
+        <rect>
+         <left>10</left>
+         <top>20</top>
+         <right>10</right>
+         <bottom>10</bottom>
+        </rect>
+       </property>
        <item>
         <widget class="QLabel" name="label_welcome">
          <property name="text">
           <string>Welcome!</string>
          </property>
          <property name="styleSheet">
-          <string>font-size: 16px; font-weight: bold;</string>
+          <string>font-size: 24px; font-weight: bold; color: #007BFF; padding: 10px;</string>
          </property>
         </widget>
        </item>
@@ -46,7 +71,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -59,7 +84,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -72,7 +97,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -85,7 +110,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -98,7 +123,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -111,7 +136,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -124,7 +149,7 @@
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 10px;</string>
+          <string>background: transparent; color: #333333; border: none; border-radius: 8px; padding: 15px; text-align: left; font-size: 16px; QPushButton:hover { background: #007BFF; color: #FFFFFF; }</string>
          </property>
         </widget>
        </item>
@@ -151,349 +176,1233 @@
       </property>
       <widget class="QWidget" name="dashboard_page">
        <layout class="QVBoxLayout" name="dashboard_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QTableWidget" name="loan_table">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>200</height>
-           </size>
+         <widget class="QScrollArea" name="dashboard_scroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableWidget" name="transaction_table">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>200</height>
-           </size>
+          <property name="styleSheet">
+           <string>border: none; background: transparent;</string>
           </property>
+          <widget class="QWidget" name="dashboard_content">
+           <layout class="QVBoxLayout" name="dashboard_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item>
+             <widget class="QWidget" name="loan_card">
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="loan_card_layout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>15</left>
+                 <top>15</top>
+                 <right>15</right>
+                 <bottom>15</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="loan_table_label">
+                 <property name="text">
+                  <string>Loans</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="loan_table">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>300</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: none; background: #FFFFFF; border-radius: 10px; color: #333333; gridline-color: #E9ECEF; QTableWidget::item { padding: 10px; } QHeaderView::section { background: #F1F3F5; padding: 10px; border: none; color: #333333; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="transaction_card">
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="transaction_card_layout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>15</left>
+                 <top>15</top>
+                 <right>15</right>
+                 <bottom>15</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="transaction_table_label">
+                 <property name="text">
+                  <string>Transactions</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="transaction_table">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>300</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: none; background: #FFFFFF; border-radius: 10px; color: #333333; gridline-color: #E9ECEF; QTableWidget::item { padding: 10px; } QHeaderView::section { background: #F1F3F5; padding: 10px; border: none; color: #333333; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="dashboard_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="loan_page">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="loan_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QLineEdit" name="amount_input">
-          <property name="placeholderText">
-           <string>Loan Amount</string>
+         <widget class="QScrollArea" name="loan_scroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="term_input">
-          <property name="placeholderText">
-           <string>Term (months)</string>
+          <property name="styleSheet">
+           <string>border: none; background: transparent;</string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="calculate_button">
-          <property name="text">
-           <string>Calculate Payment</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="payment_result">
-          <property name="text">
-           <string>Monthly Payment: </string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="submit_loan_button">
-          <property name="text">
-           <string>Submit Loan</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="back_button_loan">
-          <property name="text">
-           <string>Back</string>
-          </property>
+          <widget class="QWidget" name="loan_content">
+           <layout class="QVBoxLayout" name="loan_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QWidget" name="loan_form_card">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="loan_form_layout">
+               <property name="spacing">
+                <number>15</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="loan_form_label">
+                 <property name="text">
+                  <string>Apply for a Loan</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="amount_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Loan Amount</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="term_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Term (months)</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="calculate_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Calculate Payment</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="payment_result">
+                 <property name="text">
+                  <string>Monthly Payment: </string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>color: #333333; font-size: 14px; padding: 10px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="submit_loan_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Submit Loan</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="back_button_loan">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Back</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="loan_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="transactions_page">
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="transactions_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QPushButton" name="sync_button">
-          <property name="text">
-           <string>Sync Transactions</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="b2c_withdraw_button">
-          <property name="text">
-           <string>Withdraw via MPesa</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="b2c_amount_input">
-          <property name="placeholderText">
-           <string>Withdrawal Amount</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="b2c_phone_input">
-          <property name="placeholderText">
-           <string>Phone Number</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="export_format_combo">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
+         <widget class="QScrollArea" name="transactions_scroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
           <property name="styleSheet">
-           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+           <string>border: none; background: transparent;</string>
           </property>
-          <item>
-           <property name="text">
-            <string>CSV</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>PDF</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="export_button">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Export Data</string>
-          </property>
-          <property name="styleSheet">
-           <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 5px;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="back_button_transactions">
-          <property name="text">
-           <string>Back</string>
-          </property>
+          <widget class="QWidget" name="transactions_content">
+           <layout class="QVBoxLayout" name="transactions_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QWidget" name="transactions_form_card">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="transactions_form_layout">
+               <property name="spacing">
+                <number>15</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="transactions_form_label">
+                 <property name="text">
+                  <string>Manage Transactions</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="sync_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Sync Transactions</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="b2c_withdraw_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Withdraw via MPesa</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="b2c_amount_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Withdrawal Amount</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="b2c_phone_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Phone Number</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="export_format_combo">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333; QComboBox::drop-down { border: none; }</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>CSV</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>PDF</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="export_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Export Data</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="back_button_transactions">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Back</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="transactions_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="analytics_page">
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="analytics_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QTextEdit" name="analytics_text">
-          <property name="readOnly">
+         <widget class="QScrollArea" name="analytics_scroll">
+          <property name="widgetResizable">
            <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="back_button_analytics">
-          <property name="text">
-           <string>Back</string>
+          <property name="styleSheet">
+           <string>border: none; background: transparent;</string>
           </property>
+          <widget class="QWidget" name="analytics_content">
+           <layout class="QVBoxLayout" name="analytics_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item>
+             <widget class="QWidget" name="analytics_card">
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="analytics_card_layout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>15</left>
+                 <top>15</top>
+                 <right>15</right>
+                 <bottom>15</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="analytics_label">
+                 <property name="text">
+                  <string>Loan Analytics</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="analytics_text">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: none; background: #FFFFFF; border-radius: 10px; color: #333333; padding: 10px; font-size: 14px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="back_button_analytics">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Back</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="analytics_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="repayment_page">
-       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <layout class="QVBoxLayout" name="repayment_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QTableWidget" name="repayment_table">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>400</height>
-           </size>
+         <widget class="QScrollArea" name="repayment_scroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="back_button_repayment">
-          <property name="text">
-           <string>Back</string>
+          <property name="styleSheet">
+           <string>border: none; background: transparent;</string>
           </property>
+          <widget class="QWidget" name="repayment_content">
+           <layout class="QVBoxLayout" name="repayment_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item>
+             <widget class="QWidget" name="repayment_card">
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="repayment_card_layout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>15</left>
+                 <top>15</top>
+                 <right>15</right>
+                 <bottom>15</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="repayment_table_label">
+                 <property name="text">
+                  <string>Repayment Schedule</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="repayment_table">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>400</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: none; background: #FFFFFF; border-radius: 10px; color: #333333; gridline-color: #E9ECEF; QTableWidget::item { padding: 10px; } QHeaderView::section { background: #F1F3F5; padding: 10px; border: none; color: #333333; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="back_button_repayment">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Back</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="repayment_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="profile_page">
-       <layout class="QVBoxLayout" name="verticalLayout_7">
+       <layout class="QVBoxLayout" name="profile_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QLineEdit" name="profile_name_input">
-          <property name="placeholderText">
-           <string>Name</string>
+         <widget class="QScrollArea" name="profile_scroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="profile_email_input">
-          <property name="placeholderText">
-           <string>Email</string>
+          <property name="styleSheet">
+           <string>border: none; background: transparent;</string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="profile_save_button">
-          <property name="text">
-           <string>Save Profile</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="two_factor_code_input">
-          <property name="placeholderText">
-           <string>Two-Factor Code</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="two_factor_button">
-          <property name="text">
-           <string>Setup Two-Factor</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="back_button_profile">
-          <property name="text">
-           <string>Back</string>
-          </property>
+          <widget class="QWidget" name="profile_content">
+           <layout class="QVBoxLayout" name="profile_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QWidget" name="profile_form_card">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="profile_form_layout">
+               <property name="spacing">
+                <number>15</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="profile_form_label">
+                 <property name="text">
+                  <string>Edit Profile</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="profile_name_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Name</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="profile_email_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Email</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="profile_save_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Save Profile</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="two_factor_code_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Two-Factor Code</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="two_factor_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Setup Two-Factor</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="back_button_profile">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Back</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="profile_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="clients_page">
-       <layout class="QVBoxLayout" name="verticalLayout_8">
+       <layout class="QVBoxLayout" name="clients_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QLineEdit" name="client_name_input">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="placeholderText">
-           <string>Name</string>
+         <widget class="QScrollArea" name="clients_scroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
           <property name="styleSheet">
-           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
+           <string>border: none; background: transparent;</string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="client_email_input">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="placeholderText">
-           <string>Email</string>
-          </property>
-          <property name="styleSheet">
-           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="client_phone_input">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="placeholderText">
-           <string>Phone Number</string>
-          </property>
-          <property name="styleSheet">
-           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="client_role_combo">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string>border: 1px solid #CED4DA; border-radius: 5px; padding: 5px;</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>Client</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Admin</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="add_client_button">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Add Client</string>
-          </property>
-          <property name="styleSheet">
-           <string>background: #007BFF; color: #FFFFFF; border-radius: 5px; padding: 5px;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="back_button_clients">
-          <property name="text">
-           <string>Back</string>
-          </property>
+          <widget class="QWidget" name="clients_content">
+           <layout class="QVBoxLayout" name="clients_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QWidget" name="clients_form_card">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="clients_form_layout">
+               <property name="spacing">
+                <number>15</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="clients_form_label">
+                 <property name="text">
+                  <string>Add Client</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="client_name_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Name</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="client_email_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Email</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="client_phone_input">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Phone Number</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="client_role_combo">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: 1px solid #CED4DA; border-radius: 8px; padding: 10px; background: #FFFFFF; font-size: 14px; color: #333333; QComboBox::drop-down { border: none; }</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Client</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Admin</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="add_client_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Add Client</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="back_button_clients">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Back</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="clients_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="notifications_page">
-       <layout class="QVBoxLayout" name="verticalLayout_9">
+       <layout class="QVBoxLayout" name="notifications_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="contentsMargins">
+         <rect>
+          <left>0</left>
+          <top>0</top>
+          <right>0</right>
+          <bottom>0</bottom>
+         </rect>
+        </property>
         <item>
-         <widget class="QTextEdit" name="notifications_text">
-          <property name="readOnly">
+         <widget class="QScrollArea" name="notifications_scroll">
+          <property name="widgetResizable">
            <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="notifications_button">
-          <property name="text">
-           <string>Refresh Notifications</string>
+          <property name="styleSheet">
+           <string>border: none; background: transparent;</string>
           </property>
+          <widget class="QWidget" name="notifications_content">
+           <layout class="QVBoxLayout" name="notifications_content_layout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="contentsMargins">
+             <rect>
+              <left>20</left>
+              <top>20</top>
+              <right>20</right>
+              <bottom>20</bottom>
+             </rect>
+            </property>
+            <item>
+             <widget class="QWidget" name="notifications_card">
+              <property name="styleSheet">
+               <string>background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);</string>
+              </property>
+              <layout class="QVBoxLayout" name="notifications_card_layout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="contentsMargins">
+                <rect>
+                 <left>15</left>
+                 <top>15</top>
+                 <right>15</right>
+                 <bottom>15</bottom>
+                </rect>
+               </property>
+               <item>
+                <widget class="QLabel" name="notifications_label">
+                 <property name="text">
+                  <string>Notifications</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size: 18px; font-weight: bold; color: #333333;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="notifications_text">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string>border: none; background: #FFFFFF; border-radius: 10px; color: #333333; padding: 10px; font-size: 14px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="notifications_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Refresh Notifications</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string>background: #007BFF; color: #FFFFFF; border: none; border-radius: 8px; padding: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); QPushButton:hover { background: #0056B3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } QPushButton:pressed { background: #003087; }</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="notifications_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -511,6 +1420,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string>background: #FFFFFF; color: #333333; font-size: 14px; QMenuBar::item:selected { background: #007BFF; color: #FFFFFF; }</string>
+   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
@@ -526,7 +1438,11 @@
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="styleSheet">
+    <string>background: #E9ECEF; color: #333333; font-size: 14px;</string>
+   </property>
+  </widget>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>

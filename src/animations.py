@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 
+
 class AnimationManager:
     def __init__(self):
         pass

@@ -1,5 +1,6 @@
 from src.database import Database
 
+
 class ProfileManager:
     def __init__(self):
         try:

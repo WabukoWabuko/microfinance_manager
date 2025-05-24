@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QShortcut
 from PyQt5.QtGui import QKeySequence
 
+
 class ShortcutManager:
     def __init__(self):
         try:
@@ -12,9 +13,11 @@ class ShortcutManager:
     def setup_shortcuts(self, widget):
         try:
             # Ctrl+D: Dashboard
-            QShortcut(QKeySequence("Ctrl+D"), widget, lambda: widget.ui_manager.main_ui.content_stack.setCurrentIndex(0))
+            QShortcut(QKeySequence("Ctrl+D"), widget,
+                      lambda: widget.ui_manager.main_ui.content_stack.setCurrentIndex(0))
             # Ctrl+L: Loan
-            QShortcut(QKeySequence("Ctrl+L"), widget, lambda: widget.ui_manager.main_ui.content_stack.setCurrentIndex(1))
+            QShortcut(QKeySequence("Ctrl+L"), widget,
+                      lambda: widget.ui_manager.main_ui.content_stack.setCurrentIndex(1))
             print("Shortcuts set up")
         except Exception as e:
             print(f"Error in setup_shortcuts: {e}")

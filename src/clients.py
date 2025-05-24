@@ -3,6 +3,7 @@ import bcrypt
 import uuid
 from src.database import Database
 
+
 class ClientManager:
     def __init__(self):
         try:
@@ -21,10 +22,11 @@ class ClientManager:
                 return False, "Invalid phone number format"
             if role not in ["client", "admin"]:
                 return False, "Invalid role"
-            
+
             user_id = str(uuid.uuid4())
             password = "password123"
-            password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            password_hash = bcrypt.hashpw(
+                password.encode('utf-8'), bcrypt.gensalt())
             query = """
                 INSERT INTO users (id, username, password, role, group_id)
                 VALUES (?, ?, ?, ?, ?)

@@ -1,6 +1,7 @@
 from datetime import datetime
 from src.database import Database
 
+
 class NotificationManager:
     def __init__(self):
         try:
@@ -25,7 +26,8 @@ class NotificationManager:
 
     def get_notifications(self, user_id):
         try:
-            notifications = self.db.fetchall("SELECT * FROM Notifications WHERE user_id = ?", (user_id,))
+            notifications = self.db.fetchall(
+                "SELECT * FROM Notifications WHERE user_id = ?", (user_id,))
             return [{"message": n[2], "created_at": n[3]} for n in notifications]
         except Exception as e:
             print(f"Error in get_notifications: {e}")

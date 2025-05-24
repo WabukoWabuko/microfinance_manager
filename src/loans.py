@@ -4,6 +4,7 @@ from src.offline import OfflineManager
 import uuid
 import json
 
+
 class LoanManager:
     def __init__(self):
         try:
@@ -34,7 +35,8 @@ class LoanManager:
                 INSERT INTO loans (id, user_id, group_id, amount, interest_rate, date_issued, due_date, status)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """
-            self.db.execute(query, (loan_id, str(user_id), None, amount, interest_rate, date_issued, due_date, 'pending'))
+            self.db.execute(query, (loan_id, str(
+                user_id), None, amount, interest_rate, date_issued, due_date, 'pending'))
             return True, "Loan application submitted"
         except Exception as e:
             print(f"Error in apply_loan: {e}")

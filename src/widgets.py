@@ -1,6 +1,7 @@
 from src.database import Database
 from PyQt5.QtWidgets import QTableWidgetItem
 
+
 class WidgetManager:
     def __init__(self):
         try:
@@ -12,9 +13,11 @@ class WidgetManager:
     def setup_dashboard(self, main_ui):
         try:
             main_ui.loan_table.setColumnCount(4)
-            main_ui.loan_table.setHorizontalHeaderLabels(["ID", "Amount", "Status", "Issued"])
+            main_ui.loan_table.setHorizontalHeaderLabels(
+                ["ID", "Amount", "Status", "Issued"])
             main_ui.transaction_table.setColumnCount(4)
-            main_ui.transaction_table.setHorizontalHeaderLabels(["ID", "Loan ID", "Amount", "Type"])
+            main_ui.transaction_table.setHorizontalHeaderLabels(
+                ["ID", "Loan ID", "Amount", "Type"])
         except Exception as e:
             print(f"Error in setup_dashboard: {e}")
             raise
@@ -28,7 +31,8 @@ class WidgetManager:
             main_ui.loan_table.setRowCount(len(loans))
             for row, loan in enumerate(loans):
                 for col, value in enumerate(loan):
-                    main_ui.loan_table.setItem(row, col, QTableWidgetItem(str(value)))
+                    main_ui.loan_table.setItem(
+                        row, col, QTableWidgetItem(str(value)))
         except Exception as e:
             print(f"Error in update_dashboard: {e}")
             raise

@@ -4,6 +4,7 @@ from src.offline import OfflineManager
 import uuid
 import json
 
+
 class TransactionManager:
     def __init__(self):
         try:
@@ -31,7 +32,8 @@ class TransactionManager:
                 INSERT INTO transactions (id, loan_id, amount, type, date, status)
                 VALUES (?, ?, ?, ?, ?, ?)
             """
-            self.db.execute(query, (transaction_id, str(loan_id), amount, transaction_type, date, 'pending'))
+            self.db.execute(query, (transaction_id, str(
+                loan_id), amount, transaction_type, date, 'pending'))
             return True, "Transaction recorded"
         except Exception as e:
             print(f"Error in record_transaction: {e}")

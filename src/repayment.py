@@ -1,6 +1,7 @@
 from src.database import Database
 from PyQt5.QtWidgets import QTableWidgetItem
 
+
 class RepaymentManager:
     def __init__(self):
         try:
@@ -18,7 +19,8 @@ class RepaymentManager:
             main_ui.repayment_table.setRowCount(len(loans))
             for row, loan in enumerate(loans):
                 for col, value in enumerate(loan):
-                    main_ui.repayment_table.setItem(row, col, QTableWidgetItem(str(value)))
+                    main_ui.repayment_table.setItem(
+                        row, col, QTableWidgetItem(str(value)))
         except Exception as e:
             print(f"Error in update_schedule: {e}")
             raise

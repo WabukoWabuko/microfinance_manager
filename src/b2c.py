@@ -1,5 +1,6 @@
 from src.daraja import DarajaAPI
 
+
 class B2CManager:
     def __init__(self):
         try:

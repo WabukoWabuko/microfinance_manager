@@ -1,5 +1,6 @@
 from src.database import Database
 
+
 class AnalyticsManager:
     def __init__(self):
         try:
@@ -16,7 +17,8 @@ class AnalyticsManager:
             )
             total_loans = len(loans)
             total_amount = sum(loan[0] for loan in loans)
-            avg_interest = sum(loan[2] for loan in loans) / total_loans if total_loans > 0 else 0
+            avg_interest = sum(loan[2] for loan in loans) / \
+                total_loans if total_loans > 0 else 0
             main_ui.analytics_text.setPlainText(
                 f"Total Loans: {total_loans}\nTotal Amount: {total_amount}\nAverage Interest: {avg_interest:.2f}%"
             )
