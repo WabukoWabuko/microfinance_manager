@@ -1,25 +1,40 @@
 from datetime import datetime, timedelta
 from src.database import Database
+from src.offline import OfflineManager
 import uuid
+import json
 
 class LoanManager:
     def __init__(self):
         try:
             self.db = Database()
+            self.offline_manager = OfflineManager()
         except Exception as e:
             print(f"Error in LoanManager.__init__: {e}")
             raise
 
     def apply_loan(self, user_id, amount, interest_rate, purpose):
         try:
+            if not self.offline_manager.is_online():
+                loan_id = str(uuid.uuid4())
+                data = {
+                    'user_id': str(user_id),
+                    'amount': amount,
+                    'interest_rate': interest_rate,
+                    'date_issued': datetime.now().isoformat(),
+                    'due_date': (datetime.now() + timedelta(days=365)).isoformat(),
+                    'status': 'pending',
+                    'group_id': None
+                }
+                return self.offline_manager.queue_operation("insert", "loans", loan_id, json.dumps(data))
             loan_id = str(uuid.uuid4())
             date_issued = datetime.now().isoformat()
             due_date = (datetime.now() + timedelta(days=365)).isoformat()
             query = """
                 INSERT INTO loans (id, user_id, group_id, amount, interest_rate, date_issued, due_date, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """
-            self.db.execute(query, (loan_id, str(user_id), None, amount, interest_rate, date_issued, due_date))
+            self.db.execute(query, (loan_id, str(user_id), None, amount, interest_rate, date_issued, due_date, 'pending'))
             return True, "Loan application submitted"
         except Exception as e:
             print(f"Error in apply_loan: {e}")
@@ -27,6 +42,9 @@ class LoanManager:
 
     def approve_loan(self, loan_id):
         try:
+            if not self.offline_manager.is_online():
+                data = {'status': 'approved'}
+                return self.offline_manager.queue_operation("update", "loans", str(loan_id), json.dumps(data))
             query = "UPDATE loans SET status = 'approved' WHERE id = ?"
             self.db.execute(query, (str(loan_id),))
             return True, "Loan approved"
@@ -55,6 +73,7 @@ class LoanManager:
     def close(self):
         try:
             self.db.close()
+            self.offline_manager.close()
         except Exception as e:
             print(f"Error in close: {e}")
             raise
