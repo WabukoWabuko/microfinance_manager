@@ -1,0 +1,44 @@
+2025-05-24 17:52:16,904 - ERROR - Error setting up login UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-24 18:11:16,398 - DEBUG - Initializing UIManager
+2025-05-24 18:11:17,525 - DEBUG - QApplication created
+2025-05-24 18:11:17,526 - DEBUG - Calling setup_login_ui
+2025-05-24 18:11:17,526 - DEBUG - Entering setup_login_ui
+2025-05-24 18:11:17,526 - DEBUG - Creating login_window
+2025-05-24 18:11:17,527 - DEBUG - Creating Ui_LoginWindow
+2025-05-24 18:11:17,527 - DEBUG - Calling setupUi
+2025-05-24 18:11:17,528 - ERROR - Error setting up login UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-24 18:14:23,841 - DEBUG - Initializing UIManager
+2025-05-24 18:14:24,034 - DEBUG - QApplication created
+2025-05-24 18:14:24,034 - DEBUG - Calling setup_login_ui
+2025-05-24 18:14:24,035 - DEBUG - Entering setup_login_ui
+2025-05-24 18:14:24,035 - DEBUG - Creating login_window
+2025-05-24 18:14:24,036 - DEBUG - Creating Ui_LoginWindow
+2025-05-24 18:14:24,036 - DEBUG - Calling setupUi
+2025-05-24 18:14:24,037 - ERROR - Error setting up login UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-24 18:17:15,638 - DEBUG - Initializing UIManager
+2025-05-24 18:17:15,911 - DEBUG - QApplication created
+2025-05-24 18:17:15,911 - DEBUG - Calling setup_login_ui
+2025-05-24 18:17:15,911 - DEBUG - Entering setup_login_ui
+2025-05-24 18:17:15,911 - DEBUG - Creating login_window
+2025-05-24 18:17:15,912 - DEBUG - Creating Ui_LoginWindow
+2025-05-24 18:17:15,913 - DEBUG - Calling setupUi
+2025-05-24 18:17:15,913 - ERROR - Error setting up login UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-24 18:27:05,816 - DEBUG - Initializing UIManager
+2025-05-24 18:27:06,141 - DEBUG - QApplication created
+2025-05-24 18:27:06,141 - DEBUG - Calling setup_login_ui
+2025-05-24 18:27:06,142 - DEBUG - Entering setup_login_ui
+2025-05-24 18:27:06,142 - DEBUG - Creating login_window
+2025-05-24 18:27:06,142 - DEBUG - Creating Ui_LoginWindow
+2025-05-24 18:27:06,143 - DEBUG - Calling setupUi
+2025-05-24 18:27:06,502 - DEBUG - Setting login UI margins
+2025-05-24 18:27:06,502 - DEBUG - Showing login_window
+2025-05-24 18:27:12,794 - DEBUG - setup_login_ui complete
+2025-05-24 18:27:12,795 - DEBUG - UIManager initialization complete
