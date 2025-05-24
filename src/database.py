@@ -113,7 +113,7 @@ class Database:
             print(f"Error fetching one: {e}")
             raise
 
-    def execute_fetch_all(self, query, params=()):
+    def fetch_all(self, query, params=()):
         try:
             self.cursor.execute(query, params)
             return self.cursor.fetchall()
