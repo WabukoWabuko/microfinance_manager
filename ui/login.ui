@@ -54,7 +54,7 @@
       <item alignment="Qt::AlignCenter">
        <widget class="QLabel" name="logo_label">
         <property name="text">
-         <string><img src="images/logo.jpg" width="120" height="120"/></string>
+         <string>&lt;img src="images/logo.jpg" width="120" height="120"/&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

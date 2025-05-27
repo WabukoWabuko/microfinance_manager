@@ -1,19 +1,25 @@
 import sqlite3
 import bcrypt
 import uuid
-
+import logging
 
 class Database:
     def __init__(self):
+        logging.basicConfig(level=logging.DEBUG, filename='debug.log', filemode='a',
+                           format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.debug("Initializing Database")
         try:
             self.conn = sqlite3.connect('microfinance.db')
+            self.conn.row_factory = sqlite3.Row  # Enable dictionary-like row access
             self.cursor = self.conn.cursor()
             self.create_tables()
+            logging.debug("Database initialized")
         except Exception as e:
-            print(f"Error in Database.__init__: {e}")
+            logging.error(f"Error in Database.__init__: {e}")
             raise
 
     def create_tables(self):
+        logging.debug("Creating tables")
         try:
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS users (
@@ -105,12 +111,15 @@ class Database:
             ''')
             self.conn.commit()
             self.seed_admin_user()
+            logging.debug("Tables created and seeded")
         except Exception as e:
-            print(f"Error in create_tables: {e}")
+            logging.error(f"Error in create_tables: {e}")
             raise
 
     def seed_admin_user(self):
+        logging.debug("Seeding users")
         try:
+            # Client user
             user_id = str(uuid.uuid4())
             username = "john@example.com"
             password = "password"
@@ -118,40 +127,71 @@ class Database:
             self.cursor.execute('''
                 INSERT OR IGNORE INTO users (id, username, password, role, group_id, two_factor_enabled)
                 VALUES (?, ?, ?, ?, ?, ?)
-            ''', (user_id, username, hashed, "client", None, 0))
+            ''', (user_id, username, hashed, "Client", None, 0))
+            # Admin user
+            admin_id = str(uuid.uuid4())
+            admin_username = "admin@example.com"
+            self.cursor.execute('''
+                INSERT OR IGNORE INTO users (id, username, password, role, group_id, two_factor_enabled)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (admin_id, admin_username, hashed, "Admin", None, 0))
             self.conn.commit()
+            logging.debug("Users seeded: john@example.com (Client), admin@example.com (Admin)")
         except Exception as e:
-            print(f"Error in seed_admin_user: {e}")
+            logging.error(f"Error in seed_admin_user: {e}")
             raise
 
+    def get_user_by_email(self, email):
+        logging.debug(f"Querying user by email: {email}")
+        try:
+            self.cursor.execute('SELECT * FROM users WHERE username = ?', (email,))
+            user = self.cursor.fetchone()
+            if user:
+                logging.debug("User found")
+                return {
+                    'user_id': user['id'],
+                    'email': user['username'],
+                    'password': user['password'],
+                    'role': user['role']
+                }
+            logging.debug("User not found")
+            return None
+        except Exception as e:
+            logging.error(f"Error in get_user_by_email: {e}")
+            return None
+
     def execute(self, query, params=()):
+        logging.debug(f"Executing query: {query}")
         try:
             self.cursor.execute(query, params)
             self.conn.commit()
         except Exception as e:
-            print(f"Error in execute: {e}")
+            logging.error(f"Error in execute: {e}")
             raise
 
     def execute_fetch_one(self, query, params=()):
+        logging.debug(f"Fetching one: {query}")
         try:
             self.cursor.execute(query, params)
             result = self.cursor.fetchone()
             return result
         except Exception as e:
-            print(f"Error fetching one: {e}")
+            logging.error(f"Error fetching one: {e}")
             raise
 
     def execute_fetch_all(self, query, params=()):
+        logging.debug(f"Fetching all: {query}")
         try:
             self.cursor.execute(query, params)
             return self.cursor.fetchall()
         except Exception as e:
-            print(f"Error fetching all: {e}")
+            logging.error(f"Error fetching all: {e}")
             raise
 
     def close(self):
+        logging.debug("Closing database connection")
         try:
             self.conn.close()
         except Exception as e:
-            print(f"Error in close: {e}")
+            logging.error(f"Error in close: {e}")
             raise

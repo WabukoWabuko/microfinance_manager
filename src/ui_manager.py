@@ -2,12 +2,14 @@ import logging
 from PyQt5 import QtWidgets, QtCore
 from src.login import Ui_LoginWindow
 from src.main_window import Ui_MainWindow
+import bcrypt
 
 class UIManager:
-    def __init__(self):
+    def __init__(self, database):
         logging.basicConfig(level=logging.DEBUG, filename='debug.log', filemode='a',
                            format='%(asctime)s - %(levelname)s - %(message)s')
         logging.debug("Initializing UIManager")
+        self.database = database
         self.app = QtWidgets.QApplication([])
         logging.debug("QApplication created")
         self.login_window = None
@@ -33,12 +35,52 @@ class UIManager:
                 login_ui.verticalLayout.setSpacing(15)
             else:
                 logging.warning("verticalLayout not found in login_ui")
+            # Connect buttons
+            logging.debug("Connecting button signals")
+            login_ui.login_button.clicked.connect(self.handle_login)
+            login_ui.reset_password_button.clicked.connect(self.handle_reset_password)
+            self.login_ui = login_ui  # Store for access in handle_login
             logging.debug("Showing login_window")
             self.login_window.show()
             logging.debug("setup_login_ui complete")
         except Exception as e:
             logging.error(f"Error setting up login UI: {str(e)}")
             raise
+
+    def handle_login(self):
+        logging.debug("Handling login")
+        try:
+            email = self.login_ui.email_input.text().strip()
+            password = self.login_ui.password_input.text().strip()
+            role = self.login_ui.role_combo.currentText()
+            if not email or not password or not role:
+                QtWidgets.QMessageBox.warning(self.login_window, "Input Error",
+                                             "Please fill in all fields")
+                logging.debug("Login failed: Empty fields")
+                return
+            user = self.database.get_user_by_email(email)
+            if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')) and user['role'] == role:
+                self.current_user_id = user['user_id']
+                self.set_user_role(role, self.current_user_id)
+                self.show_main_window()
+                logging.debug(f"Login successful for {email}, role: {role}")
+            else:
+                QtWidgets.QMessageBox.critical(self.login_window, "Login Failed",
+                                              "Invalid email, password, or role")
+                logging.debug("Login failed: Invalid credentials")
+        except Exception as e:
+            logging.error(f"Error during login: {str(e)}")
+            QtWidgets.QMessageBox.critical(self.login_window, "Error",
+                                          "An error occurred during login")
+
+    def handle_reset_password(self):
+        logging.debug("Handling reset password")
+        try:
+            QtWidgets.QMessageBox.information(self.login_window, "Reset Password",
+                                             "Please contact the admin to reset your password")
+            logging.debug("Reset password requested")
+        except Exception as e:
+            logging.error(f"Error during reset password: {str(e)}")
 
     def setup_main_ui(self):
         logging.debug("Entering setup_main_ui")
@@ -110,6 +152,6 @@ class UIManager:
                 else:
                     main_ui.clients_button.show()
                     main_ui.analytics_button.show()
-            logging.debug("User role set")
+            logging.debug("User role set completed")
         except Exception as e:
             logging.error(f"Error setting user role: {str(e)}")

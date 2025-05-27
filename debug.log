@@ -42,3 +42,14 @@
 2025-05-24 18:27:06,502 - DEBUG - Showing login_window
 2025-05-24 18:27:12,794 - DEBUG - setup_login_ui complete
 2025-05-24 18:27:12,795 - DEBUG - UIManager initialization complete
+2025-05-27 22:15:27,060 - DEBUG - Initializing UIManager
+2025-05-27 22:15:27,879 - DEBUG - QApplication created
+2025-05-27 22:15:27,879 - DEBUG - Calling setup_login_ui
+2025-05-27 22:15:27,879 - DEBUG - Entering setup_login_ui
+2025-05-27 22:15:27,880 - DEBUG - Creating login_window
+2025-05-27 22:15:27,880 - DEBUG - Creating Ui_LoginWindow
+2025-05-27 22:15:27,881 - DEBUG - Calling setupUi
+2025-05-27 22:15:27,924 - DEBUG - Setting login UI margins
+2025-05-27 22:15:27,924 - DEBUG - Showing login_window
+2025-05-27 22:15:31,101 - DEBUG - setup_login_ui complete
+2025-05-27 22:15:31,102 - DEBUG - UIManager initialization complete
