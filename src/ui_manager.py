@@ -48,18 +48,32 @@ class UIManager:
             raise
 
     def handle_login(self):
-        logging.debug("Handling login")
+        logging.debug("Login button clicked")
         try:
             email = self.login_ui.email_input.text().strip()
             password = self.login_ui.password_input.text().strip()
             role = self.login_ui.role_combo.currentText()
+            logging.debug(f"Login attempt: email={email}, role={role}")
             if not email or not password or not role:
                 QtWidgets.QMessageBox.warning(self.login_window, "Input Error",
                                              "Please fill in all fields")
                 logging.debug("Login failed: Empty fields")
                 return
             user = self.database.get_user_by_email(email)
-            if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')) and user['role'] == role:
+            logging.debug(f"User query result: {user}")
+            if user is None:
+                QtWidgets.QMessageBox.critical(self.login_window, "Login Failed",
+                                              "Invalid email, password, or role")
+                logging.debug("Login failed: User not found")
+                return
+            if not isinstance(user['password'], (str, bytes)):
+                logging.error(f"Invalid password type: {type(user['password'])}")
+                QtWidgets.QMessageBox.critical(self.login_window, "Error",
+                                              "Invalid password format in database")
+                return
+            password_bytes = password.encode('utf-8')
+            stored_password = user['password'].encode('utf-8') if isinstance(user['password'], str) else user['password']
+            if bcrypt.checkpw(password_bytes, stored_password) and user['role'] == role:
                 self.current_user_id = user['user_id']
                 self.set_user_role(role, self.current_user_id)
                 self.show_main_window()
@@ -71,10 +85,10 @@ class UIManager:
         except Exception as e:
             logging.error(f"Error during login: {str(e)}")
             QtWidgets.QMessageBox.critical(self.login_window, "Error",
-                                          "An error occurred during login")
+                                          f"Login error: {str(e)}")
 
     def handle_reset_password(self):
-        logging.debug("Handling reset password")
+        logging.debug("Reset Password button clicked")
         try:
             QtWidgets.QMessageBox.information(self.login_window, "Reset Password",
                                              "Please contact the admin to reset your password")

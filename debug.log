@@ -53,3 +53,75 @@
 2025-05-27 22:15:27,924 - DEBUG - Showing login_window
 2025-05-27 22:15:31,101 - DEBUG - setup_login_ui complete
 2025-05-27 22:15:31,102 - DEBUG - UIManager initialization complete
+2025-05-27 23:28:27,097 - DEBUG - Starting main.py
+2025-05-27 23:28:27,097 - DEBUG - Initializing Database
+2025-05-27 23:28:27,097 - DEBUG - Initializing Database
+2025-05-27 23:28:27,098 - DEBUG - Creating tables
+2025-05-27 23:28:31,902 - DEBUG - Seeding users
+2025-05-27 23:28:33,069 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-27 23:28:33,069 - DEBUG - Tables created and seeded
+2025-05-27 23:28:33,070 - DEBUG - Database initialized
+2025-05-27 23:28:33,070 - DEBUG - Initializing UIManager
+2025-05-27 23:28:33,070 - DEBUG - Initializing UIManager
+2025-05-27 23:28:34,019 - DEBUG - QApplication created
+2025-05-27 23:28:34,019 - DEBUG - Calling setup_login_ui
+2025-05-27 23:28:34,019 - DEBUG - Entering setup_login_ui
+2025-05-27 23:28:34,020 - DEBUG - Creating login_window
+2025-05-27 23:28:34,020 - DEBUG - Creating Ui_LoginWindow
+2025-05-27 23:28:34,020 - DEBUG - Calling setupUi
+2025-05-27 23:28:34,420 - DEBUG - Setting login UI margins
+2025-05-27 23:28:34,420 - DEBUG - Connecting button signals
+2025-05-27 23:28:34,420 - DEBUG - Showing login_window
+2025-05-27 23:28:37,991 - DEBUG - setup_login_ui complete
+2025-05-27 23:28:37,991 - DEBUG - UIManager initialization complete
+2025-05-27 23:28:37,991 - DEBUG - UIManager initialized, starting app
+2025-05-27 23:28:51,192 - DEBUG - Handling login
+2025-05-27 23:28:51,192 - DEBUG - Querying user by email: john@example.com
+2025-05-27 23:28:51,193 - DEBUG - User found
+2025-05-27 23:28:51,702 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-27 23:28:51,702 - DEBUG - User role set completed
+2025-05-27 23:28:51,702 - DEBUG - Entering show_main_window
+2025-05-27 23:28:51,705 - DEBUG - Entering setup_main_ui
+2025-05-27 23:28:51,707 - ERROR - Error setting up main UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-27 23:28:51,708 - ERROR - Error during login: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-28 10:16:26,961 - DEBUG - Starting main.py
+2025-05-28 10:16:26,979 - DEBUG - Initializing Database
+2025-05-28 10:16:26,980 - DEBUG - Initializing Database
+2025-05-28 10:16:27,097 - DEBUG - Creating tables
+2025-05-28 10:16:27,100 - DEBUG - Seeding users
+2025-05-28 10:16:27,615 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 10:16:27,616 - DEBUG - Tables created and seeded
+2025-05-28 10:16:27,616 - DEBUG - Database initialized
+2025-05-28 10:16:27,616 - DEBUG - Initializing UIManager
+2025-05-28 10:16:27,616 - DEBUG - Initializing UIManager
+2025-05-28 10:16:28,891 - DEBUG - QApplication created
+2025-05-28 10:16:28,892 - DEBUG - Calling setup_login_ui
+2025-05-28 10:16:28,892 - DEBUG - Entering setup_login_ui
+2025-05-28 10:16:28,892 - DEBUG - Creating login_window
+2025-05-28 10:16:28,893 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 10:16:28,893 - DEBUG - Calling setupUi
+2025-05-28 10:16:30,260 - DEBUG - Setting login UI margins
+2025-05-28 10:16:30,260 - DEBUG - Connecting button signals
+2025-05-28 10:16:30,260 - DEBUG - Showing login_window
+2025-05-28 10:16:35,015 - DEBUG - setup_login_ui complete
+2025-05-28 10:16:35,016 - DEBUG - UIManager initialization complete
+2025-05-28 10:16:35,016 - DEBUG - UIManager initialized, starting app
+2025-05-28 10:17:00,127 - DEBUG - Login button clicked
+2025-05-28 10:17:00,131 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 10:17:00,131 - DEBUG - Querying user by email: john@example.com
+2025-05-28 10:17:00,131 - DEBUG - User found
+2025-05-28 10:17:00,132 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 10:17:00,645 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 10:17:00,646 - DEBUG - User role set completed
+2025-05-28 10:17:00,646 - DEBUG - Entering show_main_window
+2025-05-28 10:17:00,648 - DEBUG - Entering setup_main_ui
+2025-05-28 10:17:00,650 - ERROR - Error setting up main UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-28 10:17:00,650 - ERROR - Error during login: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
