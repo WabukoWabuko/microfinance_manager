@@ -10,8 +10,6 @@ class UIManager:
                            format='%(asctime)s - %(levelname)s - %(message)s')
         logging.debug("Initializing UIManager")
         self.database = database
-        self.app = QtWidgets.QApplication([])
-        logging.debug("QApplication created")
         self.login_window = None
         self.main_window = None
         self.current_user_role = None
@@ -75,8 +73,11 @@ class UIManager:
             stored_password = user['password'].encode('utf-8') if isinstance(user['password'], str) else user['password']
             if bcrypt.checkpw(password_bytes, stored_password) and user['role'] == role:
                 self.current_user_id = user['user_id']
-                self.set_user_role(role, self.current_user_id)
+                logging.debug(f"Setting user role: {role}, user_id: {self.current_user_id}")
+                self.current_user_role = role
+                self.current_user_id = user_id
                 self.show_main_window()
+                self.set_user_role(role, self.current_user_id)
                 logging.debug(f"Login successful for {email}, role: {role}")
             else:
                 QtWidgets.QMessageBox.critical(self.login_window, "Login Failed",
@@ -99,35 +100,73 @@ class UIManager:
     def setup_main_ui(self):
         logging.debug("Entering setup_main_ui")
         try:
+            # Step 1: Create the main window
+            logging.debug("Creating main_window")
             self.main_window = QtWidgets.QMainWindow()
+            if self.main_window is None:
+                logging.error("Failed to create main_window")
+                raise ValueError("Failed to create main_window")
+
+            # Step 2: Initialize the UI
+            logging.debug("Creating Ui_MainWindow instance")
             main_ui = Ui_MainWindow()
+            logging.debug("Calling setupUi for main_window")
             main_ui.setupUi(self.main_window)
-            logging.debug("Setting main UI margins")
-            if hasattr(main_ui, 'horizontalLayout'):
-                main_ui.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-                main_ui.horizontalLayout.setSpacing(0)
-            if hasattr(main_ui, 'verticalLayout'):
-                main_ui.verticalLayout.setContentsMargins(10, 20, 10, 10)
-                main_ui.verticalLayout.setSpacing(10)
-            if hasattr(main_ui, 'content_stack'):
-                for i in range(main_ui.content_stack.count()):
-                    page = main_ui.content_stack.widget(i)
-                    layout = page.layout()
-                    if layout:
-                        layout.setContentsMargins(20, 20, 20, 20)
-                        layout.setSpacing(15)
-            self.main_window.show()
+
+            # Step 3: Verify the main window exists
+            if self.main_window is None:
+                logging.error("main_window is None after setupUi")
+                raise ValueError("main_window is None after setupUi")
+
+            # Temporarily skip layout adjustments to isolate the issue
+            logging.debug("Skipping layout adjustments for debugging")
+            """
+            try:
+                if hasattr(main_ui, 'horizontalLayout'):
+                    logging.debug("Setting horizontalLayout margins")
+                    main_ui.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+                    main_ui.horizontalLayout.setSpacing(0)
+                if hasattr(main_ui, 'verticalLayout'):
+                    logging.debug("Setting verticalLayout margins")
+                    main_ui.verticalLayout.setContentsMargins(10, 20, 10, 10)
+                    main_ui.verticalLayout.setSpacing(10)
+                if hasattr(main_ui, 'content_stack'):
+                    logging.debug("Setting content_stack page margins")
+                    for i in range(main_ui.content_stack.count()):
+                        page = main_ui.content_stack.widget(i)
+                        layout = page.layout()
+                        if layout:
+                            layout.setContentsMargins(20, 20, 20, 20)
+                            layout.setSpacing(15)
+            except Exception as e:
+                logging.error(f"Error setting layout margins: {str(e)}")
+                raise
+            """
             logging.debug("setup_main_ui complete")
         except Exception as e:
             logging.error(f"Error setting up main UI: {str(e)}")
+            self.main_window = None  # Reset on failure
             raise
 
     def show_main_window(self):
         logging.debug("Entering show_main_window")
-        if self.login_window:
-            self.login_window.hide()
-        self.setup_main_ui()
-        logging.debug("show_main_window complete")
+        try:
+            if self.main_window is None:
+                logging.debug("main_window is None, calling setup_main_ui")
+                self.setup_main_ui()
+                if self.main_window is None:
+                    logging.error("setup_main_ui failed to initialize main_window")
+                    raise ValueError("Login error: main_window is None")
+            logging.debug("Closing login_window")
+            if self.login_window:
+                self.login_window.close()
+                self.login_window = None  # Clear reference
+            logging.debug("Showing main_window")
+            self.main_window.show()
+            logging.debug("show_main_window complete")
+        except Exception as e:
+            logging.error(f"Error in show_main_window: {str(e)}")
+            raise
 
     def apply_theme(self, theme="light"):
         logging.debug(f"Applying theme: {theme}")
@@ -148,7 +187,7 @@ class UIManager:
                     QLineEdit, QComboBox, QTextEdit { border: 1px solid #4A4A4A; border-radius: 8px; padding: 10px; background: #3C3C3C; }
                     QTableWidget { border: none; background: #3C3C3C; gridline-color: #4A4A4A; }
                 """
-            self.app.setStyleSheet(style)
+            QtWidgets.QApplication.instance().setStyleSheet(style)
             logging.debug("Theme applied")
         except Exception as e:
             logging.error(f"Error applying theme: {str(e)}")
@@ -159,13 +198,28 @@ class UIManager:
         self.current_user_id = user_id
         try:
             if self.main_window:
+                logging.debug("Finding main_ui in main_window")
                 main_ui = self.main_window.findChild(Ui_MainWindow)
+                if main_ui is None:
+                    logging.error("main_ui not found in main_window")
+                    raise AttributeError("main_ui not found in main_window")
+                logging.debug("main_ui found, checking buttons")
+                if not hasattr(main_ui, 'clients_button') or not hasattr(main_ui, 'analytics_button'):
+                    logging.error("clients_button or analytics_button not found in main_ui")
+                    raise AttributeError("clients_button or analytics_button not found in main_ui")
+                logging.debug(f"Setting visibility for role: {role}")
                 if role == "Client":
                     main_ui.clients_button.hide()
                     main_ui.analytics_button.hide()
+                    logging.debug("Hid clients_button and analytics_button for Client role")
                 else:
                     main_ui.clients_button.show()
                     main_ui.analytics_button.show()
+                    logging.debug("Showed clients_button and analytics_button for Admin role")
+            else:
+                logging.error("main_window is None in set_user_role")
+                raise ValueError("main_window is None")
             logging.debug("User role set completed")
         except Exception as e:
             logging.error(f"Error setting user role: {str(e)}")
+            raise

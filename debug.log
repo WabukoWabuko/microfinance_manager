@@ -125,3 +125,250 @@
 2025-05-28 10:17:00,650 - ERROR - Error during login: arguments did not match any overloaded call:
   setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
   setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-28 10:59:06,020 - DEBUG - Starting main.py
+2025-05-28 10:59:06,021 - DEBUG - Initializing Database
+2025-05-28 10:59:06,021 - DEBUG - Initializing Database
+2025-05-28 10:59:06,022 - DEBUG - Creating tables
+2025-05-28 10:59:06,023 - DEBUG - Seeding users
+2025-05-28 10:59:06,559 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 10:59:06,559 - DEBUG - Tables created and seeded
+2025-05-28 10:59:06,559 - DEBUG - Database initialized
+2025-05-28 10:59:06,559 - DEBUG - Initializing UIManager
+2025-05-28 10:59:06,560 - DEBUG - Initializing UIManager
+2025-05-28 10:59:07,842 - DEBUG - QApplication created
+2025-05-28 10:59:07,843 - DEBUG - Calling setup_login_ui
+2025-05-28 10:59:07,843 - DEBUG - Entering setup_login_ui
+2025-05-28 10:59:07,843 - DEBUG - Creating login_window
+2025-05-28 10:59:07,844 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 10:59:07,844 - DEBUG - Calling setupUi
+2025-05-28 10:59:08,331 - DEBUG - Setting login UI margins
+2025-05-28 10:59:08,331 - DEBUG - Connecting button signals
+2025-05-28 10:59:08,332 - DEBUG - Showing login_window
+2025-05-28 10:59:13,152 - DEBUG - setup_login_ui complete
+2025-05-28 10:59:13,153 - DEBUG - UIManager initialization complete
+2025-05-28 10:59:13,153 - DEBUG - UIManager initialized, starting app
+2025-05-28 10:59:30,515 - DEBUG - Login button clicked
+2025-05-28 10:59:30,515 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 10:59:30,515 - DEBUG - Querying user by email: john@example.com
+2025-05-28 10:59:30,516 - DEBUG - User found
+2025-05-28 10:59:30,516 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 10:59:31,035 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 10:59:31,035 - DEBUG - User role set completed
+2025-05-28 10:59:31,035 - DEBUG - Entering show_main_window
+2025-05-28 10:59:31,039 - DEBUG - Entering setup_main_ui
+2025-05-28 10:59:31,039 - DEBUG - Creating main_window
+2025-05-28 10:59:31,040 - DEBUG - Calling setupUi for main_window
+2025-05-28 10:59:31,040 - ERROR - Error setting up main UI: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-28 10:59:31,040 - ERROR - Error during login: arguments did not match any overloaded call:
+  setContentsMargins(self, left: int, top: int, right: int, bottom: int): argument 1 has unexpected type 'QRect'
+  setContentsMargins(self, margins: QMargins): argument 1 has unexpected type 'QRect'
+2025-05-28 11:16:38,839 - DEBUG - Starting main.py
+2025-05-28 11:16:38,839 - DEBUG - Initializing Database
+2025-05-28 11:16:38,839 - DEBUG - Initializing Database
+2025-05-28 11:16:38,840 - DEBUG - Creating tables
+2025-05-28 11:16:38,841 - DEBUG - Seeding users
+2025-05-28 11:16:39,361 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 11:16:39,361 - DEBUG - Tables created and seeded
+2025-05-28 11:16:39,361 - DEBUG - Database initialized
+2025-05-28 11:16:39,361 - DEBUG - Initializing UIManager
+2025-05-28 11:16:39,362 - DEBUG - Initializing UIManager
+2025-05-28 11:16:39,886 - DEBUG - QApplication created
+2025-05-28 11:16:39,886 - DEBUG - Calling setup_login_ui
+2025-05-28 11:16:39,887 - DEBUG - Entering setup_login_ui
+2025-05-28 11:16:39,887 - DEBUG - Creating login_window
+2025-05-28 11:16:39,887 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 11:16:39,888 - DEBUG - Calling setupUi
+2025-05-28 11:16:39,928 - DEBUG - Setting login UI margins
+2025-05-28 11:16:39,928 - DEBUG - Connecting button signals
+2025-05-28 11:16:39,929 - DEBUG - Showing login_window
+2025-05-28 11:16:41,314 - DEBUG - setup_login_ui complete
+2025-05-28 11:16:41,315 - DEBUG - UIManager initialization complete
+2025-05-28 11:16:41,316 - DEBUG - UIManager initialized, starting app
+2025-05-28 11:16:52,405 - DEBUG - Login button clicked
+2025-05-28 11:16:52,406 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 11:16:52,406 - DEBUG - Querying user by email: john@example.com
+2025-05-28 11:16:52,406 - DEBUG - User found
+2025-05-28 11:16:52,407 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 11:16:52,925 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 11:16:52,926 - ERROR - main_window is None in set_user_role
+2025-05-28 11:16:52,926 - ERROR - Error setting user role: main_window is None
+2025-05-28 11:16:52,926 - ERROR - Error during login: main_window is None
+2025-05-28 12:33:39,142 - DEBUG - Starting main.py
+2025-05-28 12:33:39,142 - DEBUG - Initializing Database
+2025-05-28 12:33:39,142 - DEBUG - Initializing Database
+2025-05-28 12:33:39,181 - DEBUG - Creating tables
+2025-05-28 12:33:39,183 - DEBUG - Seeding users
+2025-05-28 12:33:39,709 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 12:33:39,709 - DEBUG - Tables created and seeded
+2025-05-28 12:33:39,709 - DEBUG - Database initialized
+2025-05-28 12:33:39,710 - DEBUG - Initializing UIManager
+2025-05-28 12:33:39,710 - DEBUG - Initializing UIManager
+2025-05-28 12:33:41,287 - DEBUG - QApplication created
+2025-05-28 12:33:41,287 - DEBUG - Calling setup_login_ui
+2025-05-28 12:33:41,287 - DEBUG - Entering setup_login_ui
+2025-05-28 12:33:41,288 - DEBUG - Creating login_window
+2025-05-28 12:33:41,288 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 12:33:41,288 - DEBUG - Calling setupUi
+2025-05-28 12:33:42,171 - DEBUG - Setting login UI margins
+2025-05-28 12:33:42,171 - DEBUG - Connecting button signals
+2025-05-28 12:33:42,172 - DEBUG - Showing login_window
+2025-05-28 12:33:46,032 - DEBUG - setup_login_ui complete
+2025-05-28 12:33:46,032 - DEBUG - UIManager initialization complete
+2025-05-28 12:33:46,032 - DEBUG - UIManager initialized, starting app
+2025-05-28 12:34:28,719 - DEBUG - Login button clicked
+2025-05-28 12:34:28,719 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:34:28,720 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:34:28,720 - DEBUG - User found
+2025-05-28 12:34:28,721 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:34:29,233 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:34:29,234 - ERROR - main_window is None in set_user_role
+2025-05-28 12:34:29,234 - ERROR - Error setting user role: main_window is None
+2025-05-28 12:34:29,234 - ERROR - Error during login: main_window is None
+2025-05-28 12:41:40,006 - DEBUG - Starting main.py
+2025-05-28 12:41:40,006 - DEBUG - Initializing Database
+2025-05-28 12:41:40,007 - DEBUG - Initializing Database
+2025-05-28 12:41:40,007 - DEBUG - Creating tables
+2025-05-28 12:41:40,008 - DEBUG - Seeding users
+2025-05-28 12:41:40,992 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 12:41:40,992 - DEBUG - Tables created and seeded
+2025-05-28 12:41:40,992 - DEBUG - Database initialized
+2025-05-28 12:41:40,992 - DEBUG - Initializing UIManager
+2025-05-28 12:41:40,993 - DEBUG - Initializing UIManager
+2025-05-28 12:41:41,952 - DEBUG - QApplication created
+2025-05-28 12:41:41,952 - DEBUG - Calling setup_login_ui
+2025-05-28 12:41:41,952 - DEBUG - Entering setup_login_ui
+2025-05-28 12:41:41,953 - DEBUG - Creating login_window
+2025-05-28 12:41:41,953 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 12:41:41,953 - DEBUG - Calling setupUi
+2025-05-28 12:41:42,063 - DEBUG - Setting login UI margins
+2025-05-28 12:41:42,063 - DEBUG - Connecting button signals
+2025-05-28 12:41:42,064 - DEBUG - Showing login_window
+2025-05-28 12:41:42,556 - DEBUG - setup_login_ui complete
+2025-05-28 12:41:42,556 - DEBUG - UIManager initialization complete
+2025-05-28 12:41:42,557 - DEBUG - UIManager initialized, starting app
+2025-05-28 12:41:52,950 - DEBUG - Login button clicked
+2025-05-28 12:41:52,951 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:41:52,951 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:41:52,952 - DEBUG - User found
+2025-05-28 12:41:52,952 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:41:53,470 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:41:53,470 - ERROR - main_window is None in set_user_role
+2025-05-28 12:41:53,471 - ERROR - Error setting user role: main_window is None
+2025-05-28 12:41:53,471 - ERROR - Error during login: main_window is None
+2025-05-28 12:41:59,533 - DEBUG - Login button clicked
+2025-05-28 12:41:59,534 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:41:59,534 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:41:59,534 - DEBUG - User found
+2025-05-28 12:41:59,535 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:42:00,044 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:42:00,044 - ERROR - main_window is None in set_user_role
+2025-05-28 12:42:00,045 - ERROR - Error setting user role: main_window is None
+2025-05-28 12:42:00,045 - ERROR - Error during login: main_window is None
+2025-05-28 12:48:55,284 - DEBUG - Starting main.py
+2025-05-28 12:48:55,284 - DEBUG - Creating QApplication
+2025-05-28 12:48:55,461 - DEBUG - Initializing Database
+2025-05-28 12:48:55,461 - DEBUG - Initializing Database
+2025-05-28 12:48:55,462 - DEBUG - Creating tables
+2025-05-28 12:48:55,463 - DEBUG - Seeding users
+2025-05-28 12:48:55,973 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 12:48:55,973 - DEBUG - Tables created and seeded
+2025-05-28 12:48:55,974 - DEBUG - Database initialized
+2025-05-28 12:48:55,974 - DEBUG - Initializing UIManager
+2025-05-28 12:48:55,974 - DEBUG - Initializing UIManager
+2025-05-28 12:48:55,974 - DEBUG - Calling setup_login_ui
+2025-05-28 12:48:55,974 - DEBUG - Entering setup_login_ui
+2025-05-28 12:48:55,974 - DEBUG - Creating login_window
+2025-05-28 12:48:55,975 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 12:48:55,975 - DEBUG - Calling setupUi
+2025-05-28 12:48:56,016 - DEBUG - Setting login UI margins
+2025-05-28 12:48:56,016 - DEBUG - Connecting button signals
+2025-05-28 12:48:56,017 - DEBUG - Showing login_window
+2025-05-28 12:48:56,754 - DEBUG - setup_login_ui complete
+2025-05-28 12:48:56,758 - DEBUG - UIManager initialization complete
+2025-05-28 12:48:56,758 - DEBUG - UIManager initialized, starting app
+2025-05-28 12:49:09,517 - DEBUG - Login button clicked
+2025-05-28 12:49:09,517 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:49:09,518 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:49:09,518 - DEBUG - User found
+2025-05-28 12:49:09,519 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:49:10,038 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:49:10,039 - ERROR - main_window is None in set_user_role
+2025-05-28 12:49:10,039 - ERROR - Error setting user role: main_window is None
+2025-05-28 12:49:10,039 - ERROR - Error during login: main_window is None
+2025-05-28 12:49:24,298 - DEBUG - Login button clicked
+2025-05-28 12:49:24,299 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:49:24,299 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:49:24,300 - DEBUG - User found
+2025-05-28 12:49:24,300 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:49:24,873 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:49:24,874 - ERROR - main_window is None in set_user_role
+2025-05-28 12:49:24,874 - ERROR - Error setting user role: main_window is None
+2025-05-28 12:49:24,874 - ERROR - Error during login: main_window is None
+2025-05-28 12:51:47,837 - DEBUG - Starting main.py
+2025-05-28 12:51:47,838 - DEBUG - Creating QApplication
+2025-05-28 12:51:47,874 - DEBUG - Initializing Database
+2025-05-28 12:51:47,874 - DEBUG - Initializing Database
+2025-05-28 12:51:47,875 - DEBUG - Creating tables
+2025-05-28 12:51:47,876 - DEBUG - Seeding users
+2025-05-28 12:51:48,397 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 12:51:48,397 - DEBUG - Tables created and seeded
+2025-05-28 12:51:48,397 - DEBUG - Database initialized
+2025-05-28 12:51:48,398 - DEBUG - Initializing UIManager
+2025-05-28 12:51:48,398 - DEBUG - Initializing UIManager
+2025-05-28 12:51:48,398 - DEBUG - Calling setup_login_ui
+2025-05-28 12:51:48,398 - DEBUG - Entering setup_login_ui
+2025-05-28 12:51:48,398 - DEBUG - Creating login_window
+2025-05-28 12:51:48,399 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 12:51:48,399 - DEBUG - Calling setupUi
+2025-05-28 12:51:48,442 - DEBUG - Setting login UI margins
+2025-05-28 12:51:48,442 - DEBUG - Connecting button signals
+2025-05-28 12:51:48,442 - DEBUG - Showing login_window
+2025-05-28 12:51:48,781 - DEBUG - setup_login_ui complete
+2025-05-28 12:51:48,783 - DEBUG - UIManager initialization complete
+2025-05-28 12:51:48,783 - DEBUG - UIManager initialized, starting app
+2025-05-28 12:51:59,226 - DEBUG - Login button clicked
+2025-05-28 12:51:59,227 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:51:59,228 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:51:59,228 - DEBUG - User found
+2025-05-28 12:51:59,228 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:51:59,751 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:51:59,751 - ERROR - main_window is None in set_user_role
+2025-05-28 12:51:59,751 - ERROR - Error setting user role: main_window is None
+2025-05-28 12:51:59,751 - ERROR - Error during login: main_window is None
+2025-05-28 12:58:46,847 - DEBUG - Starting main.py
+2025-05-28 12:58:46,847 - DEBUG - Creating QApplication
+2025-05-28 12:58:46,882 - DEBUG - Initializing Database
+2025-05-28 12:58:46,883 - DEBUG - Initializing Database
+2025-05-28 12:58:46,883 - DEBUG - Creating tables
+2025-05-28 12:58:46,885 - DEBUG - Seeding users
+2025-05-28 12:58:47,401 - DEBUG - Users seeded: john@example.com (Client), admin@example.com (Admin)
+2025-05-28 12:58:47,401 - DEBUG - Tables created and seeded
+2025-05-28 12:58:47,401 - DEBUG - Database initialized
+2025-05-28 12:58:47,401 - DEBUG - Initializing UIManager
+2025-05-28 12:58:47,401 - DEBUG - Initializing UIManager
+2025-05-28 12:58:47,402 - DEBUG - Calling setup_login_ui
+2025-05-28 12:58:47,402 - DEBUG - Entering setup_login_ui
+2025-05-28 12:58:47,402 - DEBUG - Creating login_window
+2025-05-28 12:58:47,402 - DEBUG - Creating Ui_LoginWindow
+2025-05-28 12:58:47,403 - DEBUG - Calling setupUi
+2025-05-28 12:58:47,444 - DEBUG - Setting login UI margins
+2025-05-28 12:58:47,444 - DEBUG - Connecting button signals
+2025-05-28 12:58:47,444 - DEBUG - Showing login_window
+2025-05-28 12:58:47,921 - DEBUG - setup_login_ui complete
+2025-05-28 12:58:47,921 - DEBUG - UIManager initialization complete
+2025-05-28 12:58:47,921 - DEBUG - UIManager initialized, starting app
+2025-05-28 12:59:00,575 - DEBUG - Login button clicked
+2025-05-28 12:59:00,576 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:59:00,576 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:59:00,577 - DEBUG - User found
+2025-05-28 12:59:00,577 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:59:03,070 - DEBUG - Login failed: Invalid credentials
+2025-05-28 12:59:07,037 - DEBUG - Login button clicked
+2025-05-28 12:59:07,038 - DEBUG - Login attempt: email=john@example.com, role=Client
+2025-05-28 12:59:07,038 - DEBUG - Querying user by email: john@example.com
+2025-05-28 12:59:07,039 - DEBUG - User found
+2025-05-28 12:59:07,039 - DEBUG - User query result: {'user_id': 'd3a19b9a-2eb0-458e-9f77-c0ac4677545d', 'email': 'john@example.com', 'password': '$2a$12$ZOGxRWIUx.Z5BEwew.DrUOPY0CfaMiRXSDWPTbz3aHw3jzJOfchXS', 'role': 'Client'}
+2025-05-28 12:59:07,561 - DEBUG - Setting user role: Client, user_id: d3a19b9a-2eb0-458e-9f77-c0ac4677545d
+2025-05-28 12:59:07,562 - ERROR - Error during login: name 'user_id' is not defined
